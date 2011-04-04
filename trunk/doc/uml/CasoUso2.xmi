@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="Bouml" exporterVersion="1.15"/>
+	<uml:Model xmi:type="uml:Model" xmi:id="themodel" name="DSCasoUso2">
+		<packagedElement xmi:type="uml:Package" xmi:id="BOUML_0x81_22" name ="DSCasoUso2">
+			<packagedElement xmi:type="uml:Collaboration" xmi:id="BOUML_COLLABORATION_0x2418a_12" name="DSS2">
+				<ownedBehavior xmi:type="uml:Interaction" xmi:id="BOUML_INTERACTION_0x2418a_12" name="DSS2">
+					<lifeline xmi:type="uml:Lifeline" xmi:id="BOUML_LIFELINE1_0x2418a_12" name="" represents="BOUML_COLLATTR1_0x2418a_12"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="BOUML_LIFELINE2_0x2418a_12" name="" represents="BOUML_COLLATTR2_0x2418a_12"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="BOUML_LIFELINE3_0x2418a_12" name="" represents="BOUML_COLLATTR3_0x2418a_12"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="BOUML_LIFELINE4_0x2418a_12" name="" represents="BOUML_COLLATTR4_0x2418a_12"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="BOUML_LIFELINE5_0x2418a_12" name="" represents="BOUML_COLLATTR5_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND8_0x2418a_12" covered="BOUML_LIFELINE1_0x2418a_12" event="BOUML_SENDEVT1_0x81_22" message="BOUML_MSG8_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC8_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_RECEVT2_0x81_22" message="BOUML_MSG8_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC8_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" start="BOUML_MSGOCCSPECREC8_0x2418a_12" finish="BOUML_EXECOCCSPEC14_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND15_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_SENDEVT3_0x81_22" message="BOUML_MSG15_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC15_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_RECEVT4_0x81_22" message="BOUML_MSG15_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC15_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" start="BOUML_MSGOCCSPECREC15_0x2418a_12" finish="BOUML_EXECOCCSPEC16_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC16_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC15_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC14_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC8_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND10_0x2418a_12" covered="BOUML_LIFELINE1_0x2418a_12" event="BOUML_SENDEVT6_0x81_22" message="BOUML_MSG10_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC10_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_RECEVT7_0x81_22" message="BOUML_MSG10_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC10_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" start="BOUML_MSGOCCSPECREC10_0x2418a_12" finish="BOUML_EXECOCCSPEC17_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC17_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC10_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND12_0x2418a_12" covered="BOUML_LIFELINE1_0x2418a_12" event="BOUML_SENDEVT8_0x81_22" message="BOUML_MSG12_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC12_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_RECEVT9_0x81_22" message="BOUML_MSG12_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC12_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" start="BOUML_MSGOCCSPECREC12_0x2418a_12" finish="BOUML_EXECOCCSPEC18_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND19_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_SENDEVT10_0x81_22" message="BOUML_MSG19_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC19_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_RECEVT11_0x81_22" message="BOUML_MSG19_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC19_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" start="BOUML_MSGOCCSPECREC19_0x2418a_12" finish="BOUML_EXECOCCSPEC21_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND20_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_SENDEVT12_0x81_22" message="BOUML_MSG20_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC20_0x2418a_12" covered="BOUML_LIFELINE3_0x2418a_12" event="BOUML_RECEVT13_0x81_22" message="BOUML_MSG20_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC20_0x2418a_12" covered="BOUML_LIFELINE3_0x2418a_12" start="BOUML_MSGOCCSPECREC20_0x2418a_12" finish="BOUML_EXECOCCSPEC23_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC21_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC19_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC18_0x2418a_12" covered="BOUML_LIFELINE2_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC12_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND22_0x2418a_12" covered="BOUML_LIFELINE3_0x2418a_12" event="BOUML_SENDEVT14_0x81_22" message="BOUML_MSG22_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC22_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_RECEVT15_0x81_22" message="BOUML_MSG22_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC22_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" start="BOUML_MSGOCCSPECREC22_0x2418a_12" finish="BOUML_EXECOCCSPEC1_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC23_0x2418a_12" covered="BOUML_LIFELINE3_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC20_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND2_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_SENDEVT16_0x81_22" message="BOUML_MSG2_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC2_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_RECEVT17_0x81_22" message="BOUML_MSG2_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC2_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" start="BOUML_MSGOCCSPECREC2_0x2418a_12" finish="BOUML_EXECOCCSPEC3_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND4_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_SENDEVT18_0x81_22" message="BOUML_MSG4_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC4_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_RECEVT19_0x81_22" message="BOUML_MSG4_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC4_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" start="BOUML_MSGOCCSPECREC4_0x2418a_12" finish="BOUML_EXECOCCSPEC6_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECSEND5_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_SENDEVT20_0x81_22" message="BOUML_MSG5_0x2418a_12"/>
+					<fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="BOUML_MSGOCCSPECREC5_0x2418a_12" covered="BOUML_LIFELINE5_0x2418a_12" event="BOUML_RECEVT21_0x81_22" message="BOUML_MSG5_0x2418a_12"/>
+					<fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="BOUML_BEHEXECSPEC5_0x2418a_12" covered="BOUML_LIFELINE5_0x2418a_12" start="BOUML_MSGOCCSPECREC5_0x2418a_12" finish="BOUML_EXECOCCSPEC7_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC6_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC4_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC3_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC2_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC7_0x2418a_12" covered="BOUML_LIFELINE5_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC5_0x2418a_12"/>
+					<fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="BOUML_EXECOCCSPEC1_0x2418a_12" covered="BOUML_LIFELINE4_0x2418a_12" event="BOUML_EXECEVT5_0x81_22" execution="BOUML_BEHEXECSPEC22_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG8_0x2418a_12" name="IntroducirFecha(w_f)" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND8_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC8_0x2418a_12" connector="BOUML_CONNECTOR1_2_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG15_0x2418a_12" name="ComprobarValidezFecha ()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND15_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC15_0x2418a_12" connector="BOUML_CONNECTOR2_2_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG10_0x2418a_12" name="IntroducirOrigen(w_ciudad)" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND10_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC10_0x2418a_12" connector="BOUML_CONNECTOR1_2_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG12_0x2418a_12" name="IntroducirDestino(w_ciudad)" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND12_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC12_0x2418a_12" connector="BOUML_CONNECTOR1_2_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG19_0x2418a_12" name="ListarViajesConPrecio()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND19_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC19_0x2418a_12" connector="BOUML_CONNECTOR2_2_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG20_0x2418a_12" name="BuscarViajes()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND20_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC20_0x2418a_12" connector="BOUML_CONNECTOR2_3_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG22_0x2418a_12" name="ObtenerHorarios()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND22_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC22_0x2418a_12" connector="BOUML_CONNECTOR3_4_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG2_0x2418a_12" name="ListarHorariosConPrecios()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND2_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC2_0x2418a_12" connector="BOUML_CONNECTOR4_4_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG4_0x2418a_12" name="CalcularPrecioTrayecto()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND4_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC4_0x2418a_12" connector="BOUML_CONNECTOR4_4_0x2418a_12"/>
+					<message xmi:type="uml:Message" xmi:id="BOUML_MSG5_0x2418a_12" name="ObtenerPrecioHorario()" messageSort="synchCall" messageKind="complete" sendEvent="BOUML_MSGOCCSPECSEND5_0x2418a_12" receiveEvent="BOUML_MSGOCCSPECREC5_0x2418a_12" connector="BOUML_CONNECTOR4_5_0x2418a_12"/>
+				</ownedBehavior>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="BOUML_COLLATTR1_0x2418a_12" name="" type="BOUML_0x2608a_4"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="BOUML_COLLATTR2_0x2418a_12" name="" type="BOUML_0x2610a_4"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="BOUML_COLLATTR3_0x2418a_12" name="" type="BOUML_0x2618a_4"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="BOUML_COLLATTR4_0x2418a_12" name="" type="BOUML_0x2620a_4"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="BOUML_COLLATTR5_0x2418a_12" name="" type="BOUML_0x2628a_4"/>
+			</packagedElement>
+			<packagedElement xmi:type="uml:Actor" name="Usuario" xmi:id="BOUML_0x2608a_4" visibility="package">
+			</packagedElement>
+			<packagedElement xmi:type="uml:Class" name="ListadoViajes" xmi:id="BOUML_0x2610a_4" visibility="package">
+			</packagedElement>
+			<packagedElement xmi:type="uml:Class" name="Viaje" xmi:id="BOUML_0x2618a_4" visibility="package">
+			</packagedElement>
+			<packagedElement xmi:type="uml:Class" name="Trayecto" xmi:id="BOUML_0x2620a_4" visibility="package">
+			</packagedElement>
+			<packagedElement xmi:type="uml:Class" name="Horario" xmi:id="BOUML_0x2628a_4" visibility="package">
+			</packagedElement>
+		</packagedElement>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT14_0x81_22" name="ObtenerHorarios()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_EXECEVT5_0x81_22" name=""/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT11_0x81_22" name="ListarViajesConPrecio()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT8_0x81_22" name="IntroducirDestino(w_ciudad)"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT1_0x81_22" name="IntroducirFecha(w_f)"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT21_0x81_22" name="ObtenerPrecioHorario()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT19_0x81_22" name="CalcularPrecioTrayecto()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT17_0x81_22" name="ListarHorariosConPrecios()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT4_0x81_22" name="ComprobarValidezFecha ()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT18_0x81_22" name="CalcularPrecioTrayecto()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT15_0x81_22" name="ObtenerHorarios()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT7_0x81_22" name="IntroducirOrigen(w_ciudad)"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT3_0x81_22" name="ComprobarValidezFecha ()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT9_0x81_22" name="IntroducirDestino(w_ciudad)"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT6_0x81_22" name="IntroducirOrigen(w_ciudad)"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT13_0x81_22" name="BuscarViajes()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT16_0x81_22" name="ListarHorariosConPrecios()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT12_0x81_22" name="BuscarViajes()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT10_0x81_22" name="ListarViajesConPrecio()"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_RECEVT2_0x81_22" name="IntroducirFecha(w_f)"/>
+		<packagedElement xmi:type="uml:ExecutionEvent" xmi:id="BOUML_SENDEVT20_0x81_22" name="ObtenerPrecioHorario()"/>
+	</uml:Model>
+</xmi:XMI>
