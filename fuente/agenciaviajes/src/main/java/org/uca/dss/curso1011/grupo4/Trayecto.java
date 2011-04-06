@@ -1,0 +1,187 @@
+/*
+ *  Copyright (C) 2011 Manuel Jesús de la Calle Brihuega
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.uca.dss.curso1011.grupo4;
+import org.uca.dss.curso1011.grupo4.Horario;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.lang.Float;
+/**
+ * Clase encargada de representar un trayecto.
+ *
+ * Se identifica con la ciudad origen y destino del mismo, y forma parte de un viaje. Su distancia se mide mediante tramos.
+ *
+ * @author manuel
+ */
+public class Trayecto {
+    private int tramos;
+    //private Ciudad Origen;
+    //private Ciudad Destino;
+    private ArrayList<Horario> Horarios;
+    private Horario HorarioElegido;
+    private float precio;
+    private boolean HorarioSeleccionado;
+
+    //Constructores
+
+    /**
+     *
+     * @param tramos
+     * @param Horarios
+     */
+    public Trayecto(int tramos, /*Ciudad Origen, Ciudad Destino,*/ArrayList<Horario> Horarios){
+        //this.Origen=new Ciudad();
+        //this.Destino=new Ciudad();
+        this.SetTramos(tramos);
+        //this.SetOrigen(Origen);
+        //this.SetDestino(Destino);
+        this.Horarios=new ArrayList();
+        this.SetHorarios(Horarios);
+        this.precio=0;
+        this.HorarioSeleccionado=false;
+    }
+
+    //Métodos de asignación
+
+    private void SetTramos(int valor){
+        this.tramos=valor;
+    }
+    /*
+    private void SetOrigen(Ciudad valor){
+        this.Origen=valor;
+    }
+
+    private void SetDestino(Ciudad valor){
+        this.Destino=valor;
+    }*/
+
+    private void SetHorarios(ArrayList<Horario> valor){
+        this.Horarios=valor;
+    }
+
+    private void SetHorarioElegido(Horario valor){
+        this.HorarioElegido=new Horario(valor);
+    }
+
+    private void SetPrecio(float valor){
+        this.precio=valor;
+    }
+
+    //Métodos consultores
+
+    /**
+     * Método consultor de tramos
+     *
+     * Devuelve el número de tramos que forman el trayecto.
+     *
+     * @return número de tramos del trayecto
+     */
+    public int GetTramos(){
+        return this.tramos;
+    }
+
+    /*
+    public Ciudad GetOrigen(){
+       return this.Origen;
+    }
+
+    public Ciudad GetDestino(){
+       return this.Destino;
+    }*/
+
+    /**
+     * Método consultor de horarios.
+     * 
+     * Devuelve un conjunto de horarios, que son los previstos para el trayecto.
+     * 
+     * @return lista de horarios disponibles para el trayecto.
+     */
+    public ArrayList<Horario> ListarHorarios(){
+        return this.Horarios;
+    }
+
+    /**
+     * Método consultor del horario elegido.
+     *
+     * Devuelve el horario elegido por el usuario para realizar el trayecto.
+     *
+     * @return horario elegido para el trayecto
+     */
+    public Horario GetHorarioElegido(){
+        if(this.HorarioSeleccionado)
+            return this.HorarioElegido;
+        else
+            //Lanzamos excepcion
+    }
+
+    /**
+     * Método consultor del precio
+     *
+     * Devuelve el precio que tiene el trayecto.
+     *
+     * @return precio del trayecto
+     */
+    public Float GetPrecio(){
+        return this.precio;
+    }
+
+    //Otros métodos
+    /**
+     * Método que calcula el precio para un horario dado
+     *
+     * Calcula y devuelve dicho precio, en función del coste por tramo del tren asociado al horario que recibe por parámetro.
+     *
+     * @param HorarioElegido horario del que queremos calcular su precio
+     * @return precio para el horario introducido por parámetro
+     */
+    public Float CalcularPrecioTrayecto(Horario HorarioElegido){
+    //  int CostePorTramo=HorarioElegido.GetTren().GetCoste();
+        int NumTramos=this.GetTramos();
+        return CostePorTramo*NumTramos;
+    }
+
+    /**
+     * Selecciona el horario que el usuario ha elegido de entre todos, para realizar el trayecto.
+     * @param HorarioElegido horario elegido por el usuario
+     */
+    public void SeleccionarHorario(Horario HorarioElegido){
+        this.SetHorarioElegido(HorarioElegido);
+        this.HorarioSeleccionado=true;
+    }
+
+    /**
+     * Método consultor de horarios con precios asociados
+     *
+     * Lista y devuelve un conjunto de pares horario-precio, es decir, la lista de horarios disponibles para el trayecto y su precio asociado.
+     *
+     * @return conjunto de pares horario-precio
+     */
+    public Map<Horario, Float> ListarHorariosConPrecios(){
+        Map<Horario, Float> mapa= new HashMap<Horario, Float>();
+        for(int i=0; i<this.GetHorarios().size(); i++){
+            Horario h=new Horario(this.GetHorarios().get(i));
+            Float PrecioParcial=this.CalcularPrecioTrayecto(h);
+            mapa.put(h, PrecioParcial);
+        }
+        return mapa;
+
+    }
+
+
+}

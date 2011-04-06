@@ -22,8 +22,7 @@ import org.joda.time.LocalTime;
 /**
  * Representa el horario previsto para un viaje en el sistema.
  *
- * Clase encargada de representar el horario de viaje previsto para un tren en el
- * sistema. Describe tanto la hora de salida como la hora de llegada del mismo.
+ * Describe tanto la hora de salida como la hora de llegada del mismo.
  *
  * @author Manuel Jesús de la Calle Brihuega
  */
@@ -37,7 +36,9 @@ public class Horario {
 
     // Constructores
     /**
-     * Construye un objeto de la clase Horario
+     * Constructor
+     *
+     * Construye un objeto de la clase Horario recibiendo como parámetros los atributos del objeto.
      *
      * @param salida hora de salida del viaje
      * @param llegada hora de llegada del viaje
@@ -52,7 +53,20 @@ public class Horario {
         //Aqui falta el tren
     }
 
-
+    /**
+     * Constructor de copia
+     *
+     * Construye un objeto de la clase Horario recibiendo como parámetro otro objeto Horario.
+     * @param valor objeto del que se realizará una copia
+     */
+    public Horario(Horario valor){
+        this.hora_llegada=new LocalTime();
+        this.hora_salida=new LocalTime();
+        this.SetHoraSalida(valor.GetHoraSalida());
+        this.SetHoraLlegada(valor.GetHoraLlegada());
+        this.SetAsientosDisponibles(valor.GetAsientosDisponibles());
+        //Falta el tren
+    }
     //Métodos de asignación
 
     private void SetHoraSalida(LocalTime valor){
@@ -83,7 +97,8 @@ public class Horario {
     // Métodos 'Get'
 
     /**
-     * Método consultor que devuelve el número de asientos disponibles para el horario
+     * Método consultor de disponibilidad.
+     * Devuelve el número de asientos disponibles para el horario
      *
      * @return número de asientos disponibles
      */
@@ -112,9 +127,9 @@ public class Horario {
     //Otros métodos
 
     /**
-     * Decrementa o incrementa el número de asientos disponibles.
+     * Actualiza el número de asientos libres para el horario.
      *
-     * Actualiza el número de asientos libres para el horario, decrementando o incrementando el atributo asientos_disponibles con el número de asientos reservados o cancelados(parámetro 'asientos_reservados').
+     * Decrementa o incremedecrementa el atributo asientos_disponibles con el número de asientos reservados o cancelados(parámetro 'asientos_reservados').
      *
      * @param asientos_reservados numero de asientos a decrementar (reservados).
      */
@@ -135,7 +150,7 @@ public class Horario {
     /**
      * Comprueba la disponibilidad del viaje.
      *
-     * Comprueba si existen asientos disponibles para el horario. Devuelve un booleano indicando su resultado.
+     * Revisa si existen asientos disponibles para el horario. Devuelve un booleano indicando su resultado.
      *
      * @return booleano que verifica la disponibildad o no de asientos
      */
