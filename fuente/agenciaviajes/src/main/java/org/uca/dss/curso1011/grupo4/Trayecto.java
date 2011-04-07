@@ -19,7 +19,6 @@ package org.uca.dss.curso1011.grupo4;
 import org.uca.dss.curso1011.grupo4.Horario;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Iterator;
 import java.util.HashMap;
 import java.lang.Float;
 /**
@@ -51,9 +50,22 @@ public class Trayecto {
         this.SetTramos(tramos);
         //this.SetOrigen(Origen);
         //this.SetDestino(Destino);
-        this.Horarios=new ArrayList();
+        
         this.SetHorarios(Horarios);
-        this.precio=0;
+        this.SetPrecio(0);
+        this.HorarioSeleccionado=false;
+    }
+
+    // Constructor de copia
+
+    public Trayecto(Trayecto valor){
+
+        this.SetTramos(valor.GetTramos());
+        //this.SetOrigen(valor.GetOrigen());
+        //this.SetDestino(valor.GetDestino());
+
+        this.SetHorarios(valor.ListarHorarios());
+        this.SetPrecio(valor.GetPrecio());
         this.HorarioSeleccionado=false;
     }
 
@@ -77,6 +89,7 @@ public class Trayecto {
 
     private void SetHorarioElegido(Horario valor){
         this.HorarioElegido=new Horario(valor);
+        this.SetPrecio(this.CalcularPrecioTrayecto(valor));
     }
 
     private void SetPrecio(float valor){
@@ -124,10 +137,18 @@ public class Trayecto {
      * @return horario elegido para el trayecto
      */
     public Horario GetHorarioElegido(){
-        if(this.HorarioSeleccionado)
+        if(this.HorarioSeleccionado){
             return this.HorarioElegido;
-        else
-            //Lanzamos excepcion
+        }else{
+            try{
+                return this.HorarioElegido;
+            }catch(NullPointerException e){
+                System.out.println("No se ha seleccionado aún ningun horario");
+            }catch(Exception e){
+                System.out.println("Se ha producido un error");
+            }
+            return null;
+        }
     }
 
     /**
@@ -174,8 +195,8 @@ public class Trayecto {
      */
     public Map<Horario, Float> ListarHorariosConPrecios(){
         Map<Horario, Float> mapa= new HashMap<Horario, Float>();
-        for(int i=0; i<this.GetHorarios().size(); i++){
-            Horario h=new Horario(this.GetHorarios().get(i));
+        for(int i=0; i<this.ListarHorarios().size(); i++){
+            Horario h=new Horario(this.ListarHorarios().get(i));
             Float PrecioParcial=this.CalcularPrecioTrayecto(h);
             mapa.put(h, PrecioParcial);
         }
