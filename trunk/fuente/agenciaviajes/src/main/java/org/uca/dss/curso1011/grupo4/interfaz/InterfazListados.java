@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.uca.dss.agenciaviajes.interfaz;
+package org.uca.dss.interfaz;
 
 import java.util.List;
 import org.joda.time.LocalDate;

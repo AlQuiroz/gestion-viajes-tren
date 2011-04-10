@@ -32,7 +32,7 @@ public class Horario {
     private int asientos_disponibles;
     private LocalTime hora_llegada;
     private LocalTime hora_salida;
-    //private Tren tren;
+    private Tren tren;
 
     // Constructores
     /**
@@ -44,13 +44,13 @@ public class Horario {
      * @param llegada hora de llegada del viaje
      * @param asientos asientos disponibles para el viaje
      */
-    public Horario(LocalTime salida, LocalTime llegada, int asientos/*, Tren tren*/){
+    public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren){
         this.hora_llegada=new LocalTime();
         this.hora_salida=new LocalTime();
         this.SetHoraSalida(salida);
         this.SetHoraLlegada(llegada);
         this.SetAsientosDisponibles(asientos);
-        //Aqui falta el tren
+        this.SetTren(tren);
     }
 
     /**
@@ -65,7 +65,7 @@ public class Horario {
         this.SetHoraSalida(valor.GetHoraSalida());
         this.SetHoraLlegada(valor.GetHoraLlegada());
         this.SetAsientosDisponibles(valor.GetAsientosDisponibles());
-        //Falta el tren
+        this.SetTren(valor.GetTren());
     }
     //Métodos de asignación
 
@@ -88,11 +88,11 @@ public class Horario {
         }
 
     }
-    /*
+    
     private void SetTren(Tren valor){
         this.tren=valor;
     }
-     */
+     
 
     // Métodos 'Get'
 
@@ -104,6 +104,11 @@ public class Horario {
      */
     public int GetAsientosDisponibles(){
         return this.asientos_disponibles;
+    }
+
+
+    public Tren GetTren(){
+        return this.tren;
     }
 
     /**
@@ -160,9 +165,9 @@ public class Horario {
         else
             return false;
     }
-    /*
+    
     public float ObtenerPrecioHorario(){
-      A expensas de la creación de tren
+        return this.GetTren().getCostetramo();
     }
-    */
+    
 }

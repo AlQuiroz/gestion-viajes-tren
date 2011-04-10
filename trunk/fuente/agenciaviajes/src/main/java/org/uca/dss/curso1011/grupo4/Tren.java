@@ -8,50 +8,50 @@ package org.uca.dss.curso1011.grupo4;
 /**
  * Clase que representa los trenes del sistema.
  *
- * Son los trenes que realizaran los viajes de nuestra aplicación.
+ * Son los trenes que realizaran los viajes de nuestra aplicaciï¿½n.
  *
  * @author migue
  */
 public class Tren {
     public Tren(int asientos, float costetramo, String tipo, String nombre){
-        this._numasiento = asientos;
-        this._costetramo = costetramo;
-        this._tipo = tipo;
-        this._nombre = nombre;
+        this.numasiento = asientos;
+        this.costetramo = costetramo;
+        this.tipo = tipo;
+        this.nombre = nombre;
     };
         /**
      * @return the _numasiento
      */
     public int getNumasiento() {
-        return _numasiento;
+        return numasiento;
     }
 
     /**
      * @return the _costetramo
      */
     public float getCostetramo() {
-        return _costetramo;
+        return costetramo;
     }
 
     /**
      * @return the _tipo
      */
     public String getTipo() {
-        return _tipo;
+        return tipo;
     }
 
     /**
      * @return the _nombre
      */
     public String getNombre() {
-        return _nombre;
+        return nombre;
     }
 
     private
 
-    int _numasiento;
-    private float _costetramo;
-    private String _tipo;
-    private String _nombre;
+    int numasiento;
+    private float costetramo;
+    private String tipo;
+    private String nombre;
 
 }

@@ -31,7 +31,7 @@ import java.util.Map;
 public class Viaje {
     private Float precio_final;
     private LocalDate fecha;
-    //private ArrayList<Reserva> Reservas;
+    private ArrayList<Reserva> Reservas;
     private Trayecto trayecto;
 
     //Constructor
@@ -44,13 +44,13 @@ public class Viaje {
      * @param fecha fecha prevista para el viaje
      * @param trayecto trayecto que compone el viaje
      */
-    public Viaje(LocalDate fecha, Trayecto trayecto/*, ArrayList<Reserva> Reservas*/){
+    public Viaje(LocalDate fecha, Trayecto trayecto, ArrayList<Reserva> Reservas){
         this.fecha=new LocalDate();
         this.SetFecha(fecha);
 
         this.SetTrayecto(trayecto);
 
-        //this.SetReservas(Reservas);
+        this.SetReservas(Reservas);
         this.CalcularPrecioViaje();
     }
 
@@ -63,10 +63,10 @@ public class Viaje {
     private void SetTrayecto(Trayecto valor){
         this.trayecto=new Trayecto(valor);
     }
-    /*
+    
     private void SetReservas(ArrayList<Reserva> valor){
         this.Reservas=valor;
-    }*/
+    }
 
     private void SetPrecio(Float valor){
         this.precio_final=valor;
@@ -95,10 +95,10 @@ public class Viaje {
     public Trayecto GetTrayecto(){
         return this.trayecto;
     }
-    /*
+    
     public ArrayList<Reserva> GetReservas(){
         return this.Reservas;
-    }*/
+    }
 
     /**
      * Método consultor del precio

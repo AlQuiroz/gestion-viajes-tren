@@ -30,8 +30,8 @@ import java.lang.Float;
  */
 public class Trayecto {
     private int tramos;
-    //private Ciudad Origen;
-    //private Ciudad Destino;
+    private Ciudad Origen;
+    private Ciudad Destino;
     private ArrayList<Horario> Horarios;
     private Horario HorarioElegido;
     private float precio;
@@ -44,12 +44,12 @@ public class Trayecto {
      * @param tramos
      * @param Horarios
      */
-    public Trayecto(int tramos, /*Ciudad Origen, Ciudad Destino,*/ArrayList<Horario> Horarios){
-        //this.Origen=new Ciudad();
-        //this.Destino=new Ciudad();
+    public Trayecto(int tramos, Ciudad Origen, Ciudad Destino, ArrayList<Horario> Horarios){
+        
+        
         this.SetTramos(tramos);
-        //this.SetOrigen(Origen);
-        //this.SetDestino(Destino);
+        this.SetOrigen(Origen);
+        this.SetDestino(Destino);
         
         this.SetHorarios(Horarios);
         this.SetPrecio(0);
@@ -61,8 +61,8 @@ public class Trayecto {
     public Trayecto(Trayecto valor){
 
         this.SetTramos(valor.GetTramos());
-        //this.SetOrigen(valor.GetOrigen());
-        //this.SetDestino(valor.GetDestino());
+        this.SetOrigen(valor.GetOrigen());
+        this.SetDestino(valor.GetDestino());
 
         this.SetHorarios(valor.ListarHorarios());
         this.SetPrecio(valor.GetPrecio());
@@ -74,14 +74,14 @@ public class Trayecto {
     private void SetTramos(int valor){
         this.tramos=valor;
     }
-    /*
+    
     private void SetOrigen(Ciudad valor){
         this.Origen=valor;
     }
 
     private void SetDestino(Ciudad valor){
         this.Destino=valor;
-    }*/
+    }
 
     private void SetHorarios(ArrayList<Horario> valor){
         this.Horarios=valor;
@@ -109,14 +109,14 @@ public class Trayecto {
         return this.tramos;
     }
 
-    /*
+    
     public Ciudad GetOrigen(){
        return this.Origen;
     }
 
     public Ciudad GetDestino(){
        return this.Destino;
-    }*/
+    }
 
     /**
      * Método consultor de horarios.
@@ -172,7 +172,7 @@ public class Trayecto {
      * @return precio para el horario introducido por parámetro
      */
     public Float CalcularPrecioTrayecto(Horario HorarioElegido){
-    //  int CostePorTramo=HorarioElegido.GetTren().GetCoste();
+        float CostePorTramo=HorarioElegido.GetTren().getCostetramo();
         int NumTramos=this.GetTramos();
         return CostePorTramo*NumTramos;
     }
