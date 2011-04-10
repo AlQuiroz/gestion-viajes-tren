@@ -19,12 +19,39 @@ public class Tren {
         this._tipo = tipo;
         this._nombre = nombre;
     };
+        /**
+     * @return the _numasiento
+     */
+    public int getNumasiento() {
+        return _numasiento;
+    }
+
+    /**
+     * @return the _costetramo
+     */
+    public float getCostetramo() {
+        return _costetramo;
+    }
+
+    /**
+     * @return the _tipo
+     */
+    public String getTipo() {
+        return _tipo;
+    }
+
+    /**
+     * @return the _nombre
+     */
+    public String getNombre() {
+        return _nombre;
+    }
 
     private
 
     int _numasiento;
-    float _costetramo;
-    String _tipo;
-    String _nombre;
+    private float _costetramo;
+    private String _tipo;
+    private String _nombre;
 
 }

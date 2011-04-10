@@ -19,16 +19,31 @@ public class Ciudad {
         this._provincia = provincia;
         this._pais = pais;
     };
-
+/**
+ * Método observador
+ *
+ * Devuelve el nombre de la ciudad.
+ * @return nombre de la ciudad
+ */
 
     public String getNombre() {
         return _nombre;
     }
-
+/**
+ * Método observador
+ *
+ * Devuelve la provincia de la ciudad
+ * @return provincia
+ */
     public String getProvincia() {
         return _provincia;
     }
-
+/**
+ * Método observador
+ *
+ * Devuelve el país de la ciudad
+ * @return País de la ciudad
+ */
     public String getPais() {
         return _pais;
     }
