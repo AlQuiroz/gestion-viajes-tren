@@ -8,48 +8,48 @@ package org.uca.dss.curso1011.grupo4;
 /**
  * Clase que representa las Ciudades del sistema.
  *
- * Son las ciudades a las cuales un tren tiene estación y para en ella.
+ * Son las ciudades a las cuales un tren tiene estaciï¿½n y para en ella.
  *
  * @author migue
  */
 public class Ciudad {
     
     public Ciudad(String nombre, String provincia, String pais){
-        this._nombre = nombre;
-        this._provincia = provincia;
-        this._pais = pais;
+        this.nombre = nombre;
+        this.provincia = provincia;
+        this.pais = pais;
     };
 /**
- * Método observador
+ * Mï¿½todo observador
  *
  * Devuelve el nombre de la ciudad.
  * @return nombre de la ciudad
  */
 
     public String getNombre() {
-        return _nombre;
+        return nombre;
     }
 /**
- * Método observador
+ * Mï¿½todo observador
  *
  * Devuelve la provincia de la ciudad
  * @return provincia
  */
     public String getProvincia() {
-        return _provincia;
+        return provincia;
     }
 /**
- * Método observador
+ * Mï¿½todo observador
  *
- * Devuelve el país de la ciudad
- * @return País de la ciudad
+ * Devuelve el paï¿½s de la ciudad
+ * @return Paï¿½s de la ciudad
  */
     public String getPais() {
-        return _pais;
+        return pais;
     }
 
     private
-    String _nombre;
-    String _provincia;
-    String _pais;
+    String nombre;
+    String provincia;
+    String pais;
 }
