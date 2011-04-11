@@ -14,9 +14,8 @@ package org.uca.dss.curso1011.grupo4;
  */
 public class Ciudad {
     
-    public Ciudad(String nombre, String provincia, String pais){
+    public Ciudad(String nombre, String pais){
         this.nombre = nombre;
-        this.provincia = provincia;
         this.pais = pais;
     };
 /**
@@ -29,15 +28,7 @@ public class Ciudad {
     public String getNombre() {
         return nombre;
     }
-/**
- * M�todo observador
- *
- * Devuelve la provincia de la ciudad
- * @return provincia
- */
-    public String getProvincia() {
-        return provincia;
-    }
+
 /**
  * M�todo observador
  *
@@ -50,6 +41,5 @@ public class Ciudad {
 
     private
     String nombre;
-    String provincia;
     String pais;
 }
