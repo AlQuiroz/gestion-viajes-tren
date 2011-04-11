@@ -13,12 +13,17 @@ package org.uca.dss.curso1011.grupo4;
  * @author migue
  */
 public class Tren {
-    public Tren(int asientos, float costetramo, String tipo, String nombre){
+    public Tren(int asientos, float costetramo, String nombre){
         this.numasiento = asientos;
         this.costetramo = costetramo;
-        this.tipo = tipo;
         this.nombre = nombre;
-    };
+    }
+
+    public Tren(Tren valor){
+        this.numasiento= valor.getNumasiento();
+        this.costetramo= valor.getCostetramo();
+        this.nombre= valor.getNombre();
+    }
         /**
      * @return the _numasiento
      */
@@ -33,12 +38,6 @@ public class Tren {
         return costetramo;
     }
 
-    /**
-     * @return the _tipo
-     */
-    public String getTipo() {
-        return tipo;
-    }
 
     /**
      * @return the _nombre
@@ -51,7 +50,6 @@ public class Tren {
 
     int numasiento;
     private float costetramo;
-    private String tipo;
     private String nombre;
 
 }
