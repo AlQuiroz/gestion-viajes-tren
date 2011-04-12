@@ -20,7 +20,18 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>source.db4o</id>
+            <url>http://source.db4o.com/maven</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>com.db4o</groupId>
+            <artifactId>db4o-full-java5</artifactId>
+            <version>7.13-SNAPSHOT</version>
+        </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
