@@ -66,10 +66,29 @@ public class ListadoViajes {
         }
    }
 
+   public ListadoViajes(ListadoViajes valor){
+       this.fecha=new LocalDate(valor.GetFecha());
+       this.origen=new Ciudad(valor.GetOrigen());
+       this.destino=new Ciudad(valor.GetDestino());
+       this.Viajes=new ArrayList<Viaje>();
+       this.Viajes=valor.GetViajes();
+   }
+
+   public Ciudad GetOrigen(){
+       return this.origen;
+   }
+
+   public Ciudad GetDestino(){
+       return this.destino;
+   }
+
    public ArrayList<Viaje> GetViajes(){
        return this.Viajes;
    }
 
+   public LocalDate GetFecha(){
+       return this.fecha;
+   }
    private void SetFecha(LocalDate valor){
        this.fecha=valor;
    }
