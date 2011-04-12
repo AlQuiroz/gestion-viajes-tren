@@ -53,10 +53,12 @@ public class ListadoViajes {
                 int j=0;
                 while(j<trayectos.get(i).ListarHorarios().size()){
                     Trayecto trayecto_=new Trayecto(trayectos.get(i));
-                    trayecto_.SeleccionarHorario(trayectos.get(i).ListarHorarios().get(j));
+                    trayecto_.SetHorarioElegido(trayecto_.ListarHorarios().get(j));
                     Viaje viaje_=new Viaje(fecha, trayecto_);
-                    Viajes.add(viaje_);
-                    System.out.println("Construyendo horarios"+trayectos.get(i).GetHorarioElegido().GetHoraLlegada().toString());
+                    if(!Viajes.add(viaje_)){
+                        System.out.println("Error al cargar el viaje");
+                    }
+                    
                     j=j+1;
                 }
             }
