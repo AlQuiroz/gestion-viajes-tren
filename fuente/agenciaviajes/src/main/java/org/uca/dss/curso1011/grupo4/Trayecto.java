@@ -65,7 +65,9 @@ public class Trayecto {
 
         this.SetHorarios(valor.ListarHorarios());
         this.SetPrecio(valor.GetPrecio());
-        this.HorarioSeleccionado=false;
+        if(valor.HorarioSeleccionado){
+            this.SetHorarioElegido(valor.GetHorarioElegido());
+        }
     }
 
     //Métodos de asignación
@@ -88,10 +90,15 @@ public class Trayecto {
         this.Horarios=valor;
     }
 
-    private void SetHorarioElegido(Horario valor){
+    /**
+     * Selecciona el horario que el usuario ha elegido de entre todos, para realizar el trayecto.
+     * @param Horario horario elegido por el usuario
+     */
+    public void SetHorarioElegido(Horario valor){
+        this.HorarioSeleccionado=true;
         this.HorarioElegido=new Horario(valor);
         this.SetPrecio(this.CalcularPrecioTrayecto(valor));
-        this.HorarioSeleccionado=true;
+        
     }
 
     private void SetPrecio(float valor){
@@ -180,14 +187,7 @@ public class Trayecto {
         return CostePorTramo*NumTramos;
     }
 
-    /**
-     * Selecciona el horario que el usuario ha elegido de entre todos, para realizar el trayecto.
-     * @param HorarioElegido horario elegido por el usuario
-     */
-    public void SeleccionarHorario(Horario HorarioElegido){
-        this.SetHorarioElegido(HorarioElegido);
-        this.HorarioSeleccionado=true;
-    }
+    
 
     /**
      * Método consultor de horarios con precios asociados

@@ -56,7 +56,7 @@ public class Viaje {
     //Métodos de asignación
 
     private void SetFecha(LocalDate valor){
-        this.fecha=valor;
+        this.fecha=new LocalDate(valor);
     }
 
     private void SetTrayecto(Trayecto valor){
