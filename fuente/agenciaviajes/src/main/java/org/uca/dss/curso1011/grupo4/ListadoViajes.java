@@ -97,7 +97,9 @@ public class ListadoViajes {
        int i=0;
        while(i<this.GetViajes().size()){
            if(this.GetViajes().get(i).GetTrayecto().GetHorarioElegido().ComprobarDisponibilidad()){
-               listado.add(this.GetViajes().get(i));
+               if(!listado.add(this.GetViajes().get(i))){
+                   System.out.println("Error al crear el listado");
+               }
            }
            i=i+1;
        }
