@@ -45,8 +45,7 @@ public class Horario {
      * @param asientos asientos disponibles para el viaje
      */
     public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren){
-        this.hora_llegada=new LocalTime();
-        this.hora_salida=new LocalTime();
+  
         this.SetHoraSalida(salida);
         this.SetHoraLlegada(llegada);
         this.SetAsientosDisponibles(asientos);
@@ -60,8 +59,6 @@ public class Horario {
      * @param valor objeto del que se realizará una copia
      */
     public Horario(Horario valor){
-        this.hora_llegada=new LocalTime();
-        this.hora_salida=new LocalTime();
         this.SetHoraSalida(valor.GetHoraSalida());
         this.SetHoraLlegada(valor.GetHoraLlegada());
         this.SetAsientosDisponibles(valor.GetAsientosDisponibles());
@@ -70,11 +67,11 @@ public class Horario {
     //Métodos de asignación
 
     private void SetHoraSalida(LocalTime valor){
-        this.hora_salida=valor;
+        this.hora_salida=new LocalTime(valor);
     }
 
     private void SetHoraLlegada(LocalTime valor){
-        this.hora_llegada=valor;
+        this.hora_llegada=new LocalTime(valor);
     }
 
     private void SetAsientosDisponibles(int valor){
@@ -90,7 +87,7 @@ public class Horario {
     }
     
     private void SetTren(Tren valor){
-        this.tren=valor;
+        this.tren=new Tren(valor);
     }
      
 

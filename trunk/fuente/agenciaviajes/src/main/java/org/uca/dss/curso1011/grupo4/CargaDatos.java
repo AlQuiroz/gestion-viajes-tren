@@ -35,37 +35,44 @@ public class CargaDatos {
         try{
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
+            this.TrenesCargados= new ArrayList<Tren>();
             while ((nextLine = readerTrenes.readNext ()) != null ) {
                 //Aqui vamos cargando los trenes
                 String nombreTren= nextLine[0];
                 String asientos= nextLine[1];
                 String precio= nextLine[2];
-                float precioConvertido=Float.valueOf(precio).floatValue();
+                float precioConvertido=Float.valueOf(precio.trim()).floatValue();
                 int asientosConvertido=Integer.parseInt(asientos.trim());
-                this.TrenesCargados.add(new Tren(asientosConvertido, precioConvertido, nombreTren));
+                Tren tren= new Tren(asientosConvertido, precioConvertido, nombreTren.trim());
+                if(!this.TrenesCargados.add(tren)){
+                    System.out.println("Error al introducir tren" + nombreTren);
+                }
             }
 
         }catch(Exception e){
-                System.out.println("Se ha producido un error de lectura en el fichero de trenes");
+
+                System.out.println("Se ha producido un error de lectura en el fichero de trenes: " + e.getMessage());
        }
 
         try{
             CSVReader readerTrayectos=new CSVReader(new FileReader(ArchivoTrayectos));
             String [] nextLineTrayectos;
+            this.TrayectosCargados=new ArrayList<Trayecto>();
             while ((nextLineTrayectos = readerTrayectos.readNext ()) != null ) {
                 //Aqui vamos cargando los trayectos
                 String nombre=nextLineTrayectos[0];
                 String ciudadOrigen= nextLineTrayectos[1];
                 String ciudadDestino=nextLineTrayectos[2];
                 String tramos=nextLineTrayectos[3];
-                Tren tren=new Tren(this.GetTren(nombre));
-                Ciudad origen= new Ciudad(ciudadOrigen, "España");
-                Ciudad destino= new Ciudad(ciudadDestino, "España");
+                Tren tren=new Tren(this.GetTren(nombre.trim()));
+                Ciudad origen= new Ciudad(ciudadOrigen.trim(), "España");
+                Ciudad destino= new Ciudad(ciudadDestino.trim(), "España");
                 int numtramos=Integer.parseInt(tramos.trim());
                 int i=4;
                 ArrayList<Horario> horariosTrayecto=new ArrayList<Horario>();
-                while(!nextLineTrayectos[i].isEmpty()){
-
+                
+                while(i<nextLineTrayectos.length){
+                    
                     String horaSalida=nextLineTrayectos[i];
                     LocalTime salida=this.StringToLocaltime(horaSalida);
                     i=i+1;
@@ -73,42 +80,39 @@ public class CargaDatos {
                     LocalTime llegada=this.StringToLocaltime(horaLlegada);
                     i=i+1;
                     Horario h=new Horario(salida, llegada, tren.getNumasiento(), tren);
-                    horariosTrayecto.add(h);
+                    
+                    if(!horariosTrayecto.add(h)){
+                        System.out.println("Error al introducir horario en trayecto");
+                    }
+                    
                 }
-                this.TrayectosCargados.add(new Trayecto(numtramos, origen, destino, horariosTrayecto));
+                
+                Trayecto trayecto_= new Trayecto(numtramos, origen, destino, horariosTrayecto);
+                
+                if(!this.TrayectosCargados.add(trayecto_)){
+                    System.out.println("Error al introducir trayecto");
+                }
             }
 
         }catch(Exception e){
-                System.out.println("Se ha producido un error de lectura en el fichero de trayectos");
+                System.out.println("Se ha producido un error de lectura en el fichero de trayectos: " + e.getMessage());
        }
     }
 
     private LocalTime StringToLocaltime(String valor){
-        int i=0;
-        String hora=new String();
-        String minutos=new String();
-        char hora_[]= new char[2];
-        char minutos_[]= new char[2];
-        while(valor.charAt(i)!=':'){
-            hora_[i]=valor.charAt(i);
-            i=i+1;
-        }
-        hora.valueOf(hora_);
-        i=i+1;
-        minutos_[0]=valor.charAt(i);
-        i=i+1;
-        minutos_[1]=valor.charAt(i);
-        minutos.valueOf(minutos_);
-        int horasInt=Integer.parseInt(hora.trim());
-        int minutosInt=Integer.parseInt(minutos.trim());
+
+        String [] vector= valor.split(":");
+        
+        int horasInt=Integer.parseInt(vector[0].trim());
+        int minutosInt=Integer.parseInt(vector[1].trim());
         return new LocalTime(horasInt,minutosInt);
     }
 
     public Tren GetTren(String nombre){
         int i=0, j=0;
         Tren t;
-        while(!this.TrenesCargados.isEmpty()){
-            if(this.TrenesCargados.get(i).getNombre()==nombre){
+        while(i<this.TrenesCargados.size()){
+            if(this.TrenesCargados.get(i).getNombre().equalsIgnoreCase(nombre)){
                 j= i;
             }
             i=i+1;
@@ -116,4 +120,12 @@ public class CargaDatos {
         t=new Tren(this.TrenesCargados.get(j));
         return t;
     }
+    public ArrayList<Tren> GetTrenesCargados(){
+        return this.TrenesCargados;
+    }
+    
+    public ArrayList<Trayecto> GetTrayectosCargados(){
+        return this.TrayectosCargados;
+    }
+
 }
