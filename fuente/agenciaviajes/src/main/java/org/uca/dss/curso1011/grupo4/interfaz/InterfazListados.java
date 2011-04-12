@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.uca.dss.interfaz;
+package org.uca.dss.curso1011.grupo4.interfaz;
 
 import java.util.List;
 import org.joda.time.LocalDate;
