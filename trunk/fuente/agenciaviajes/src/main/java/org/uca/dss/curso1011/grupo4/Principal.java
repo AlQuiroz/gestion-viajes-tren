@@ -4,11 +4,15 @@
  */
 
 package org.uca.dss.curso1011.grupo4;
+import org.uca.dss.curso1011.grupo4.interfaz.InterfazListados;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
+import java.util.List;
+import java.util.LinkedList;
 
 /**
  *
@@ -50,8 +54,15 @@ public class Principal {
         Map<Viaje, Float> lista=new HashMap<Viaje, Float>();
         lista=l.ListarViajesConPrecio();
         System.out.println("Fin de la aplicación");
+        List<LocalTime> listilla= new LinkedList<LocalTime>();
+        AdaptadorListado ll=new AdaptadorListado(c);
 
-        
+        listilla=ll.getHorarios("sevilla", "valencia", new LocalDate(2011, 8, 8));
+        int o=0;
+        while(o<listilla.size()){
+            System.out.println("Hora salida del Viaje "+o+": "+listilla.get(o).toString());
+            o=o+1;
+        }
         
 
     }

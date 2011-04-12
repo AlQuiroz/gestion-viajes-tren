@@ -99,6 +99,12 @@ public class CargaDatos {
        }
     }
 
+    public CargaDatos(CargaDatos valor){
+        this.TrenesCargados= new ArrayList<Tren>();
+        this.TrayectosCargados=new ArrayList<Trayecto>();
+        this.TrayectosCargados=valor.GetTrayectosCargados();
+        this.TrenesCargados=valor.GetTrenesCargados();
+    }
     private LocalTime StringToLocaltime(String valor){
 
         String [] vector= valor.split(":");
