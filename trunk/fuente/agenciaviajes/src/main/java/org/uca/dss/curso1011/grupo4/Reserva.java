@@ -30,12 +30,6 @@ public class Reserva {
         return num_asientos;
     }
 
-    /**
-     * @param num_asientos the _num_asientos to set
-     */
-    public void setNum_asientos(int num_asientos) {
-        this.num_asientos = num_asientos;
-    }
 
     /**
      * @return the _fecha_reserva
@@ -44,12 +38,6 @@ public class Reserva {
         return fecha_reserva;
     }
 
-    /**
-     * @param fecha_reserva the _fecha_reserva to set
-     */
-    public void setFecha_reserva(LocalDate fecha_reserva) {
-        this.fecha_reserva = fecha_reserva;
-    }
 
     /**
      * @return the _id_reserva
@@ -58,12 +46,7 @@ public class Reserva {
         return id_reserva;
     }
 
-    /**
-     * @param id_reserva the _id_reserva to set
-     */
-    public void setId_reserva(int id_reserva) {
-        this.id_reserva = id_reserva;
-    }
+
 
     /**
      * @return the _viaje
@@ -72,12 +55,6 @@ public class Reserva {
         return viaje;
     }
 
-    /**
-     * @param viaje the _viaje to set
-     */
-    public void setViaje(Viaje viaje) {
-        this.viaje = viaje;
-    }
 ;
     private
     int num_asientos;

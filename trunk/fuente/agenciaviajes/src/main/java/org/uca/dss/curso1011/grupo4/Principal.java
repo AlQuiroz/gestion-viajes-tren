@@ -21,7 +21,7 @@ public class Principal {
      */
     public static void main(String[] args) {
         //Pruebas de funcionamiento
-        CargaDatos c=new CargaDatos("/home/manuel/Escritorio/DSS/gestion-viajes-tren/fuente/agenciaviajes/src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "/home/manuel/Escritorio/DSS/gestion-viajes-tren/fuente/agenciaviajes/src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
+        CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
         
         LocalDate fecha=new LocalDate(2011, 10, 20);
         Ciudad origen=new Ciudad("cádiz", "España");
