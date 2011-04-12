@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.uca.dss.agenciaviajes.interfaz;
+package org.uca.dss.curso1011.grupo4.interfaz;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -39,7 +39,7 @@ public interface InterfazCompras {
      * @return cadena que identifica a la reserva. Puede ser cualquier cadena
      *
      */
-    public void reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora);
+    public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora);
     /**
      * Cancela una reserva, dejando el asiento indicado libre
      *
