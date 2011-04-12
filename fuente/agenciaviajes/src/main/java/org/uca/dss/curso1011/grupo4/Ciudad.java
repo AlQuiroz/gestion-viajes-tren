@@ -17,7 +17,12 @@ public class Ciudad {
     public Ciudad(String nombre, String pais){
         this.nombre = nombre;
         this.pais = pais;
-    };
+    }
+
+    public Ciudad(Ciudad valor){
+        this.nombre=valor.getNombre();
+        this.pais=valor.getPais();
+    }
 /**
  * M�todo observador
  *

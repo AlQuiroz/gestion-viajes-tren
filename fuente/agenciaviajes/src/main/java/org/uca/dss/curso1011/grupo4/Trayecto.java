@@ -46,7 +46,6 @@ public class Trayecto {
      */
     public Trayecto(int tramos, Ciudad Origen, Ciudad Destino, ArrayList<Horario> Horarios){
         
-        
         this.SetTramos(tramos);
         this.SetOrigen(Origen);
         this.SetDestino(Destino);
@@ -76,20 +75,23 @@ public class Trayecto {
     }
     
     private void SetOrigen(Ciudad valor){
-        this.Origen=valor;
+        this.Origen=new Ciudad(valor);
+
     }
 
     private void SetDestino(Ciudad valor){
-        this.Destino=valor;
+        this.Destino=new Ciudad(valor);
     }
 
     private void SetHorarios(ArrayList<Horario> valor){
+        this.Horarios= new ArrayList<Horario>();
         this.Horarios=valor;
     }
 
     private void SetHorarioElegido(Horario valor){
         this.HorarioElegido=new Horario(valor);
         this.SetPrecio(this.CalcularPrecioTrayecto(valor));
+        this.HorarioSeleccionado=true;
     }
 
     private void SetPrecio(float valor){
@@ -137,6 +139,7 @@ public class Trayecto {
      * @return horario elegido para el trayecto
      */
     public Horario GetHorarioElegido(){
+        
         if(this.HorarioSeleccionado){
             return this.HorarioElegido;
         }else{

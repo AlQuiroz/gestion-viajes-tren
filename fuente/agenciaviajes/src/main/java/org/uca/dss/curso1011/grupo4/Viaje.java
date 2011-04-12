@@ -44,13 +44,12 @@ public class Viaje {
      * @param fecha fecha prevista para el viaje
      * @param trayecto trayecto que compone el viaje
      */
-    public Viaje(LocalDate fecha, Trayecto trayecto, ArrayList<Reserva> Reservas){
-        this.fecha=new LocalDate();
+    public Viaje(LocalDate fecha, Trayecto trayecto){
+        
         this.SetFecha(fecha);
 
         this.SetTrayecto(trayecto);
 
-        this.SetReservas(Reservas);
         this.CalcularPrecioViaje();
     }
 
@@ -64,7 +63,8 @@ public class Viaje {
         this.trayecto=new Trayecto(valor);
     }
     
-    private void SetReservas(ArrayList<Reserva> valor){
+    public void SetReservas(ArrayList<Reserva> valor){
+        this.Reservas=new ArrayList<Reserva>();
         this.Reservas=valor;
     }
 
