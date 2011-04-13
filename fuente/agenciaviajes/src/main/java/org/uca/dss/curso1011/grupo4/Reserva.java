@@ -42,7 +42,7 @@ public class Reserva {
     /**
      * @return the _id_reserva
      */
-    public int getId_reserva() {
+    public String getId_reserva() {
         return id_reserva;
     }
 
@@ -59,6 +59,6 @@ public class Reserva {
     private
     int num_asientos;
     private LocalDate fecha_reserva;
-    private int id_reserva;
+    private String id_reserva;
     private Viaje viaje;
 }
