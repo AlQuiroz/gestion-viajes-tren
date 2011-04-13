@@ -31,9 +31,19 @@ import java.util.LinkedList;
  *
  * @author Manuel Jesús de la Calle Brihuega
  */
+
 public class AdaptadorListado implements InterfazListados {
+
     private CargaDatos datos;
     private ListadoViajes listado;
+
+    //Constructor
+    /**
+     * Construye un objeto de la clase AdaptadorListado
+     *
+     * Recibe de parámetro de entrada un objeto de la clase CargaDatos con los trayectos y trenes precargados.
+     * @param datos objeto de la clase CargaDatos
+     */
     public AdaptadorListado(CargaDatos datos){
         this.SetDatos(datos);
     }
@@ -41,6 +51,9 @@ public class AdaptadorListado implements InterfazListados {
     private void SetDatos(CargaDatos valor){
         this.datos=new CargaDatos(valor);
     }
+
+    //Métodos Get
+
     public List<LocalTime> getHorarios(String origen, String destino, LocalDate fecha){
         this.listado=new ListadoViajes(fecha, new Ciudad(origen, "España"), new Ciudad(destino, "España"), this.GetDatos());
         ArrayList<Viaje> listaViajes=new ArrayList<Viaje>();
@@ -56,6 +69,12 @@ public class AdaptadorListado implements InterfazListados {
         return listadoSalidas;
     }
 
+    /**
+     * Método consultor de datos.
+     *
+     * Devuelve el objeto de la clase CargaDatos que contiene los trenes y trayectos precargados.
+     * @return objeto de CargaDatos con los trenes y trayectos existentes.
+     */
     public CargaDatos GetDatos(){
         return this.datos;
     }

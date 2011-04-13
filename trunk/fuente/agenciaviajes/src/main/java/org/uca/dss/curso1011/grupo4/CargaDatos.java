@@ -23,14 +23,24 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import org.joda.time.LocalTime;
 /**
+ * Clase encargada de cargar datos.
  *
- * @author manuel
+ * Realiza una carga de los trenes y trayectos que obtiene de los ficheros csv.
+ * @author Manuel Jesús de la Calle Brihuega
  */
 public class CargaDatos {
 
     private ArrayList<Tren> TrenesCargados;
     private ArrayList<Trayecto> TrayectosCargados;
 
+    /**
+     * Constructor de la clase.
+     *
+     * Recibe como parámetros dos strings con las rutas de los ficheros trenes.csv y trayectos.csv de los cuales se obtienen los trenes y trayectos.
+     *
+     * @param ArchivoTrayectos ruta del fichero trayectos.csv
+     * @param ArchivoTrenes ruta del fichero trenes.csv
+     */
     public CargaDatos(String ArchivoTrayectos, String ArchivoTrenes){
         try{
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
@@ -99,13 +109,28 @@ public class CargaDatos {
        }
     }
 
+    /**
+     * Constructor de copia.
+     *
+     * Construye un objeto CargaDatos que será una copia del que recibe por parámetro.
+     *
+     * @param valor objeto de CargaDatos del cual se realizará la copia.
+     */
     public CargaDatos(CargaDatos valor){
         this.TrenesCargados= new ArrayList<Tren>();
         this.TrayectosCargados=new ArrayList<Trayecto>();
         this.TrayectosCargados=valor.GetTrayectosCargados();
         this.TrenesCargados=valor.GetTrenesCargados();
     }
-    private LocalTime StringToLocaltime(String valor){
+    /**
+     * Método convertidor.
+     *
+     * Método que convierte un string que contiene una hora determinada, en un objeto LocalTime con dicha hora.
+     *
+     * @param valor string con la hora que queremos convertir
+     * @return hora contenida en el string de entrada en formato LocalTime
+     */
+    public LocalTime StringToLocaltime(String valor){
 
         String [] vector= valor.split(":");
         
@@ -114,6 +139,14 @@ public class CargaDatos {
         return new LocalTime(horasInt,minutosInt);
     }
 
+    /**
+     * Método consultor de tren.
+     *
+     * Devuelve el tren de entre los trenes cargados cuyo nombre coincide con el string que recibe por parámetro.
+     *
+     * @param nombre string con el nombre del tren que queremos obtener.
+     * @return objeto tren cuyo nombre coincide con el parámetro de entrada.
+     */
     public Tren GetTren(String nombre){
         int i=0, j=0;
         Tren t;
@@ -126,10 +159,23 @@ public class CargaDatos {
         t=new Tren(this.TrenesCargados.get(j));
         return t;
     }
+    /**
+     * Método consultor de trenes.
+     *
+     * Devuelve el conjunto de trenes que han sido cargados del fichero trenes.csv
+     * @return conjunto de trenes existentes
+     */
     public ArrayList<Tren> GetTrenesCargados(){
         return this.TrenesCargados;
     }
     
+    /**
+     * Método consultor de trayectos.
+     *
+     * Devuelve el conjunto de trayectos que han sido cargados del fichero trayectos.csv
+     *
+     * @return conjunto de trayectos existentes
+     */
     public ArrayList<Trayecto> GetTrayectosCargados(){
         return this.TrayectosCargados;
     }
