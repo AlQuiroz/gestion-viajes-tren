@@ -52,6 +52,18 @@ public class Viaje {
 
         this.CalcularPrecioViaje();
     }
+    /**
+     * Constructor de copia
+     *
+     * Construye un objeto de la clase Viaje a partir de otro.
+     *
+     * @param viaje objeto a partir del cual se crea el nuevo
+     */
+    public Viaje(Viaje v){
+        this.SetFecha(v.GetFecha());
+        this.SetTrayecto(v.GetTrayecto());
+        this.precioFinal = v.GetPrecio();
+    }
 
     //Métodos de asignación
 
