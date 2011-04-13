@@ -29,9 +29,9 @@ import org.joda.time.LocalTime;
 public class Horario {
 
     //Atributos
-    private int asientos_disponibles;
-    private LocalTime hora_llegada;
-    private LocalTime hora_salida;
+    private int asientosDisponibles;
+    private LocalTime horaLlegada;
+    private LocalTime horaSalida;
     private Tren tren;
 
     // Constructores
@@ -43,6 +43,7 @@ public class Horario {
      * @param salida hora de salida del viaje
      * @param llegada hora de llegada del viaje
      * @param asientos asientos disponibles para el viaje
+     * @param tren tren que realiza el trayecto en este horario
      */
     public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren){
   
@@ -67,21 +68,21 @@ public class Horario {
     //Métodos de asignación
 
     private void SetHoraSalida(LocalTime valor){
-        this.hora_salida=new LocalTime(valor);
+        this.horaSalida=new LocalTime(valor);
     }
 
     private void SetHoraLlegada(LocalTime valor){
-        this.hora_llegada=new LocalTime(valor);
+        this.horaLlegada=new LocalTime(valor);
     }
 
     private void SetAsientosDisponibles(int valor){
         if(valor < 1)
         {
-            this.asientos_disponibles=0;
+            this.asientosDisponibles=0;
         }
         else
         {
-            this.asientos_disponibles=valor;
+            this.asientosDisponibles=valor;
         }
 
     }
@@ -100,30 +101,41 @@ public class Horario {
      * @return número de asientos disponibles
      */
     public int GetAsientosDisponibles(){
-        return this.asientos_disponibles;
+        return this.asientosDisponibles;
     }
 
 
+    /**
+     * Método consultor de tren.
+     *
+     * Devuelve el tren que realiza el trayecto para este horario.
+     *
+     * @return objeto de la clase tren que realiza el trayecto para el horario
+     */
     public Tren GetTren(){
         return this.tren;
     }
 
     /**
-     * Método consultor que devuelve la hora de llegada prevista
+     * Método consultor de hora.
+     * 
+     * Devuelve la hora de llegada prevista para el tren en este horario.
      *
      * @return hora de llegada del tren
      */
     public LocalTime GetHoraLlegada(){
-        return this.hora_llegada;
+        return this.horaLlegada;
     }
 
     /**
-     * Método consultor que devuelve la hora de salida prevista
+     * Método consultor de hora.
+     * 
+     * Devuelve la hora de salida prevista para el tren en este horario.
      *
      * @return hora de salida del tren
      */
     public LocalTime GetHoraSalida(){
-        return this.hora_salida;
+        return this.horaSalida;
     }
 
     //Otros métodos
@@ -131,13 +143,13 @@ public class Horario {
     /**
      * Actualiza el número de asientos libres para el horario.
      *
-     * Decrementa o incremedecrementa el atributo asientos_disponibles con el número de asientos reservados o cancelados(parámetro 'asientos_reservados').
+     * Decrementa o incremedecrementa el atributo asientosDisponibles con el número de asientos reservados o cancelados(parámetro 'asientos_reservados').
      *
-     * @param asientos_reservados numero de asientos a decrementar (reservados).
+     * @param asientosReservados numero de asientos a decrementar (reservados).
      */
-    public void ActualizaAsientos(int asientos_reservados){
+    public void ActualizaAsientos(int asientosReservados){
         int disponibles=this.GetAsientosDisponibles();
-        disponibles=disponibles + asientos_reservados;
+        disponibles=disponibles + asientosReservados;
         if(disponibles < 0){
             // Aquí lanzaremos una excepción
         }
@@ -163,7 +175,14 @@ public class Horario {
             return false;
     }
     
-    public float ObtenerPrecioHorario(){
+    /**
+     * Método consultor de precio.
+     * 
+     * Devuelve el precio de un horario, que no es más que el precio por tramo del tren que cubre. No devuelve un precio final, solo el precio del tramo viajado.
+     * 
+     * @return precio del horario
+     */
+    public float GetPrecioHorario(){
         return this.GetTren().getCostetramo();
     }
     

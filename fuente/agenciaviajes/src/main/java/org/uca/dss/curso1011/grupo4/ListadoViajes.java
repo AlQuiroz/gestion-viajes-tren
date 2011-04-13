@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
+ * Clase encargada de generar un listado de viajes.
+ *
+ * Genera y representa un listado de los viajes disponibles para una fecha determinada entre una ciudad origen y una ciudad destino.
  *
  * @author Manuel Jesús de la Calle Brihuega
  */
@@ -35,7 +38,17 @@ public class ListadoViajes {
 
     // Constructores
 
-   public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, CargaDatos datos){
+    /**
+     * Constructor.
+     *
+     * Construye un objeto de ListadoViajes, recibiendo por parámetros los datos necesarios para crear el listado.
+     *
+     * @param fecha fecha para los viajes que queremos listar
+     * @param origen ciudad origen de los viajes que queremos listar
+     * @param destino ciudad destino de los viajes que queremos listar
+     * @param datos objeto de la clase CargaDatos que contiene los datos de trenes y trayectos precargados.
+     */
+    public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, CargaDatos datos){
 
         this.SetFecha(fecha);
         if(!this.ComprobarValidezFecha()){
@@ -66,7 +79,14 @@ public class ListadoViajes {
         }
    }
 
-   public ListadoViajes(ListadoViajes valor){
+    /**
+     * Constructor de copia
+     *
+     * Construye un objeto de la clase ListadoViajes que será una copia del que recibe por parámetro.
+     *
+     * @param valor objeto del que queremos realizar la copia
+     */
+    public ListadoViajes(ListadoViajes valor){
        this.fecha=new LocalDate(valor.GetFecha());
        this.origen=new Ciudad(valor.GetOrigen());
        this.destino=new Ciudad(valor.GetDestino());
@@ -74,18 +94,46 @@ public class ListadoViajes {
        this.Viajes=valor.GetViajes();
    }
 
-   public Ciudad GetOrigen(){
+    /**
+     * Método consultor de ciudad origen.
+     *
+     * Devuelve la ciudad origen de los viajes para los cuales se ha generado el listado.
+     *
+     * @return ciudad origen de los viajes
+     */
+    public Ciudad GetOrigen(){
        return this.origen;
    }
 
+   /**
+    * Método consultor de ciudad destino.
+    *
+    * Devuelve la ciudad destino de los viajes para los cuales se ha generado el listado.
+    *
+    * @return ciudad destino de los viajes
+    */
    public Ciudad GetDestino(){
        return this.destino;
    }
 
+   /**
+    * Método consultor de viajes
+    *
+    * Genera y devuelve un conjunto de objetos Viaje, que serán los viajes que forman parte del listado.
+    *
+    * @return listado de viajes
+    */
    public ArrayList<Viaje> GetViajes(){
        return this.Viajes;
    }
 
+   /**
+    * Método consultor de fecha.
+    *
+    * Devuelve la fecha para la cual se ha pedido el listado de viajes.
+    *
+    * @return fecha de viaje
+    */
    public LocalDate GetFecha(){
        return this.fecha;
    }
@@ -101,6 +149,13 @@ public class ListadoViajes {
        this.destino=new Ciudad(valor);
    }
 
+   /**
+    * Método consultor de listado.
+    *
+    * Genera y devuelve un listado de los viajes con sus correspondientes precios.
+    *
+    * @return conjunto de pares de viaje-precio
+    */
    public Map<Viaje, Float> ListarViajesConPrecio(){
        Map<Viaje, Float> listado=new HashMap<Viaje, Float>();
        int i=0;
@@ -111,6 +166,13 @@ public class ListadoViajes {
        return listado;
    }
 
+   /**
+    * Método consultor de listado.
+    *
+    * Genera y devuelve un listado de los viajes que disponen de asientos libres.
+    *
+    * @return conjunto de viajes que disponen de asientos libres
+    */
    public ArrayList<Viaje> ListarViajesPorAsientoDisponible(){
        ArrayList<Viaje> listado= new ArrayList<Viaje>();
        int i=0;

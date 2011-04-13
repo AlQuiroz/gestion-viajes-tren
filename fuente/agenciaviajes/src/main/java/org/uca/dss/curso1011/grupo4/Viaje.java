@@ -29,7 +29,7 @@ import java.util.Map;
  * @author manuel
  */
 public class Viaje {
-    private Float precio_final;
+    private Float precioFinal;
     private LocalDate fecha;
     private ArrayList<Reserva> Reservas;
     private Trayecto trayecto;
@@ -63,13 +63,20 @@ public class Viaje {
         this.trayecto=new Trayecto(valor);
     }
     
+    /**
+     * Método modificador.
+     *
+     * Establece la reserva, o conjunto de reservas realizadas previamente para el viaje.
+     *
+     * @param valor conjunto de reservas para el viaje
+     */
     public void SetReservas(ArrayList<Reserva> valor){
         this.Reservas=new ArrayList<Reserva>();
         this.Reservas=valor;
     }
 
     private void SetPrecio(Float valor){
-        this.precio_final=valor;
+        this.precioFinal=valor;
     }
 
     // Métodos consultores
@@ -96,6 +103,13 @@ public class Viaje {
         return this.trayecto;
     }
     
+    /**
+     * Método consultor.
+     *
+     * Devuelve el conjunto de reservas realizadas para el viaje.
+     *
+     * @return conjunto de reservas del viaje
+     */
     public ArrayList<Reserva> GetReservas(){
         return this.Reservas;
     }
@@ -108,7 +122,7 @@ public class Viaje {
      * @return precio del viaje
      */
     public Float GetPrecio(){
-        return this.precio_final;
+        return this.precioFinal;
     }
 
     //Otros métodos

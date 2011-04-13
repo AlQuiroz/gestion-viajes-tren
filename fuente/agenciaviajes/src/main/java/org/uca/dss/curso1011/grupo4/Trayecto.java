@@ -40,10 +40,16 @@ public class Trayecto {
     //Constructores
 
     /**
+     * Constructor
      *
-     * @param tramos
-     * @param Horarios
+     * Construye un objeto de la clase Trayecto, recibiendo por parámetros el origen, destino, horarios y número de tramos del trayecto a construir.
+     * 
+     * @param tramos número de tramos que componen el trayecto
+     * @param Origen ciudad origen del trayecto
+     * @param Horarios conjunto de horarios en los que se realiza el trayecto
+     * @param Destino ciudad destino del trayecto
      */
+
     public Trayecto(int tramos, Ciudad Origen, Ciudad Destino, ArrayList<Horario> Horarios){
         
         this.SetTramos(tramos);
@@ -57,6 +63,13 @@ public class Trayecto {
 
     // Constructor de copia
 
+    /**
+     * Constructor de copia.
+     *
+     * Construye un objeto de la clase Trayecto, copia del trayecto que recibe por parámetro.
+     *
+     * @param valor objeto Trayecto del que queremos realizar una copia
+     */
     public Trayecto(Trayecto valor){
 
         this.SetTramos(valor.GetTramos());
@@ -91,8 +104,11 @@ public class Trayecto {
     }
 
     /**
+     * Método modificador.
+     *
      * Selecciona el horario que el usuario ha elegido de entre todos, para realizar el trayecto.
-     * @param Horario horario elegido por el usuario
+     * 
+     * @param valor horario que queremos establecer como horario elegido para el trayecto
      */
     public void SetHorarioElegido(Horario valor){
         this.HorarioSeleccionado=true;
@@ -110,19 +126,34 @@ public class Trayecto {
     /**
      * Método consultor de tramos
      *
-     * Devuelve el número de tramos que forman el trayecto.
+     * Devuelve el número de tramos que componen el trayecto.
      *
      * @return número de tramos del trayecto
      */
+
     public int GetTramos(){
         return this.tramos;
     }
 
     
+    /**
+     * Método consultor de ciudad origen.
+     *
+     * Devuelve la ciudad origen del trayecto.
+     *
+     * @return ciudad origen del trayecto
+     */
     public Ciudad GetOrigen(){
        return this.Origen;
     }
 
+    /**
+     * Método consultor de ciudad destino.
+     *
+     * Devuelve la ciudad destino del trayecto.
+     *
+     * @return ciudad destino del trayecto
+     */
     public Ciudad GetDestino(){
        return this.Destino;
     }
