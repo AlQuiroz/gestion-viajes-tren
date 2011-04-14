@@ -43,7 +43,7 @@ public interface InterfazCompras {
     /**
      * Cancela una reserva, dejando el asiento indicado libre
      *
-     * @param reserva cadena que identifica la reserva
+     * @param codigoReserva cadena que identifica la reserva
      */
     public void cancelaReserva(String codigoReserva);
 

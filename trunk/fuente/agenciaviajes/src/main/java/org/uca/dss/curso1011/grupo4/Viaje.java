@@ -61,10 +61,10 @@ public class Viaje {
      *
      * @param viaje objeto a partir del cual se crea el nuevo
      */
-    public Viaje(Viaje v){
-        this.SetFecha(v.GetFecha());
-        this.SetTrayecto(v.GetTrayecto());
-        this.precioFinal = v.GetPrecio();
+    public Viaje(Viaje viaje){
+        this.SetFecha(viaje.GetFecha());
+        this.SetTrayecto(viaje.GetTrayecto());
+        this.precioFinal = viaje.GetPrecio();
         this.realizadaReserva=v.realizadaReserva;
         if(v.realizadaReserva){
             this.SetReservas(v.GetReservas());
