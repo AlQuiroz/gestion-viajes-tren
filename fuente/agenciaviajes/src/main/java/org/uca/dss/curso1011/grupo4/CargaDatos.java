@@ -89,7 +89,7 @@ public class CargaDatos {
                     String horaLlegada=nextLineTrayectos[i];
                     LocalTime llegada=this.StringToLocaltime(horaLlegada);
                     i=i+1;
-                    Horario h=new Horario(salida, llegada, tren.getNumasiento(), tren);
+                    Horario h=new Horario(salida, llegada, tren.getNumAsientos(), tren);
                     
                     if(!horariosTrayecto.add(h)){
                         System.out.println("Error al introducir horario en trayecto");

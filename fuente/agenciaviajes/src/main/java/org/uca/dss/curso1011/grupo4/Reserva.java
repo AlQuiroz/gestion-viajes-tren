@@ -17,33 +17,33 @@ import org.joda.time.LocalDate;
 public class Reserva {
     public Reserva(int asientos, Viaje viaje){
       //Primero hay que combrar que se pueda hacer la reserva si hay asientos
-      this.num_asientos = asientos;
-      this.fecha_reserva = new LocalDate();
+      this.numAsientos = asientos;
+      this.fechaReserva = new LocalDate();
       this.viaje = viaje;
-      //el _id_reserva tendra que hacerse de forma autom�tica incrementando el anterior
+      //el _idReserva tendra que hacerse de forma automática incrementando el anterior
     }
 
     /**
-     * @return the _num_asientos
+     * @return the _numAsientos
      */
-    public int getNum_asientos() {
-        return num_asientos;
-    }
-
-
-    /**
-     * @return the _fecha_reserva
-     */
-    public LocalDate getFecha_reserva() {
-        return fecha_reserva;
+    public int getNumAsientos() {
+        return numAsientos;
     }
 
 
     /**
-     * @return the _id_reserva
+     * @return the _fechaReserva
      */
-    public String getId_reserva() {
-        return id_reserva;
+    public LocalDate getFechaReserva() {
+        return fechaReserva;
+    }
+
+
+    /**
+     * @return the _idReserva
+     */
+    public String getIdReserva() {
+        return idReserva;
     }
 
 
@@ -56,9 +56,8 @@ public class Reserva {
     }
 
 ;
-    private
-    int num_asientos;
-    private LocalDate fecha_reserva;
-    private String id_reserva;
+    private int numAsientos;
+    private LocalDate fechaReserva;
+    private String idReserva;
     private Viaje viaje;
 }

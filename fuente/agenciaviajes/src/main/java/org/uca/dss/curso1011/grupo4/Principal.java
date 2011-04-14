@@ -45,7 +45,7 @@ public class Principal {
         while(i<prueba.size()){
             System.out.println("\nViaje nº"+i+": ");
             System.out.println("Ciudad origen: "+prueba.get(i).GetTrayecto().GetOrigen().getNombre()+" Ciudad destino: "+prueba.get(i).GetTrayecto().GetDestino().getNombre()+" Hora salida: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetHoraSalida().toString()+"Hora llegada: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetHoraLlegada().toString()+"Precio: "+prueba.get(i).GetPrecio());
-            System.out.println("Coste tren: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetTren().getCostetramo());
+            System.out.println("Coste tren: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetTren().getCosteTramo());
             System.out.println("Numero de tramos: "+prueba.get(i).GetTrayecto().GetTramos());
             System.out.println("Asientos disponibles: "+ prueba.get(i).GetTrayecto().GetHorarioElegido().GetAsientosDisponibles());
             i=i+1;

@@ -63,8 +63,8 @@ public class GestionReserva implements InterfazCompras{
     /**
      * @return the num_asientos
      */
-    public int getNum_asientos() {
-        return num_asientos;
+    public int getNumAsientos() {
+        return numAsientos;
     }
 
 
@@ -104,7 +104,7 @@ public class GestionReserva implements InterfazCompras{
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
         Reserva reserva = new Reserva(1,viaje);
-        return reserva.getId_reserva();
+        return reserva.getIdReserva();
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -112,12 +112,11 @@ public class GestionReserva implements InterfazCompras{
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private
-    LocalDate fecha;
+    private LocalDate fecha;
     private Ciudad origen;
     private Ciudad destino;
     private LocalTime hora;
     private Tren tren;
-    private int num_asientos;   
+    private int numAsientos;
     
 }
