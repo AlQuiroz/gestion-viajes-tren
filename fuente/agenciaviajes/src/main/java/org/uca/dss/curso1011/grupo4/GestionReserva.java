@@ -37,7 +37,7 @@ public class GestionReserva implements InterfazCompras{
         this.destino = cDestino;
         this.hora = cHora;
         this.tren = cTren;
-        this.num_asientos = numasientos;
+        this.numAsientos = numasientos;
     };
 
     /**
