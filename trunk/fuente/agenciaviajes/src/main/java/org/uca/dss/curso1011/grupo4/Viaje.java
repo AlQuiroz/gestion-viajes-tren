@@ -33,6 +33,7 @@ public class Viaje {
     private LocalDate fecha;
     private ArrayList<Reserva> Reservas;
     private Trayecto trayecto;
+    private boolean realizadaReserva;
 
     //Constructor
 
@@ -51,6 +52,7 @@ public class Viaje {
         this.SetTrayecto(trayecto);
 
         this.CalcularPrecioViaje();
+        this.realizadaReserva=false;
     }
     /**
      * Constructor de copia
@@ -63,6 +65,10 @@ public class Viaje {
         this.SetFecha(v.GetFecha());
         this.SetTrayecto(v.GetTrayecto());
         this.precioFinal = v.GetPrecio();
+        this.realizadaReserva=v.realizadaReserva;
+        if(v.realizadaReserva){
+            this.SetReservas(v.GetReservas());
+        }
     }
 
     //Métodos de asignación
@@ -85,6 +91,7 @@ public class Viaje {
     public void SetReservas(ArrayList<Reserva> valor){
         this.Reservas=new ArrayList<Reserva>();
         this.Reservas=valor;
+        this.realizadaReserva=true;
     }
 
     private void SetPrecio(Float valor){

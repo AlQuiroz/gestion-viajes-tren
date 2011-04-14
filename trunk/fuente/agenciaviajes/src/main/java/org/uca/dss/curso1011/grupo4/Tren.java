@@ -14,28 +14,28 @@ package org.uca.dss.curso1011.grupo4;
  */
 public class Tren {
     public Tren(int asientos, float costetramo, String nombre){
-        this.numasiento = asientos;
-        this.costetramo = costetramo;
+        this.numAsientos = asientos;
+        this.costeTramo = costetramo;
         this.nombre = nombre;
     }
 
     public Tren(Tren valor){
-        this.numasiento= valor.getNumasiento();
-        this.costetramo= valor.getCostetramo();
+        this.numAsientos= valor.getNumAsientos();
+        this.costeTramo= valor.getCosteTramo();
         this.nombre= valor.getNombre();
     }
         /**
      * @return the _numasiento
      */
-    public int getNumasiento() {
-        return numasiento;
+    public int getNumAsientos() {
+        return numAsientos;
     }
 
     /**
      * @return the _costetramo
      */
-    public float getCostetramo() {
-        return costetramo;
+    public float getCosteTramo() {
+        return costeTramo;
     }
 
 
@@ -46,10 +46,8 @@ public class Tren {
         return nombre;
     }
 
-    private
-
-    int numasiento;
-    private float costetramo;
+    private int numAsientos;
+    private float costeTramo;
     private String nombre;
 
 }

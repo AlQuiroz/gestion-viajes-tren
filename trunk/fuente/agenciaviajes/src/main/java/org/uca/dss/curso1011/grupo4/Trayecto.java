@@ -213,7 +213,7 @@ public class Trayecto {
      * @return precio para el horario introducido por parámetro
      */
     public Float CalcularPrecioTrayecto(Horario HorarioElegido){
-        float CostePorTramo=HorarioElegido.GetTren().getCostetramo();
+        float CostePorTramo=HorarioElegido.GetTren().getCosteTramo();
         int NumTramos=this.GetTramos();
         return CostePorTramo*NumTramos;
     }

@@ -183,7 +183,7 @@ public class Horario {
      * @return precio del horario
      */
     public float GetPrecioHorario(){
-        return this.GetTren().getCostetramo();
+        return this.GetTren().getCosteTramo();
     }
     
 }
