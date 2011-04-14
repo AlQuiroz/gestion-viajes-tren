@@ -35,8 +35,8 @@ public class Tren {
      * @param tren a copiar
      */
     public Tren(Tren tren){
-        this.numAsientos= tren.getNumasiento();
-        this.costeTramo= tren.getCostetramo();
+        this.numAsientos= tren.getNumAsientos();
+        this.costeTramo= tren.getCosteTramo();
         this.nombre= tren.getNombre();
      }
      /**

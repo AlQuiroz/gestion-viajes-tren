@@ -65,9 +65,9 @@ public class Viaje {
         this.SetFecha(viaje.GetFecha());
         this.SetTrayecto(viaje.GetTrayecto());
         this.precioFinal = viaje.GetPrecio();
-        this.realizadaReserva=v.realizadaReserva;
-        if(v.realizadaReserva){
-            this.SetReservas(v.GetReservas());
+        this.realizadaReserva=viaje.realizadaReserva;
+        if(viaje.realizadaReserva){
+            this.SetReservas(viaje.GetReservas());
         }
     }
 
