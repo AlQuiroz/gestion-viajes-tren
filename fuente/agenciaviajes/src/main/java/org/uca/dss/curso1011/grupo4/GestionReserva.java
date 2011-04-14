@@ -12,62 +12,110 @@ import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
 
 
 /**
- * Clase que gestiona el caso de uso de las reservas
+ * Genera y gestiona una Reserva.
+ *
+ * Clase encargada de generar y gestionar una reserva determinada, para un viaje de nuestro sistema. Será la encargada de interaccionar con el usuario a la hora de realizar la reserva.
  *
  * @author migue
  */
 public class GestionReserva implements InterfazCompras{
-    public GestionReserva(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren ){
+    /**
+     * Constructor de la clase GestionReserva
+     *
+     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren y el número de asiento a reservar
+     *
+     * @param cFecha
+     * @param cOrigen
+     * @param cDestino
+     * @param cHora
+     * @param cTren
+     * @param numasientos
+     */
+    public GestionReserva(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
         this.hora = cHora;
         this.tren = cTren;
+        this.num_asientos = numasientos;
     };
 
     /**
-     * @return the fecha
+     * Metodo Consultor de la fecha de reserva
+     *
+     * Devuelve la fecha en la que se viajará
+     *
+     * @return La fecha del viaje de la reserva
      */
     public LocalDate getFecha() {
         return fecha;
     }
 
     /**
-     * @return the origen
+     * Método Consultor del origen del viaje
+     *
+     * Devuelve la ciudad origen del viaje
+     *
+     * @return Ciudad origen del viaje de la reserva
      */
     public Ciudad getOrigen() {
         return origen;
     }
 
     /**
-     * @return the destino
+     * Método Consultor del destino del viaje
+     *
+     * Devuelve la ciudad destino del viaje
+     *
+     * @return Ciudad destino del viaje de la resreva
      */
     public Ciudad getDestino() {
         return destino;
     }
 
     /**
-     * @return the hora
+     * Método consultor de la hora del viaje
+     *
+     * Devuelve la hora del viaje
+     *
+     * @return Hora del viaje reservado
      */
     public LocalTime getHora() {
         return hora;
     }
 
     /**
-     * @return the tren
+     * Método consultor del tren del viaje
+     *
+     * Duelve el tren del viaje reservador
+     *
+     * @return Tren del viaje reservado
      */
     public Tren getTren() {
         return tren;
     }
 
     /**
+     * Método consultor del número de asientos reservado.
+     *
+     * Devuelve el número de asientos que se han reservado.
      * @return the num_asientos
      */
     public int getNumAsientos() {
         return numAsientos;
     }
 
-
+    /**
+     * Método consultor del precio.
+     *
+     * Devuelve el precio de la reserva.
+     *
+     * @param origen
+     * @param destino
+     * @param fecha
+     * @param hora
+     * @return Precio de la reserva
+     */
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora) {
         double precioViajes;
         CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
@@ -85,7 +133,17 @@ public class GestionReserva implements InterfazCompras{
         return precioViajes;
         //throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    /**
+     * Realiza la reserva del viaje.
+     *
+     * Reserva un asiento para el viaje dandole ciudad orige, ciudad destino, fecha y hora
+     * 
+     * @param origen
+     * @param destino
+     * @param fecha
+     * @param hora
+     * @return
+     */
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
         CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), c);
@@ -107,7 +165,13 @@ public class GestionReserva implements InterfazCompras{
         return reserva.getIdReserva();
         //throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    /**
+     * Cancela una reserva.
+     *
+     * Dado un código de reserva, cancela la reserva si existe liberando los asientes del tren de dicho viaje.
+     *
+     * @param codigoReserva de la reserva a cancelar
+     */
     public void cancelaReserva(String codigoReserva) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
