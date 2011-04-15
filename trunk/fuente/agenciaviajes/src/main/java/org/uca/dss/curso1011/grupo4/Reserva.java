@@ -15,10 +15,10 @@ import org.joda.time.LocalDate;
  * @author migue
  */
 public class Reserva {
-    /*
+    /**
      * Constructor de Reserva
      *
-     * Clase encargada de representar una reserva de un número de asientos determinado para un viaje concreto. La reserva se identificará por un código 'ID_reserva', y también se almacenará la fecha en la que se realice la misma.
+     * Clase encargada de representar una reserva de un nï¿½mero de asientos determinado para un viaje concreto. La reserva se identificarï¿½ por un cï¿½digo 'ID_reserva', y tambiï¿½n se almacenarï¿½ la fecha en la que se realice la misma.
      *
      * @param asientos que se desean reservar
      * @param viaje a reservar
@@ -46,11 +46,11 @@ public class Reserva {
       //el _id_reserva tendra que hacerse de forma automï¿½tica incrementando el anterior
     }
      /**
-     * Método consultor del número de asientos reservados
+     * MÃ©todo consultor del nÃºmero de asientos reservados
      *
      * Devuelve el numero de asientos reservados
       *
-     * @return número de asientos reservados
+     * @return nÃºmero de asientos reservados
      */
     public int getNumAsientos() {
         return numAsientos;
@@ -58,7 +58,7 @@ public class Reserva {
 
 
     /**
-     * Método consultor de la fecha de la reserva
+     * MÃ©todo consultor de la fecha de la reserva
      *
      * Devuelve la fecha de la reserva
      *
@@ -70,7 +70,7 @@ public class Reserva {
 
 
     /**
-     * Método consultor del Id_reserva
+     * MÃ©todo consultor del Id_reserva
      *
      * Devuelve el id de la reserva
      *
@@ -83,7 +83,7 @@ public class Reserva {
 
 
     /**
-     * Método consulto del viaje
+     * MÃ©todo consulto del viaje
      *
      * Devuelve le viaje que se ha reservado
      *

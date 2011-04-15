@@ -8,24 +8,24 @@ package org.uca.dss.curso1011.grupo4;
 /**
  * Representa la ciudad origen o destino del viaje.
  *
- * Clase encargada de representar una ciudad en el sistema de viajes de tren, identificándola en el mismo mediante su nombre. También guarda la provincia y el país al que pertenece.
+ * Clase encargada de representar una ciudad en el sistema de viajes de tren, identificï¿½ndola en el mismo mediante su nombre. Tambiï¿½n guarda la provincia y el paï¿½s al que pertenece.
  *
  * @author migue
  */
 public class Ciudad {
     //Constructor
-    /*
+    /**
      * Constructor
      *
      * Construye un objeto de la clase Ciudad
      * @param nombre nombre de la ciudad
-     * @param pais nombre del país en el que esta la ciudad
+     * @param pais nombre del paï¿½s en el que esta la ciudad
      */
     public Ciudad(String nombre, String pais){
         this.nombre = nombre;
         this.pais = pais;
     }
-    /*
+    /**
      * Conversor de String a Ciudad
      *
      * Construye un objeto de la clase Ciudad a partir de un string
@@ -35,12 +35,12 @@ public class Ciudad {
         this.nombre = nombre;
         this.pais = "EspaÃ±a";
     }
-    /*
+    /**
      * Constructor copia
      *
      * Construye un objeto de la clase Ciudad a partir de
      * @param valor
-     * @param pais nombre del país en el que esta la ciudad
+     * @param pais nombre del paÃ­s en el que esta la ciudad
      */
     public Ciudad(Ciudad valor){
         this.nombre=valor.getNombre();

@@ -183,7 +183,7 @@
 					<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#Integer"/>
 					<ownedComment xmi:type="uml:Comment" xmi:id="COMMENT_2" body="Refleja los asientos disponibles para viajar en el horario de un tren determinado."/>
 				</ownedAttribute>
-				<ownedOperation xmi:type="uml:Operation" name="ActAsientos" xmi:id="BOUML_0x2620a_2" visibility="private" isAbstract="false">
+				<ownedOperation xmi:type="uml:Operation" name="ActualizaAsientos" xmi:id="BOUML_0x2620a_2" visibility="private" isAbstract="false">
 					<ownedComment xmi:type="uml:Comment" xmi:id="COMMENT_3" body="Actualiza el n?mero de asientos libres para el horario, decrementando el atributo asientos_disponibles con el n?mero de asientos reservados (par?metro 'asientos_reservados')."/>
 					<ownedParameter name="return" xmi:id="BOUML_return_5" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
