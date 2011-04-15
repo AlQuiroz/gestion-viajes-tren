@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * En ella se describe el trayecto a realizar por un determinado tren, en una fecha y hora concretas, además de su precio.
  *
- * @author manuel
+ * @author Manuel Jesús de la Calle Brihuega
  */
 public class Viaje {
     private Float precioFinal;

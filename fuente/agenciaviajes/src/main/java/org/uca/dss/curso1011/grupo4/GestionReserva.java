@@ -14,7 +14,7 @@ import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
 /**
  * Genera y gestiona una Reserva.
  *
- * Clase encargada de generar y gestionar una reserva determinada, para un viaje de nuestro sistema. Será la encargada de interaccionar con el usuario a la hora de realizar la reserva.
+ * Clase encargada de generar y gestionar una reserva determinada, para un viaje de nuestro sistema. Serï¿½ la encargada de interaccionar con el usuario a la hora de realizar la reserva.
  *
  * @author migue
  */
@@ -22,7 +22,7 @@ public class GestionReserva implements InterfazCompras{
     /**
      * Constructor de la clase GestionReserva
      *
-     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren y el número de asiento a reservar
+     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren y el nï¿½mero de asiento a reservar
      *
      * @param cFecha
      * @param cOrigen
@@ -43,7 +43,7 @@ public class GestionReserva implements InterfazCompras{
     /**
      * Metodo Consultor de la fecha de reserva
      *
-     * Devuelve la fecha en la que se viajará
+     * Devuelve la fecha en la que se viajarÃ¡
      *
      * @return La fecha del viaje de la reserva
      */
@@ -52,7 +52,7 @@ public class GestionReserva implements InterfazCompras{
     }
 
     /**
-     * Método Consultor del origen del viaje
+     * MÃ©todo Consultor del origen del viaje
      *
      * Devuelve la ciudad origen del viaje
      *
@@ -63,7 +63,7 @@ public class GestionReserva implements InterfazCompras{
     }
 
     /**
-     * Método Consultor del destino del viaje
+     * MÃ©todo Consultor del destino del viaje
      *
      * Devuelve la ciudad destino del viaje
      *
@@ -74,7 +74,7 @@ public class GestionReserva implements InterfazCompras{
     }
 
     /**
-     * Método consultor de la hora del viaje
+     * MÃ©todo consultor de la hora del viaje
      *
      * Devuelve la hora del viaje
      *
@@ -85,7 +85,7 @@ public class GestionReserva implements InterfazCompras{
     }
 
     /**
-     * Método consultor del tren del viaje
+     * MÃ©todo consultor del tren del viaje
      *
      * Duelve el tren del viaje reservador
      *
@@ -96,17 +96,17 @@ public class GestionReserva implements InterfazCompras{
     }
 
     /**
-     * Método consultor del número de asientos reservado.
+     * MÃ©todo consultor del nÃºmero de asientos reservado.
      *
-     * Devuelve el número de asientos que se han reservado.
-     * @return the num_asientos
+     * Devuelve el nÃºmero de asientos que se han reservado.
+     * @return the numAsientos
      */
     public int getNumAsientos() {
         return numAsientos;
     }
 
     /**
-     * Método consultor del precio.
+     * MÃ©todo consultor del precio.
      *
      * Devuelve el precio de la reserva.
      *
@@ -168,7 +168,7 @@ public class GestionReserva implements InterfazCompras{
     /**
      * Cancela una reserva.
      *
-     * Dado un código de reserva, cancela la reserva si existe liberando los asientes del tren de dicho viaje.
+     * Dado un cÃ³digo de reserva, cancela la reserva si existe liberando los asientes del tren de dicho viaje.
      *
      * @param codigoReserva de la reserva a cancelar
      */
