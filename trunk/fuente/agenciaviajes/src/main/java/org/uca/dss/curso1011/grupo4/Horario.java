@@ -47,10 +47,10 @@ public class Horario {
      */
     public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren){
   
-        this.SetHoraSalida(salida);
-        this.SetHoraLlegada(llegada);
-        this.SetAsientosDisponibles(asientos);
-        this.SetTren(tren);
+        this.setHoraSalida(salida);
+        this.setHoraLlegada(llegada);
+        this.setAsientosDisponibles(asientos);
+        this.setTren(tren);
     }
 
     /**
@@ -60,22 +60,22 @@ public class Horario {
      * @param valor objeto del que se realizará una copia
      */
     public Horario(Horario valor){
-        this.SetHoraSalida(valor.GetHoraSalida());
-        this.SetHoraLlegada(valor.GetHoraLlegada());
-        this.SetAsientosDisponibles(valor.GetAsientosDisponibles());
-        this.SetTren(valor.GetTren());
+        this.setHoraSalida(valor.getHoraSalida());
+        this.setHoraLlegada(valor.getHoraLlegada());
+        this.setAsientosDisponibles(valor.getAsientosDisponibles());
+        this.setTren(valor.getTren());
     }
     //Métodos de asignación
 
-    private void SetHoraSalida(LocalTime valor){
+    private void setHoraSalida(LocalTime valor){
         this.horaSalida=new LocalTime(valor);
     }
 
-    private void SetHoraLlegada(LocalTime valor){
+    private void setHoraLlegada(LocalTime valor){
         this.horaLlegada=new LocalTime(valor);
     }
 
-    private void SetAsientosDisponibles(int valor){
+    private void setAsientosDisponibles(int valor){
         if(valor < 1)
         {
             this.asientosDisponibles=0;
@@ -87,7 +87,7 @@ public class Horario {
 
     }
     
-    private void SetTren(Tren valor){
+    private void setTren(Tren valor){
         this.tren=new Tren(valor);
     }
      
@@ -100,7 +100,7 @@ public class Horario {
      *
      * @return número de asientos disponibles
      */
-    public int GetAsientosDisponibles(){
+    public int getAsientosDisponibles(){
         return this.asientosDisponibles;
     }
 
@@ -112,7 +112,7 @@ public class Horario {
      *
      * @return objeto de la clase tren que realiza el trayecto para el horario
      */
-    public Tren GetTren(){
+    public Tren getTren(){
         return this.tren;
     }
 
@@ -123,7 +123,7 @@ public class Horario {
      *
      * @return hora de llegada del tren
      */
-    public LocalTime GetHoraLlegada(){
+    public LocalTime getHoraLlegada(){
         return this.horaLlegada;
     }
 
@@ -134,7 +134,7 @@ public class Horario {
      *
      * @return hora de salida del tren
      */
-    public LocalTime GetHoraSalida(){
+    public LocalTime getHoraSalida(){
         return this.horaSalida;
     }
 
@@ -147,8 +147,8 @@ public class Horario {
      *
      * @param asientosReservados numero de asientos a decrementar (reservados).
      */
-    public void ActualizaAsientos(int asientosReservados){
-        int disponibles=this.GetAsientosDisponibles();
+    public void actualizaAsientos(int asientosReservados){
+        int disponibles=this.getAsientosDisponibles();
         disponibles=disponibles + asientosReservados;
         if(disponibles < 0){
             // Aquí lanzaremos una excepción
@@ -156,7 +156,7 @@ public class Horario {
         else
         {
             //If supera numero de asientos del tren otra excepcion
-            this.SetAsientosDisponibles(disponibles);
+            this.setAsientosDisponibles(disponibles);
         }
 
     }
@@ -168,8 +168,8 @@ public class Horario {
      *
      * @return booleano que verifica la disponibildad o no de asientos
      */
-    public boolean ComprobarDisponibilidad(){
-        if(this.GetAsientosDisponibles() > 0)
+    public boolean comprobarDisponibilidad(){
+        if(this.getAsientosDisponibles() > 0)
             return true;
         else
             return false;
@@ -182,8 +182,8 @@ public class Horario {
      * 
      * @return precio del horario
      */
-    public float GetPrecioHorario(){
-        return this.GetTren().getCosteTramo();
+    public float getPrecioHorario(){
+        return this.getTren().getCosteTramo();
     }
     
 }

@@ -31,9 +31,9 @@ import java.util.Map;
 public class Viaje {
     private Float precioFinal;
     private LocalDate fecha;
-    private ArrayList<Reserva> Reservas;
+    //private ArrayList<Reserva> reservas;
     private Trayecto trayecto;
-    private boolean realizadaReserva;
+    //private boolean realizadaReserva;
 
     //Constructor
 
@@ -47,12 +47,12 @@ public class Viaje {
      */
     public Viaje(LocalDate fecha, Trayecto trayecto){
         
-        this.SetFecha(fecha);
+        this.setFecha(fecha);
 
-        this.SetTrayecto(trayecto);
+        this.setTrayecto(trayecto);
 
-        this.CalcularPrecioViaje();
-        this.realizadaReserva=false;
+        this.calcularPrecioViaje();
+        //this.realizadaReserva=false;
     }
     /**
      * Constructor de copia
@@ -62,22 +62,22 @@ public class Viaje {
      * @param viaje objeto a partir del cual se crea el nuevo
      */
     public Viaje(Viaje viaje){
-        this.SetFecha(viaje.GetFecha());
-        this.SetTrayecto(viaje.GetTrayecto());
-        this.precioFinal = viaje.GetPrecio();
-        this.realizadaReserva=viaje.realizadaReserva;
-        if(viaje.realizadaReserva){
-            this.SetReservas(viaje.GetReservas());
-        }
+        this.setFecha(viaje.getFecha());
+        this.setTrayecto(viaje.getTrayecto());
+        this.precioFinal = viaje.getPrecio();
+       // this.realizadaReserva=viaje.realizadaReserva;
+      //  if(viaje.realizadaReserva){
+        //    this.SetReservas(viaje.GetReservas());
+        //}
     }
 
     //Métodos de asignación
 
-    private void SetFecha(LocalDate valor){
+    private void setFecha(LocalDate valor){
         this.fecha=new LocalDate(valor);
     }
 
-    private void SetTrayecto(Trayecto valor){
+    private void setTrayecto(Trayecto valor){
         this.trayecto=new Trayecto(valor);
     }
     
@@ -88,13 +88,13 @@ public class Viaje {
      *
      * @param valor conjunto de reservas para el viaje
      */
-    public void SetReservas(ArrayList<Reserva> valor){
-        this.Reservas=new ArrayList<Reserva>();
-        this.Reservas=valor;
-        this.realizadaReserva=true;
-    }
+    //public void SetReservas(ArrayList<Reserva> valor){
+      //  this.Reservas=new ArrayList<Reserva>();
+        //this.Reservas=valor;
+        //this.realizadaReserva=true;
+    //}
 
-    private void SetPrecio(Float valor){
+    private void setPrecio(Float valor){
         this.precioFinal=valor;
     }
 
@@ -107,7 +107,7 @@ public class Viaje {
      *
      * @return fecha de comienzo del viaje
      */
-    public LocalDate GetFecha(){
+    public LocalDate getFecha(){
         return this.fecha;
     }
 
@@ -118,7 +118,7 @@ public class Viaje {
      *
      * @return trayecto que compone el viaje
      */
-    public Trayecto GetTrayecto(){
+    public Trayecto getTrayecto(){
         return this.trayecto;
     }
     
@@ -129,9 +129,9 @@ public class Viaje {
      *
      * @return conjunto de reservas del viaje
      */
-    public ArrayList<Reserva> GetReservas(){
-        return this.Reservas;
-    }
+    //public ArrayList<Reserva> GetReservas(){
+      //  return this.Reservas;
+    //}
 
     /**
      * Método consultor del precio
@@ -140,7 +140,7 @@ public class Viaje {
      *
      * @return precio del viaje
      */
-    public Float GetPrecio(){
+    public Float getPrecio(){
         return this.precioFinal;
     }
 
@@ -151,8 +151,8 @@ public class Viaje {
      *
      * Lo calcula en función del precio del trayecto, y el número de trayectos que componen el viaje. Establece dicho precio en el atributo 'precio_final'.
      */
-    public void CalcularPrecioViaje(){
-        this.SetPrecio(this.GetTrayecto().GetPrecio());
+    public void calcularPrecioViaje(){
+        this.setPrecio(this.getTrayecto().getPrecio());
     }
 
     /**
@@ -162,8 +162,8 @@ public class Viaje {
      *
      * @return lista de horarios
      */
-    public ArrayList<Horario> ObtenerHorarios(){
-        return this.GetTrayecto().ListarHorarios();
+    public ArrayList<Horario> obtenerHorarios(){
+        return this.getTrayecto().listarHorarios();
     }
 
     /**
@@ -173,8 +173,8 @@ public class Viaje {
      *
      * @return map de horarios y precios asociados
      */
-    public Map<Horario, Float> ObtenerHorariosConPrecios(){
-        return this.GetTrayecto().ListarHorariosConPrecios();
+    public Map<Horario, Float> obtenerHorariosConPrecios(){
+        return this.getTrayecto().listarHorariosConPrecios();
     }
     
 }

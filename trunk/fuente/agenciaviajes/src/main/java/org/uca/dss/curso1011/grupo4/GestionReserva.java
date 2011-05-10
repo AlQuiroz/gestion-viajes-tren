@@ -121,12 +121,12 @@ public class GestionReserva implements InterfazCompras{
         CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), c);
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
-        viajes  = l.GetViajes();
+        viajes  = l.getViajes();
         int i=0;
         precioViajes = 0;
         while(i <viajes.size()){
-            if(viajes.get(i).GetTrayecto().GetOrigen().getNombre().equals(origen) && viajes.get(i).GetTrayecto().GetDestino().getNombre().equals(destino))
-                precioViajes = viajes.get(i).GetTrayecto().GetPrecio();
+            if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
+                precioViajes = viajes.get(i).getTrayecto().getPrecio();
             else
             ++i;
         }
@@ -149,10 +149,10 @@ public class GestionReserva implements InterfazCompras{
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), c);
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         Viaje viaje = null;
-        viajes  = l.GetViajes();
+        viajes  = l.getViajes();
         int i=0;
         while(i <viajes.size()){
-            if(viajes.get(i).GetTrayecto().GetOrigen().getNombre().equals(origen) && viajes.get(i).GetTrayecto().GetDestino().getNombre().equals(destino))
+            if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
                 viaje = new Viaje(viajes.get(i));
             else
             ++i;

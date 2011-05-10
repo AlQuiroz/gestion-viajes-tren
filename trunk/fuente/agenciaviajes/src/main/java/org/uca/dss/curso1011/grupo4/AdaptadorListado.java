@@ -45,24 +45,24 @@ public class AdaptadorListado implements InterfazListados {
      * @param datos objeto de la clase CargaDatos
      */
     public AdaptadorListado(CargaDatos datos){
-        this.SetDatos(datos);
+        this.setDatos(datos);
     }
     
-    private void SetDatos(CargaDatos valor){
+    private void setDatos(CargaDatos valor){
         this.datos=new CargaDatos(valor);
     }
 
     //Métodos Get
 
     public List<LocalTime> getHorarios(String origen, String destino, LocalDate fecha){
-        this.listado=new ListadoViajes(fecha, new Ciudad(origen, "España"), new Ciudad(destino, "España"), this.GetDatos());
+        this.listado=new ListadoViajes(fecha, new Ciudad(origen, "España"), new Ciudad(destino, "España"), this.getDatos());
         ArrayList<Viaje> listaViajes=new ArrayList<Viaje>();
-        listaViajes=this.listado.ListarViajesPorAsientoDisponible();
+        listaViajes=this.listado.listarViajesPorAsientoDisponible();
         List<LocalTime> listadoSalidas=new LinkedList<LocalTime>();
         int i=0;
         while(i<listaViajes.size()){
-            if(!listadoSalidas.add(listaViajes.get(i).GetTrayecto().GetHorarioElegido().GetHoraSalida())){
-                System.out.println("Error al crear el listado");
+            if(!listadoSalidas.add(listaViajes.get(i).getTrayecto().getHorarioElegido().getHoraSalida())){
+                throw new RuntimeException("Error al crear el listado");
             }
             i=i+1;
         }
@@ -75,7 +75,7 @@ public class AdaptadorListado implements InterfazListados {
      * Devuelve el objeto de la clase CargaDatos que contiene los trenes y trayectos precargados.
      * @return objeto de CargaDatos con los trenes y trayectos existentes.
      */
-    public CargaDatos GetDatos(){
+    public CargaDatos getDatos(){
         return this.datos;
     }
 
