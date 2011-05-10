@@ -35,24 +35,24 @@ public class Principal {
        // System.out.println(l.GetViajes().get(1).GetTrayecto().GetHorarioElegido().GetHoraLlegada().toString());
         ArrayList<Viaje> prueba= new ArrayList<Viaje>();
         //Dejo al viaje sin asientos disponibles
-        l.GetViajes().get(0).GetTrayecto().GetHorarioElegido().ActualizaAsientos(-10);
+        l.getViajes().get(0).getTrayecto().getHorarioElegido().actualizaAsientos(-10);
         //Listo los viajes por asiento disponible
-        prueba=l.ListarViajesPorAsientoDisponible();
+        prueba=l.listarViajesPorAsientoDisponible();
         
         int i=0;
-        System.out.println(l.GetViajes().size());
+        System.out.println(l.getViajes().size());
         
         while(i<prueba.size()){
             System.out.println("\nViaje nº"+i+": ");
-            System.out.println("Ciudad origen: "+prueba.get(i).GetTrayecto().GetOrigen().getNombre()+" Ciudad destino: "+prueba.get(i).GetTrayecto().GetDestino().getNombre()+" Hora salida: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetHoraSalida().toString()+"Hora llegada: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetHoraLlegada().toString()+"Precio: "+prueba.get(i).GetPrecio());
-            System.out.println("Coste tren: "+prueba.get(i).GetTrayecto().GetHorarioElegido().GetTren().getCosteTramo());
-            System.out.println("Numero de tramos: "+prueba.get(i).GetTrayecto().GetTramos());
-            System.out.println("Asientos disponibles: "+ prueba.get(i).GetTrayecto().GetHorarioElegido().GetAsientosDisponibles());
+            System.out.println("Ciudad origen: "+prueba.get(i).getTrayecto().getOrigen().getNombre()+" Ciudad destino: "+prueba.get(i).getTrayecto().getDestino().getNombre()+" Hora salida: "+prueba.get(i).getTrayecto().getHorarioElegido().getHoraSalida().toString()+"Hora llegada: "+prueba.get(i).getTrayecto().getHorarioElegido().getHoraLlegada().toString()+"Precio: "+prueba.get(i).getPrecio());
+            System.out.println("Coste tren: "+prueba.get(i).getTrayecto().getHorarioElegido().getTren().getCosteTramo());
+            System.out.println("Numero de tramos: "+prueba.get(i).getTrayecto().getTramos());
+            System.out.println("Asientos disponibles: "+ prueba.get(i).getTrayecto().getHorarioElegido().getAsientosDisponibles());
             i=i+1;
         }
 
         Map<Viaje, Float> lista=new HashMap<Viaje, Float>();
-        lista=l.ListarViajesConPrecio();
+        lista=l.listarViajesConPrecio();
         System.out.println("Fin de la aplicación");
         List<LocalTime> listilla= new LinkedList<LocalTime>();
         AdaptadorListado ll=new AdaptadorListado(c);

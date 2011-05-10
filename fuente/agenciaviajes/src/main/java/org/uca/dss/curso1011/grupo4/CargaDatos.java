@@ -30,8 +30,8 @@ import org.joda.time.LocalTime;
  */
 public class CargaDatos {
 
-    private ArrayList<Tren> TrenesCargados;
-    private ArrayList<Trayecto> TrayectosCargados;
+    private ArrayList<Tren> trenesCargados;
+    private ArrayList<Trayecto> trayectosCargados;
 
     /**
      * Constructor de la clase.
@@ -45,7 +45,7 @@ public class CargaDatos {
         try{
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
-            this.TrenesCargados= new ArrayList<Tren>();
+            this.trenesCargados= new ArrayList<Tren>();
             while ((nextLine = readerTrenes.readNext ()) != null ) {
                 //Aqui vamos cargando los trenes
                 String nombreTren= nextLine[0];
@@ -54,7 +54,7 @@ public class CargaDatos {
                 float precioConvertido=Float.valueOf(precio.trim()).floatValue();
                 int asientosConvertido=Integer.parseInt(asientos.trim());
                 Tren tren= new Tren(asientosConvertido, precioConvertido, nombreTren.trim());
-                if(!this.TrenesCargados.add(tren)){
+                if(!this.trenesCargados.add(tren)){
                     System.out.println("Error al introducir tren" + nombreTren);
                 }
             }
@@ -67,14 +67,14 @@ public class CargaDatos {
         try{
             CSVReader readerTrayectos=new CSVReader(new FileReader(ArchivoTrayectos));
             String [] nextLineTrayectos;
-            this.TrayectosCargados=new ArrayList<Trayecto>();
+            this.trayectosCargados=new ArrayList<Trayecto>();
             while ((nextLineTrayectos = readerTrayectos.readNext ()) != null ) {
                 //Aqui vamos cargando los trayectos
                 String nombre=nextLineTrayectos[0];
                 String ciudadOrigen= nextLineTrayectos[1];
                 String ciudadDestino=nextLineTrayectos[2];
                 String tramos=nextLineTrayectos[3];
-                Tren tren=new Tren(this.GetTren(nombre.trim()));
+                Tren tren=new Tren(this.getTren(nombre.trim()));
                 Ciudad origen= new Ciudad(ciudadOrigen.trim(), "España");
                 Ciudad destino= new Ciudad(ciudadDestino.trim(), "España");
                 int numtramos=Integer.parseInt(tramos.trim());
@@ -84,10 +84,10 @@ public class CargaDatos {
                 while(i<nextLineTrayectos.length){
                     
                     String horaSalida=nextLineTrayectos[i];
-                    LocalTime salida=this.StringToLocaltime(horaSalida);
+                    LocalTime salida=this.stringToLocaltime(horaSalida);
                     i=i+1;
                     String horaLlegada=nextLineTrayectos[i];
-                    LocalTime llegada=this.StringToLocaltime(horaLlegada);
+                    LocalTime llegada=this.stringToLocaltime(horaLlegada);
                     i=i+1;
                     Horario h=new Horario(salida, llegada, tren.getNumAsientos(), tren);
                     
@@ -99,7 +99,7 @@ public class CargaDatos {
                 
                 Trayecto trayecto_= new Trayecto(numtramos, origen, destino, horariosTrayecto);
                 
-                if(!this.TrayectosCargados.add(trayecto_)){
+                if(!this.trayectosCargados.add(trayecto_)){
                     System.out.println("Error al introducir trayecto");
                 }
             }
@@ -117,10 +117,10 @@ public class CargaDatos {
      * @param valor objeto de CargaDatos del cual se realizará la copia.
      */
     public CargaDatos(CargaDatos valor){
-        this.TrenesCargados= new ArrayList<Tren>();
-        this.TrayectosCargados=new ArrayList<Trayecto>();
-        this.TrayectosCargados=valor.GetTrayectosCargados();
-        this.TrenesCargados=valor.GetTrenesCargados();
+        this.trenesCargados= new ArrayList<Tren>();
+        this.trayectosCargados=new ArrayList<Trayecto>();
+        this.trayectosCargados=valor.getTrayectosCargados();
+        this.trenesCargados=valor.getTrenesCargados();
     }
     /**
      * Método convertidor.
@@ -130,7 +130,7 @@ public class CargaDatos {
      * @param valor string con la hora que queremos convertir
      * @return hora contenida en el string de entrada en formato LocalTime
      */
-    public LocalTime StringToLocaltime(String valor){
+    public LocalTime stringToLocaltime(String valor){
 
         String [] vector= valor.split(":");
         
@@ -147,16 +147,16 @@ public class CargaDatos {
      * @param nombre string con el nombre del tren que queremos obtener.
      * @return objeto tren cuyo nombre coincide con el parámetro de entrada.
      */
-    public Tren GetTren(String nombre){
+    public Tren getTren(String nombre){
         int i=0, j=0;
         Tren t;
-        while(i<this.TrenesCargados.size()){
-            if(this.TrenesCargados.get(i).getNombre().equalsIgnoreCase(nombre)){
+        while(i<this.trenesCargados.size()){
+            if(this.trenesCargados.get(i).getNombre().equalsIgnoreCase(nombre)){
                 j= i;
             }
             i=i+1;
         }
-        t=new Tren(this.TrenesCargados.get(j));
+        t=new Tren(this.trenesCargados.get(j));
         return t;
     }
     /**
@@ -165,8 +165,8 @@ public class CargaDatos {
      * Devuelve el conjunto de trenes que han sido cargados del fichero trenes.csv
      * @return conjunto de trenes existentes
      */
-    public ArrayList<Tren> GetTrenesCargados(){
-        return this.TrenesCargados;
+    public ArrayList<Tren> getTrenesCargados(){
+        return this.trenesCargados;
     }
     
     /**
@@ -176,8 +176,8 @@ public class CargaDatos {
      *
      * @return conjunto de trayectos existentes
      */
-    public ArrayList<Trayecto> GetTrayectosCargados(){
-        return this.TrayectosCargados;
+    public ArrayList<Trayecto> getTrayectosCargados(){
+        return this.trayectosCargados;
     }
 
 }

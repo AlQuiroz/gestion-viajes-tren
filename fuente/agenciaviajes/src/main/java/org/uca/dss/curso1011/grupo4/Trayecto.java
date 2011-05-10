@@ -30,12 +30,12 @@ import java.lang.Float;
  */
 public class Trayecto {
     private int tramos;
-    private Ciudad Origen;
-    private Ciudad Destino;
-    private ArrayList<Horario> Horarios;
-    private Horario HorarioElegido;
+    private Ciudad origen;
+    private Ciudad destino;
+    private ArrayList<Horario> horarios;
+    private Horario horarioElegido;
     private float precio;
-    private boolean HorarioSeleccionado;
+    private boolean horarioSeleccionado;
 
     //Constructores
 
@@ -52,13 +52,13 @@ public class Trayecto {
 
     public Trayecto(int tramos, Ciudad Origen, Ciudad Destino, ArrayList<Horario> Horarios){
         
-        this.SetTramos(tramos);
-        this.SetOrigen(Origen);
-        this.SetDestino(Destino);
+        this.setTramos(tramos);
+        this.setOrigen(Origen);
+        this.setDestino(Destino);
         
-        this.SetHorarios(Horarios);
-        this.SetPrecio(0);
-        this.HorarioSeleccionado=false;
+        this.setHorarios(Horarios);
+        this.setPrecio(0);
+        this.horarioSeleccionado=false;
     }
 
     // Constructor de copia
@@ -72,35 +72,35 @@ public class Trayecto {
      */
     public Trayecto(Trayecto valor){
 
-        this.SetTramos(valor.GetTramos());
-        this.SetOrigen(valor.GetOrigen());
-        this.SetDestino(valor.GetDestino());
+        this.setTramos(valor.getTramos());
+        this.setOrigen(valor.getOrigen());
+        this.setDestino(valor.getDestino());
 
-        this.SetHorarios(valor.ListarHorarios());
-        this.SetPrecio(valor.GetPrecio());
-        if(valor.HorarioSeleccionado){
-            this.SetHorarioElegido(valor.GetHorarioElegido());
+        this.setHorarios(valor.listarHorarios());
+        this.setPrecio(valor.getPrecio());
+        if(valor.horarioSeleccionado){
+            this.setHorarioElegido(valor.getHorarioElegido());
         }
     }
 
     //Métodos de asignación
 
-    private void SetTramos(int valor){
+    private void setTramos(int valor){
         this.tramos=valor;
     }
     
-    private void SetOrigen(Ciudad valor){
-        this.Origen=new Ciudad(valor);
+    private void setOrigen(Ciudad valor){
+        this.origen=new Ciudad(valor);
 
     }
 
-    private void SetDestino(Ciudad valor){
-        this.Destino=new Ciudad(valor);
+    private void setDestino(Ciudad valor){
+        this.destino=new Ciudad(valor);
     }
 
-    private void SetHorarios(ArrayList<Horario> valor){
-        this.Horarios= new ArrayList<Horario>();
-        this.Horarios=valor;
+    private void setHorarios(ArrayList<Horario> valor){
+        this.horarios= new ArrayList<Horario>();
+        this.horarios=valor;
     }
 
     /**
@@ -110,14 +110,14 @@ public class Trayecto {
      * 
      * @param valor horario que queremos establecer como horario elegido para el trayecto
      */
-    public void SetHorarioElegido(Horario valor){
-        this.HorarioSeleccionado=true;
-        this.HorarioElegido=new Horario(valor);
-        this.SetPrecio(this.CalcularPrecioTrayecto(valor));
+    public void setHorarioElegido(Horario valor){
+        this.horarioSeleccionado=true;
+        this.horarioElegido=new Horario(valor);
+        this.setPrecio(this.calcularPrecioTrayecto(valor));
         
     }
 
-    private void SetPrecio(float valor){
+    private void setPrecio(float valor){
         this.precio=valor;
     }
 
@@ -131,7 +131,7 @@ public class Trayecto {
      * @return número de tramos del trayecto
      */
 
-    public int GetTramos(){
+    public int getTramos(){
         return this.tramos;
     }
 
@@ -143,8 +143,8 @@ public class Trayecto {
      *
      * @return ciudad origen del trayecto
      */
-    public Ciudad GetOrigen(){
-       return this.Origen;
+    public Ciudad getOrigen(){
+       return this.origen;
     }
 
     /**
@@ -154,8 +154,8 @@ public class Trayecto {
      *
      * @return ciudad destino del trayecto
      */
-    public Ciudad GetDestino(){
-       return this.Destino;
+    public Ciudad getDestino(){
+       return this.destino;
     }
 
     /**
@@ -165,8 +165,8 @@ public class Trayecto {
      * 
      * @return lista de horarios disponibles para el trayecto.
      */
-    public ArrayList<Horario> ListarHorarios(){
-        return this.Horarios;
+    public ArrayList<Horario> listarHorarios(){
+        return this.horarios;
     }
 
     /**
@@ -176,13 +176,13 @@ public class Trayecto {
      *
      * @return horario elegido para el trayecto
      */
-    public Horario GetHorarioElegido(){
+    public Horario getHorarioElegido(){
         
-        if(this.HorarioSeleccionado){
-            return this.HorarioElegido;
+        if(this.horarioSeleccionado){
+            return this.horarioElegido;
         }else{
             try{
-                return this.HorarioElegido;
+                return this.horarioElegido;
             }catch(NullPointerException e){
                 System.out.println("No se ha seleccionado aún ningun horario");
             }catch(Exception e){
@@ -199,7 +199,7 @@ public class Trayecto {
      *
      * @return precio del trayecto
      */
-    public Float GetPrecio(){
+    public Float getPrecio(){
         return this.precio;
     }
 
@@ -212,10 +212,10 @@ public class Trayecto {
      * @param HorarioElegido horario del que queremos calcular su precio
      * @return precio para el horario introducido por parámetro
      */
-    public Float CalcularPrecioTrayecto(Horario HorarioElegido){
-        float CostePorTramo=HorarioElegido.GetTren().getCosteTramo();
-        int NumTramos=this.GetTramos();
-        return CostePorTramo*NumTramos;
+    public Float calcularPrecioTrayecto(Horario HorarioElegido){
+        float costePorTramo=horarioElegido.getTren().getCosteTramo();
+        int numTramos=this.getTramos();
+        return costePorTramo*numTramos;
     }
 
     
@@ -227,11 +227,11 @@ public class Trayecto {
      *
      * @return conjunto de pares horario-precio
      */
-    public Map<Horario, Float> ListarHorariosConPrecios(){
+    public Map<Horario, Float> listarHorariosConPrecios(){
         Map<Horario, Float> mapa= new HashMap<Horario, Float>();
-        for(int i=0; i<this.ListarHorarios().size(); i++){
-            Horario h=new Horario(this.ListarHorarios().get(i));
-            Float PrecioParcial=this.CalcularPrecioTrayecto(h);
+        for(int i=0; i<this.listarHorarios().size(); i++){
+            Horario h=new Horario(this.listarHorarios().get(i));
+            Float PrecioParcial=this.calcularPrecioTrayecto(h);
             mapa.put(h, PrecioParcial);
         }
         return mapa;

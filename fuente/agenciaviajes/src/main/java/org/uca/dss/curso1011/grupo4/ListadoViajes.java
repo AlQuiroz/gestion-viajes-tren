@@ -34,7 +34,7 @@ public class ListadoViajes {
     private LocalDate fecha;
     private Ciudad origen;
     private Ciudad destino;
-    private ArrayList<Viaje> Viajes;
+    private ArrayList<Viaje> viajes;
 
     // Constructores
 
@@ -50,25 +50,25 @@ public class ListadoViajes {
      */
     public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, CargaDatos datos){
 
-        this.SetFecha(fecha);
-        if(!this.ComprobarValidezFecha()){
+        this.setFecha(fecha);
+        if(!this.comprobarValidezFecha()){
             System.out.println("La fecha indicada es anterior a la actual");
         }
-        this.SetOrigen(origen);
-        this.SetDestino(destino);
+        this.setOrigen(origen);
+        this.setDestino(destino);
         //Ahora creamos los viajes
         ArrayList<Trayecto> trayectos=new ArrayList<Trayecto>();
-        trayectos=datos.GetTrayectosCargados();
+        trayectos=datos.getTrayectosCargados();
         int i=0;
-        this.Viajes=new ArrayList<Viaje>();
+        this.viajes=new ArrayList<Viaje>();
         while(i<trayectos.size()){
-            if(trayectos.get(i).GetOrigen().getNombre().equalsIgnoreCase(origen.getNombre()) && trayectos.get(i).GetDestino().getNombre().equalsIgnoreCase(destino.getNombre())){
+            if(trayectos.get(i).getOrigen().getNombre().equalsIgnoreCase(origen.getNombre()) && trayectos.get(i).getDestino().getNombre().equalsIgnoreCase(destino.getNombre())){
                 int j=0;
-                while(j<trayectos.get(i).ListarHorarios().size()){
+                while(j<trayectos.get(i).listarHorarios().size()){
                     Trayecto trayecto_=new Trayecto(trayectos.get(i));
-                    trayecto_.SetHorarioElegido(trayecto_.ListarHorarios().get(j));
+                    trayecto_.setHorarioElegido(trayecto_.listarHorarios().get(j));
                     Viaje viaje_=new Viaje(fecha, trayecto_);
-                    if(!Viajes.add(viaje_)){
+                    if(!viajes.add(viaje_)){
                         System.out.println("Error al cargar el viaje");
                     }
                     
@@ -87,11 +87,11 @@ public class ListadoViajes {
      * @param valor objeto del que queremos realizar la copia
      */
     public ListadoViajes(ListadoViajes valor){
-       this.fecha=new LocalDate(valor.GetFecha());
-       this.origen=new Ciudad(valor.GetOrigen());
-       this.destino=new Ciudad(valor.GetDestino());
-       this.Viajes=new ArrayList<Viaje>();
-       this.Viajes=valor.GetViajes();
+       this.fecha=new LocalDate(valor.getFecha());
+       this.origen=new Ciudad(valor.getOrigen());
+       this.destino=new Ciudad(valor.getDestino());
+       this.viajes=new ArrayList<Viaje>();
+       this.viajes=valor.getViajes();
    }
 
     /**
@@ -101,7 +101,7 @@ public class ListadoViajes {
      *
      * @return ciudad origen de los viajes
      */
-    public Ciudad GetOrigen(){
+    public Ciudad getOrigen(){
        return this.origen;
    }
 
@@ -112,7 +112,7 @@ public class ListadoViajes {
     *
     * @return ciudad destino de los viajes
     */
-   public Ciudad GetDestino(){
+   public Ciudad getDestino(){
        return this.destino;
    }
 
@@ -123,8 +123,8 @@ public class ListadoViajes {
     *
     * @return listado de viajes
     */
-   public ArrayList<Viaje> GetViajes(){
-       return this.Viajes;
+   public ArrayList<Viaje> getViajes(){
+       return this.viajes;
    }
 
    /**
@@ -134,18 +134,18 @@ public class ListadoViajes {
     *
     * @return fecha de viaje
     */
-   public LocalDate GetFecha(){
+   public LocalDate getFecha(){
        return this.fecha;
    }
-   private void SetFecha(LocalDate valor){
+   private void setFecha(LocalDate valor){
        this.fecha=valor;
    }
 
-   private void SetOrigen(Ciudad valor){
+   private void setOrigen(Ciudad valor){
        this.origen=new Ciudad(valor);
    }
 
-   private void SetDestino(Ciudad valor){
+   private void setDestino(Ciudad valor){
        this.destino=new Ciudad(valor);
    }
 
@@ -156,11 +156,11 @@ public class ListadoViajes {
     *
     * @return conjunto de pares de viaje-precio
     */
-   public Map<Viaje, Float> ListarViajesConPrecio(){
+   public Map<Viaje, Float> listarViajesConPrecio(){
        Map<Viaje, Float> listado=new HashMap<Viaje, Float>();
        int i=0;
-       while(i<this.GetViajes().size()){
-            listado.put(this.GetViajes().get(i), this.GetViajes().get(i).GetPrecio());
+       while(i<this.getViajes().size()){
+            listado.put(this.getViajes().get(i), this.getViajes().get(i).getPrecio());
             i=i+1;
        }
        return listado;
@@ -173,12 +173,12 @@ public class ListadoViajes {
     *
     * @return conjunto de viajes que disponen de asientos libres
     */
-   public ArrayList<Viaje> ListarViajesPorAsientoDisponible(){
+   public ArrayList<Viaje> listarViajesPorAsientoDisponible(){
        ArrayList<Viaje> listado= new ArrayList<Viaje>();
        int i=0;
-       while(i<this.GetViajes().size()){
-           if(this.GetViajes().get(i).GetTrayecto().GetHorarioElegido().ComprobarDisponibilidad()){
-               if(!listado.add(this.GetViajes().get(i))){
+       while(i<this.getViajes().size()){
+           if(this.getViajes().get(i).getTrayecto().getHorarioElegido().comprobarDisponibilidad()){
+               if(!listado.add(this.getViajes().get(i))){
                    System.out.println("Error al crear el listado");
                }
            }
@@ -187,7 +187,7 @@ public class ListadoViajes {
        return listado;
    }
 
-   private boolean ComprobarValidezFecha(){
+   private boolean comprobarValidezFecha(){
        if(this.fecha.isBefore(new LocalDate())){
            return false;
        }else{
