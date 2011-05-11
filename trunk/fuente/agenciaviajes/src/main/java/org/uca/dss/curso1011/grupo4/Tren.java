@@ -8,7 +8,7 @@ package org.uca.dss.curso1011.grupo4;
 /**
  * Representa al tren que realiza el viaje.
  *
- * Clase encargada de representar al tren que realizará el viaje determinado en el sistema. En ella se describen aspectos fundamentales del mismo, como puede ser su nombre, que lo identificará, su número de asientos, el tipo o el coste por tramo viajado.
+ * Clase encargada de representar al tren que realizarÃ¡ el viaje determinado en el sistema. En ella se describen aspectos fundamentales del mismo, como puede ser su nombre, que lo identificarï¿½, su nï¿½mero de asientos, el tipo o el coste por tramo viajado.
  *
  * @author migue
  */
@@ -40,7 +40,7 @@ public class Tren {
         this.nombre= tren.getNombre();
      }
      /**
-     * Método consultor del número de asiento
+     * MÃ©todo consultor del nï¿½mero de asiento
      *
      * @return Duelve el valor del numasiento
      */
@@ -49,7 +49,7 @@ public class Tren {
     }
 
     /**
-     * Método consultor de coste del tramo.
+     * MÃ©todo consultor de coste del tramo.
      * Devuelve el coste del tramo que realiza el tren
      *
      * @return Devuelve el valor de costeramo
@@ -60,7 +60,7 @@ public class Tren {
 
 
     /**
-     * Método Consultor del nombre del tren.
+     * MÃ©todo Consultor del nombre del tren.
      *
      * Devuelve el nombre que tiene el tren.
      *

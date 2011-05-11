@@ -61,7 +61,8 @@ public class AdaptadorListado implements InterfazListados {
         List<LocalTime> listadoSalidas=new LinkedList<LocalTime>();
         int i=0;
         while(i<listaViajes.size()){
-            if(!listadoSalidas.add(listaViajes.get(i).getTrayecto().getHorarioElegido().getHoraSalida())){
+            Trayecto auxTrayecto=new Trayecto(listaViajes.get(i).getTrayecto());
+            if(!listadoSalidas.add(auxTrayecto.getHorarioElegido().getHoraSalida())){
                 throw new RuntimeException("Error al crear el listado");
             }
             i=i+1;

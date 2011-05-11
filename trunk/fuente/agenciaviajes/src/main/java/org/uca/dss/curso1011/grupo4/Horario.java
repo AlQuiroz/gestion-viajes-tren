@@ -151,7 +151,7 @@ public class Horario {
         int disponibles=this.getAsientosDisponibles();
         disponibles=disponibles + asientosReservados;
         if(disponibles < 0){
-            // Aquí lanzaremos una excepción
+            throw new RuntimeException("Error: No hay asientos disponibles");
         }
         else
         {
