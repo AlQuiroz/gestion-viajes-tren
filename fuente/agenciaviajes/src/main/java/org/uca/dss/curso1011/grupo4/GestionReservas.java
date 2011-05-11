@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
-
+import org.uca.dss.curso1011.grupo4.CargaDatos;
 
 
 /**
@@ -18,7 +18,7 @@ import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
  *
  * @author migue
  */
-public class GestionReserva implements InterfazCompras{
+public class GestionReservas implements InterfazCompras{
     /**
      * Constructor de la clase GestionReserva
      *
@@ -31,7 +31,7 @@ public class GestionReserva implements InterfazCompras{
      * @param cTren
      * @param numasientos
      */
-    public GestionReserva(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos ){
+    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
@@ -40,6 +40,10 @@ public class GestionReserva implements InterfazCompras{
         this.numAsientos = numasientos;
     };
 
+    public GestionReservas(String trenes, String trayectos){
+        CargaDatos d=new CargaDatos(trenes, trayectos);
+
+    };
     /**
      * Metodo Consultor de la fecha de reserva
      *

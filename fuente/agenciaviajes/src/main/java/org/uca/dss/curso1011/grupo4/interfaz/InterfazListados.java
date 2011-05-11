@@ -21,6 +21,7 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+
 /**
  * Permite consultar los trayectos correspondientes
  * Es necesario para hacer los tests automáticos
@@ -31,7 +32,7 @@ public interface InterfazListados {
     /**
      * Permite obtener la hora de inicio del viaje. No se mostrarán las
      * horas para las cuales ya no hay asientos disponibles
-     * 
+     *
      * @param origen ciudad origen
      * @param destino ciudad destino
      * @param fecha fecha del viaje

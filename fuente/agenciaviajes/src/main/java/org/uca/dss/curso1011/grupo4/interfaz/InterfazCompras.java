@@ -41,9 +41,23 @@ public interface InterfazCompras {
      */
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora);
     /**
+     * Permite comprobar el número de asientos libres
+     *
+     * En el caso de que alguno de los parámetros no sea correcto, debe de devolver
+     * una excepción IllegalArgumentException
+     *
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param fecha fecha del viaje
+     * @param hora hora del viaje
+     * @return número de asientos libres (no reservados)
+     *
+     */
+    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora);
+    /**
      * Cancela una reserva, dejando el asiento indicado libre
      *
-     * @param codigoReserva cadena que identifica la reserva
+     * @param reserva cadena que identifica la reserva
      */
     public void cancelaReserva(String codigoReserva);
 
