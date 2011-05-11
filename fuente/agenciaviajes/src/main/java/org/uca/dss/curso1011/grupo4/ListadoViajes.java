@@ -52,7 +52,8 @@ public class ListadoViajes {
 
         this.setFecha(fecha);
         if(!this.comprobarValidezFecha()){
-            System.out.println("La fecha indicada es anterior a la actual");
+            throw new RuntimeException("Error: La fecha indicada es anterior a la actual");
+
         }
         this.setOrigen(origen);
         this.setDestino(destino);
@@ -62,14 +63,16 @@ public class ListadoViajes {
         int i=0;
         this.viajes=new ArrayList<Viaje>();
         while(i<trayectos.size()){
-            if(trayectos.get(i).getOrigen().getNombre().equalsIgnoreCase(origen.getNombre()) && trayectos.get(i).getDestino().getNombre().equalsIgnoreCase(destino.getNombre())){
+            Ciudad auxOrigen=new Ciudad(trayectos.get(i).getOrigen());
+            Ciudad auxDestino=new Ciudad(trayectos.get(i).getDestino());
+            if(auxOrigen.getNombre().equalsIgnoreCase(origen.getNombre()) && auxDestino.getNombre().equalsIgnoreCase(destino.getNombre())){
                 int j=0;
                 while(j<trayectos.get(i).listarHorarios().size()){
                     Trayecto trayecto_=new Trayecto(trayectos.get(i));
                     trayecto_.setHorarioElegido(trayecto_.listarHorarios().get(j));
                     Viaje viaje_=new Viaje(fecha, trayecto_);
                     if(!viajes.add(viaje_)){
-                        System.out.println("Error al cargar el viaje");
+                        throw new RuntimeException("Error al cargar el viaje");
                     }
                     
                     j=j+1;
@@ -177,9 +180,11 @@ public class ListadoViajes {
        ArrayList<Viaje> listado= new ArrayList<Viaje>();
        int i=0;
        while(i<this.getViajes().size()){
-           if(this.getViajes().get(i).getTrayecto().getHorarioElegido().comprobarDisponibilidad()){
+           Trayecto auxiliar=new Trayecto(this.getViajes().get(i).getTrayecto());
+           Horario hAuxiliar= new Horario(auxiliar.getHorarioElegido());
+           if(hAuxiliar.comprobarDisponibilidad()){
                if(!listado.add(this.getViajes().get(i))){
-                   System.out.println("Error al crear el listado");
+                   throw new RuntimeException("Error al crear el listado");
                }
            }
            i=i+1;

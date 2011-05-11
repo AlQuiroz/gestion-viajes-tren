@@ -213,7 +213,8 @@ public class Trayecto {
      * @return precio para el horario introducido por parámetro
      */
     public Float calcularPrecioTrayecto(Horario HorarioElegido){
-        float costePorTramo=horarioElegido.getTren().getCosteTramo();
+        Tren auxiliar=new Tren(horarioElegido.getTren());
+        float costePorTramo=auxiliar.getCosteTramo();
         int numTramos=this.getTramos();
         return costePorTramo*numTramos;
     }

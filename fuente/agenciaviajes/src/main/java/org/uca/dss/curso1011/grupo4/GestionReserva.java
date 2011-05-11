@@ -125,7 +125,10 @@ public class GestionReserva implements InterfazCompras{
         int i=0;
         precioViajes = 0;
         while(i <viajes.size()){
-            if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
+            Trayecto auxTrayecto=new Trayecto(viajes.get(i).getTrayecto());
+            Ciudad auxOrigen=new Ciudad(auxTrayecto.getOrigen());
+            Ciudad auxDestino=new Ciudad(auxTrayecto.getDestino());
+            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino))
                 precioViajes = viajes.get(i).getTrayecto().getPrecio();
             else
             ++i;

@@ -55,7 +55,8 @@ public class CargaDatos {
                 int asientosConvertido=Integer.parseInt(asientos.trim());
                 Tren tren= new Tren(asientosConvertido, precioConvertido, nombreTren.trim());
                 if(!this.trenesCargados.add(tren)){
-                    System.out.println("Error al introducir tren" + nombreTren);
+                    throw new RuntimeException("Error al introducir el tren" + nombreTren);
+
                 }
             }
 
@@ -92,7 +93,8 @@ public class CargaDatos {
                     Horario h=new Horario(salida, llegada, tren.getNumAsientos(), tren);
                     
                     if(!horariosTrayecto.add(h)){
-                        System.out.println("Error al introducir horario en trayecto");
+                        throw new RuntimeException("Error al introducir horario en trayecto");
+
                     }
                     
                 }
@@ -100,7 +102,7 @@ public class CargaDatos {
                 Trayecto trayecto_= new Trayecto(numtramos, origen, destino, horariosTrayecto);
                 
                 if(!this.trayectosCargados.add(trayecto_)){
-                    System.out.println("Error al introducir trayecto");
+                    throw new RuntimeException("Error al introducir trayecto");
                 }
             }
 
