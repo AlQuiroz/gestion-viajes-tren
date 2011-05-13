@@ -38,14 +38,14 @@ public class GestionReservas implements InterfazCompras{
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
-        this.datos=new AdaptadorListado(new CargaDatos(trenes, trayectos));
+        this.datos=new AdaptadorListado(new CargaDatos(trayectos, trenes));
        // Trayecto trayecto=new Trayecto();
         //Viaje viaje=new Viaje(this.fecha, trayecto);
         //this.reserva= new Reserva(numasientos, viaje);
     };
 
     public GestionReservas(String trenes, String trayectos){
-        this.datos=new AdaptadorListado(new CargaDatos(trenes, trayectos));
+        this.datos=new AdaptadorListado(new CargaDatos(trayectos, trenes));
     };
 
    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
@@ -56,8 +56,10 @@ public class GestionReservas implements InterfazCompras{
        boolean des=false;
        for(int i=0; i<this.datos.getDatos().getTrayectosCargados().size(); i++){
            Ciudad orig=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
+           //System.out.println(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
            if(orig.getNombre().equals(origen)){
                or=true;
+               System.out.println("Cai");
            }
            Ciudad dest=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getDestino());
            if(dest.getNombre().equals(destino)){
@@ -66,6 +68,7 @@ public class GestionReservas implements InterfazCompras{
            if(orig.getNombre().equals(origen) && dest.getNombre().equals(destino)){
                //t=new Trayecto(this.datos.getTrayectosCargados().get(i));
                numTrayecto=i;
+               System.out.println("Ole");
            }
        }
        
@@ -228,6 +231,10 @@ public class GestionReservas implements InterfazCompras{
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public AdaptadorListado getDatos(){
+        return this.datos;
+    }
+
     private LocalDate fecha;
     private Ciudad origen;
     private Ciudad destino;
@@ -235,7 +242,6 @@ public class GestionReservas implements InterfazCompras{
     private Tren tren;
     private int numAsientos;
     private AdaptadorListado datos;
-    //private CargaDatos datos;
    // private Reserva reserva;
     
 }

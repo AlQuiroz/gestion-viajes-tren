@@ -51,10 +51,10 @@ public class ListadoViajes {
     public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, CargaDatos datos){
 
         this.setFecha(fecha);
-        if(!this.comprobarValidezFecha()){
-            throw new RuntimeException("Error: La fecha indicada es anterior a la actual");
+        //if(!this.comprobarValidezFecha()){
+          //  throw new RuntimeException("Error: La fecha indicada es anterior a la actual");
 
-        }
+        //}
         this.setOrigen(origen);
         this.setDestino(destino);
         //Ahora creamos los viajes
