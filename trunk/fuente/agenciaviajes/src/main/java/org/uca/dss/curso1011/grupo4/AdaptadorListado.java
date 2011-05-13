@@ -52,6 +52,7 @@ public class AdaptadorListado implements InterfazListados {
         this.datos=new CargaDatos(valor);
     }
 
+    
     //Métodos Get
 
     public List<LocalTime> getHorarios(String origen, String destino, LocalDate fecha){
