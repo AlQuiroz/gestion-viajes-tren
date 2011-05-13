@@ -31,19 +31,64 @@ public class GestionReservas implements InterfazCompras{
      * @param cTren
      * @param numasientos
      */
-    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos ){
+    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, String trenes, String trayectos ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
+        this.datos=new AdaptadorListado(new CargaDatos(trenes, trayectos));
+       // Trayecto trayecto=new Trayecto();
+        //Viaje viaje=new Viaje(this.fecha, trayecto);
+        //this.reserva= new Reserva(numasientos, viaje);
     };
 
     public GestionReservas(String trenes, String trayectos){
-        CargaDatos d=new CargaDatos(trenes, trayectos);
-
+        this.datos=new AdaptadorListado(new CargaDatos(trenes, trayectos));
     };
+
+   public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
+       Trayecto t;
+       int resultado=-1;
+       int numTrayecto=-1;
+       boolean or=false;
+       boolean des=false;
+       for(int i=0; i<this.datos.getDatos().getTrayectosCargados().size(); i++){
+           Ciudad orig=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
+           if(orig.getNombre().equals(origen)){
+               or=true;
+           }
+           Ciudad dest=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getDestino());
+           if(dest.getNombre().equals(destino)){
+               des=true;
+           }
+           if(orig.getNombre().equals(origen) && dest.getNombre().equals(destino)){
+               //t=new Trayecto(this.datos.getTrayectosCargados().get(i));
+               numTrayecto=i;
+           }
+       }
+       
+       if(!or){
+           throw new IllegalArgumentException("Error: La ciudad origen no existe");
+       }else{
+           if(!des){
+               throw new IllegalArgumentException("Error: La ciudad destino no existe");
+           }else{
+               t=new Trayecto(this.datos.getDatos().getTrayectosCargados().get(numTrayecto));
+
+               for(int j=0; j< t.listarHorarios().size(); j++){
+                   Horario h=new Horario(t.listarHorarios().get(j));
+                   if(h.getHoraSalida().equals(hora)){
+                       
+                       resultado= h.getAsientosDisponibles();
+                   }
+               }
+           }
+       }
+       
+       return resultado;
+   };
     /**
      * Metodo Consultor de la fecha de reserva
      *
@@ -189,5 +234,8 @@ public class GestionReservas implements InterfazCompras{
     private LocalTime hora;
     private Tren tren;
     private int numAsientos;
+    private AdaptadorListado datos;
+    //private CargaDatos datos;
+   // private Reserva reserva;
     
 }
