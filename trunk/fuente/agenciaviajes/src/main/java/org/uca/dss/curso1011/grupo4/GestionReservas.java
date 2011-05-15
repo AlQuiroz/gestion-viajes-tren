@@ -4,11 +4,14 @@
  */
 
 package org.uca.dss.curso1011.grupo4;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import com.db4o.query.Query;
 import java.util.ArrayList;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
-import org.uca.dss.curso1011.grupo4.CargaDatos;
+import org.uca.dss.trenes.basededatos.DBUtils;
 
 
 /**
@@ -39,6 +42,7 @@ public class GestionReservas implements InterfazCompras{
         this.tren = cTren;
         this.numAsientos = numasientos;
         this.datos=new AdaptadorListado(new CargaDatos(trayectos, trenes));
+        DBUtils.initDataBase("./src/main/resources/reservas.yap");
        // Trayecto trayecto=new Trayecto();
         //Viaje viaje=new Viaje(this.fecha, trayecto);
         //this.reserva= new Reserva(numasientos, viaje);
@@ -216,7 +220,12 @@ public class GestionReservas implements InterfazCompras{
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
-        Reserva reserva = new Reserva(1,viaje);
+        ObjectContainer db1 = DBUtils.getDb();
+        Query q=db1.query();
+        q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
+        q.descend("id_reserva").orderDescending();//lo ordena descendente por el id_reserva(supuestamente)
+        ObjectSet result = q.execute();
+        Reserva reserva = new Reserva(1,viaje,result.toString());
         return reserva.getIdReserva();
         //throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -230,6 +239,14 @@ public class GestionReservas implements InterfazCompras{
     public void cancelaReserva(String codigoReserva) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
+    /**
+     * Limpia la base de datos
+     *
+     * Sirve para no dejar datos inconsistentes en la base de datos
+     */
+    public void clear(){
+        DBUtils.clear();
+    }
 
     public AdaptadorListado getDatos(){
         return this.datos;
@@ -242,6 +259,7 @@ public class GestionReservas implements InterfazCompras{
     private Tren tren;
     private int numAsientos;
     private AdaptadorListado datos;
+    private DBUtils db = new DBUtils();
    // private Reserva reserva;
     
 }

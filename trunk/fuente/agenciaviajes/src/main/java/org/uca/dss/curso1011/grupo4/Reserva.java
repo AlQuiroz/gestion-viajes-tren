@@ -23,11 +23,12 @@ public class Reserva {
      * @param asientos que se desean reservar
      * @param viaje a reservar
      */
-    public Reserva(int asientos, Viaje viaje){
+    public Reserva(int asientos, Viaje viaje, String id){
       //Primero hay que combrar que se pueda hacer la reserva si hay asientos
       this.numAsientos = asientos;
       this.fechaReserva = new LocalDate();
       this.viaje = viaje;
+      this.idReserva = id;
       //el _idReserva tendra que hacerse de forma automática incrementando el anterior
     }
 
@@ -38,11 +39,12 @@ public class Reserva {
      *
      * @param viaje
      */
-    public Reserva(Viaje viaje){
+    public Reserva(Viaje viaje,String id){
        //Primero hay que combrar que se pueda hacer la reserva si hay asientos
       this.numAsientos = 1;
       this.fechaReserva = new LocalDate();
       this.viaje = viaje;
+      this.idReserva = id;
       //el _id_reserva tendra que hacerse de forma autom�tica incrementando el anterior
     }
      /**
