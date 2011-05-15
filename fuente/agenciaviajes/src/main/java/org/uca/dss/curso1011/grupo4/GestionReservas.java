@@ -226,8 +226,9 @@ public class GestionReservas implements InterfazCompras{
         q.descend("id_reserva").orderDescending();//lo ordena descendente por el id_reserva(supuestamente)
         ObjectSet result = q.execute();
         Reserva reserva = new Reserva(1,viaje,result.toString());
+        db1.store(reserva);
         return reserva.getIdReserva();
-        //throw new UnsupportedOperationException("Not supported yet.");
+        //disminuir las plazas del tren
     }
     /**
      * Cancela una reserva.
@@ -238,6 +239,13 @@ public class GestionReservas implements InterfazCompras{
      */
     public void cancelaReserva(String codigoReserva) {
         //throw new UnsupportedOperationException("Not supported yet.");
+        ObjectContainer db1 = DBUtils.getDb();
+        Query q=db1.query();
+        q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
+        q.descend("id_reserva").constrain(codigoReserva).equal();
+        Object result=q.execute();
+        db1.delete(result.getClass());
+        //Hay que aumentar el número de plazas disponibles
     }
     /**
      * Limpia la base de datos
