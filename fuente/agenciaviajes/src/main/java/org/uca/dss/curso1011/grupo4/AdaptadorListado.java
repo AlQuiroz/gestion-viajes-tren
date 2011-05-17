@@ -81,4 +81,8 @@ public class AdaptadorListado implements InterfazListados {
         return this.datos;
     }
 
+    public ListadoViajes getListado(){
+        return this.listado;
+    }
+
 }
