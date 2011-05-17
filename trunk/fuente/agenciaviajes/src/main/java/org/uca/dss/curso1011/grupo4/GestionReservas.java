@@ -64,7 +64,6 @@ public class GestionReservas implements InterfazCompras{
            //System.out.println(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
            if(orig.getNombre().equals(origen)){
                or=true;
-               System.out.println("Cai");
            }
            Ciudad dest=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getDestino());
            if(dest.getNombre().equals(destino)){
@@ -73,7 +72,6 @@ public class GestionReservas implements InterfazCompras{
            if(orig.getNombre().equals(origen) && dest.getNombre().equals(destino)){
                //t=new Trayecto(this.datos.getTrayectosCargados().get(i));
                numTrayecto=i;
-               System.out.println("Ole");
            }
        }
        
@@ -221,14 +219,33 @@ public class GestionReservas implements InterfazCompras{
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
+        Trayecto t=new Trayecto(viaje.getTrayecto());
+               for(int j=0; j< t.listarHorarios().size(); j++){
+                   Horario h=new Horario(t.listarHorarios().get(j));
+                   if(h.getHoraSalida().equals(hora)){
+                       if(h.comprobarDisponibilidad())
+                           h.actualizaAsientos(-1);
+                       else
+                           throw new RuntimeException("No quedan asientos disponibles");
+                   }
+               }
         ObjectContainer db1 = DBUtils.getDb();
         Query q=db1.query();
         q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
         q.descend("id_reserva").orderDescending();//lo ordena descendente por el id_reserva(supuestamente)
         ObjectSet result = q.execute();
-        Reserva reserva = new Reserva(1,viaje,result.toString());
-        db1.store(reserva);
-        return reserva.getIdReserva();
+        if (result != null)
+        {
+            Reserva reserva = new Reserva(1,viaje,result.toString()+1);
+            db1.store(reserva);
+            return reserva.getIdReserva();
+        }
+        else
+        {
+            Reserva reserva = new Reserva(1,viaje,"1");
+            db1.store(reserva);
+            return reserva.getIdReserva();
+        }
         //disminuir las plazas del tren
     }
     /**
@@ -245,6 +262,7 @@ public class GestionReservas implements InterfazCompras{
         q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
         q.descend("id_reserva").constrain(codigoReserva).equal();
         Object result=q.execute();
+        if (result == null) throw new RuntimeException("El código de reserva no existe");
         db1.delete(result.getClass());
         //Hay que aumentar el nï¿½mero de plazas disponibles
     }
