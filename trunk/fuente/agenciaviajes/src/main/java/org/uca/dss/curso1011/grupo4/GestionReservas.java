@@ -50,7 +50,7 @@ public class GestionReservas implements InterfazCompras{
     public GestionReservas(String trenes, String trayectos){
         CargaDatos datosprevios= new CargaDatos(trayectos, trenes);
         this.datos= new AdaptadorListado(datosprevios);
-        DBUtils.initDataBase("./src/main/resources/reservas.yap");
+        //DBUtils.initDataBase("./src/main/resources/reservas.yap");
     };
 
    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
@@ -209,11 +209,14 @@ public class GestionReservas implements InterfazCompras{
         Viaje viaje = null;
         viajes  = l.getViajes();
         int i=0;
-        while(i <viajes.size()){
+        while(i <=viajes.size()){
             if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
+            {
                 viaje = new Viaje(viajes.get(i));
+                ++i;
+            }
             else
-            ++i;
+                ++i;
         }
         if (viaje == null) throw new IllegalArgumentException();
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
@@ -287,7 +290,7 @@ public class GestionReservas implements InterfazCompras{
     private int numAsientos;
     private AdaptadorListado datos;
     //private ListadoViajes listado;
-    private DBUtils db = new DBUtils();
+    //private DBUtils db = new DBUtils();
    // private Reserva reserva;
     
 }
