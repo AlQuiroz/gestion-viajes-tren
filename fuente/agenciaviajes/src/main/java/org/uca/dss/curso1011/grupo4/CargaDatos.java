@@ -46,7 +46,8 @@ public class CargaDatos {
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
             this.trenesCargados= new ArrayList<Tren>();
-            while ((nextLine = readerTrenes.readNext ()) != null ) {
+            nextLine = readerTrenes.readNext ();
+            while (nextLine.length == 3 ) {//pongo 3 porque en cada línea hay 3 datos, si estamos en una linea sin datos no valdra 3
                 //Aqui vamos cargando los trenes
                 String nombreTren= nextLine[0];
                 String asientos= nextLine[1];
@@ -58,6 +59,7 @@ public class CargaDatos {
                     throw new RuntimeException("Error al introducir el tren" + nombreTren);
 
                 }
+                nextLine = readerTrenes.readNext ();
             }
 
         }catch(Exception e){
