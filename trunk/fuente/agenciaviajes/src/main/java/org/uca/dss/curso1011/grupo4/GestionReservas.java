@@ -41,7 +41,6 @@ public class GestionReservas implements InterfazCompras{
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
-        this.datos=new AdaptadorListado(new CargaDatos(trayectos, trenes));
         DBUtils.initDataBase("./src/main/resources/reservas.yap");
        // Trayecto trayecto=new Trayecto();
         //Viaje viaje=new Viaje(this.fecha, trayecto);
@@ -49,7 +48,9 @@ public class GestionReservas implements InterfazCompras{
     };
 
     public GestionReservas(String trenes, String trayectos){
-        this.datos=new AdaptadorListado(new CargaDatos(trayectos, trenes));
+        CargaDatos datosprevios= new CargaDatos(trayectos, trenes);
+        this.datos= new AdaptadorListado(datosprevios);
+        DBUtils.initDataBase("./src/main/resources/reservas.yap");
     };
 
    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
@@ -204,8 +205,8 @@ public class GestionReservas implements InterfazCompras{
      * @return
      */
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
-        CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
-        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), c);
+        
+        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         Viaje viaje = null;
         viajes  = l.getViajes();
@@ -245,7 +246,7 @@ public class GestionReservas implements InterfazCompras{
         q.descend("id_reserva").constrain(codigoReserva).equal();
         Object result=q.execute();
         db1.delete(result.getClass());
-        //Hay que aumentar el número de plazas disponibles
+        //Hay que aumentar el nï¿½mero de plazas disponibles
     }
     /**
      * Limpia la base de datos
@@ -267,6 +268,7 @@ public class GestionReservas implements InterfazCompras{
     private Tren tren;
     private int numAsientos;
     private AdaptadorListado datos;
+    //private ListadoViajes listado;
     private DBUtils db = new DBUtils();
    // private Reserva reserva;
     
