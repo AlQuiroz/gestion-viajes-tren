@@ -56,10 +56,12 @@ public class GestionReservas implements InterfazCompras{
    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
        Trayecto t;
        int resultado=-1;
-       int numTrayecto=-1;
+       int[] numTrayecto=new int[5];
+       int indiceTrayecto=0;
        boolean or=false;
        boolean des=false;
-       for(int i=0; i<this.datos.getDatos().getTrayectosCargados().size(); i++){
+       ArrayList<Trayecto> trayectos = this.datos.getDatos().getTrayectosCargados();
+       for(int i=0; i<trayectos.size(); i++){
            Ciudad orig=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
            //System.out.println(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
            if(orig.getNombre().equals(origen)){
@@ -70,8 +72,10 @@ public class GestionReservas implements InterfazCompras{
                des=true;
            }
            if(orig.getNombre().equals(origen) && dest.getNombre().equals(destino)){
-               //t=new Trayecto(this.datos.getTrayectosCargados().get(i));
-               numTrayecto=i;
+               //Horario salida = new Horario(trayectos.get(i).getHorarioElegido());
+               //if (salida.getHoraSalida().equals(hora))
+                    numTrayecto[indiceTrayecto]=i;
+                    ++indiceTrayecto;
            }
        }
        
@@ -81,14 +85,17 @@ public class GestionReservas implements InterfazCompras{
            if(!des){
                throw new IllegalArgumentException("Error: La ciudad destino no existe");
            }else{
-               t=new Trayecto(this.datos.getDatos().getTrayectosCargados().get(numTrayecto));
+               for(int i=0;i<indiceTrayecto;++i)
+               {
+                t=new Trayecto(trayectos.get(numTrayecto[i]));
 
-               for(int j=0; j< t.listarHorarios().size(); j++){
+                for(int j=0; j< t.listarHorarios().size(); j++){
                    Horario h=new Horario(t.listarHorarios().get(j));
                    if(h.getHoraSalida().equals(hora)){
                        
                        resultado= h.getAsientosDisponibles();
                    }
+                }
                }
            }
        }
@@ -209,7 +216,7 @@ public class GestionReservas implements InterfazCompras{
         Viaje viaje = null;
         viajes  = l.getViajes();
         int i=0;
-        while(i <=viajes.size()){
+        while(i <viajes.size()){
             if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
             {
                 viaje = new Viaje(viajes.get(i));
@@ -265,7 +272,7 @@ public class GestionReservas implements InterfazCompras{
         q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
         q.descend("id_reserva").constrain(codigoReserva).equal();
         Object result=q.execute();
-        if (result == null) throw new RuntimeException("El código de reserva no existe");
+        if (result == null) throw new RuntimeException("El cï¿½digo de reserva no existe");
         db1.delete(result.getClass());
         //Hay que aumentar el nï¿½mero de plazas disponibles
     }
