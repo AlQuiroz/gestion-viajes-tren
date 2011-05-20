@@ -30,8 +30,8 @@ public class Horario {
 
     //Atributos
     private int asientosDisponibles;
-    private LocalTime horaLlegada;
-    private LocalTime horaSalida;
+    private String horaLlegada;
+    private String horaSalida;
     private Tren tren;
 
     // Constructores
@@ -68,11 +68,11 @@ public class Horario {
     //Métodos de asignación
 
     private void setHoraSalida(LocalTime valor){
-        this.horaSalida=new LocalTime(valor);
+        this.horaSalida=valor.toString();
     }
 
     private void setHoraLlegada(LocalTime valor){
-        this.horaLlegada=new LocalTime(valor);
+        this.horaLlegada=valor.toString();
     }
 
     private void setAsientosDisponibles(int valor){
@@ -124,7 +124,7 @@ public class Horario {
      * @return hora de llegada del tren
      */
     public LocalTime getHoraLlegada(){
-        return this.horaLlegada;
+        return new LocalTime(this.horaLlegada);
     }
 
     /**
@@ -135,7 +135,7 @@ public class Horario {
      * @return hora de salida del tren
      */
     public LocalTime getHoraSalida(){
-        return this.horaSalida;
+        return new LocalTime(this.horaSalida);
     }
 
     //Otros métodos
