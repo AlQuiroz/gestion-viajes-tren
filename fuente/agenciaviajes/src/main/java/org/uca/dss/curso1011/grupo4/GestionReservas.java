@@ -264,13 +264,14 @@ public class GestionReservas implements InterfazCompras{
         //ObjectSet result = q.execute();
         //if (!reservas.isEmpty())
         //{
-            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"1");
+            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"0");
             db.store(reserva);
             return reserva.getIdReserva();
         }
         else
         {
-            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"1");
+            String codigo = ""+ result.size();
+            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),codigo);
             db.store(reserva);
             return reserva.getIdReserva();
         }
@@ -284,15 +285,15 @@ public class GestionReservas implements InterfazCompras{
      * @param codigoReserva de la reserva a cancelar
      */
     public void cancelaReserva(String codigoReserva) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-        ObjectContainer db1 = DBUtils.getDb();
-        Query q=db1.query();
-        q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
-        q.descend("id_reserva").constrain(codigoReserva).equal();
-        Object result=q.execute();
-        if (result == null) throw new RuntimeException("El código de reserva no existe");
-        db1.delete(result.getClass());
-        //Hay que aumentar el n�mero de plazas disponibles
+        Reserva reserva = new Reserva(0,null,codigoReserva);
+        ObjectContainer db = DBUtils.getDb();
+        ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
+        if (result.isEmpty()) throw new RuntimeException("El código de reserva no existe");
+        else{
+            Reserva reservaCancelada =  (Reserva)result.next();
+            reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
+            db.delete(reservaCancelada);
+        }
     }
     /**
      * Limpia la base de datos
