@@ -6,8 +6,10 @@
 package org.uca.dss.curso1011.grupo4;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Predicate;
 import com.db4o.query.Query;
 import java.util.ArrayList;
+import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
@@ -213,47 +215,63 @@ public class GestionReservas implements InterfazCompras{
         
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
-        Viaje viaje = null;
+        ArrayList<Viaje> posiblesviajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
         int i=0;
         while(i <viajes.size()){
             if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
             {
-                viaje = new Viaje(viajes.get(i));
+                posiblesviajes.add(new Viaje(viajes.get(i)));
                 ++i;
             }
             else
                 ++i;
         }
-        if (viaje == null) throw new IllegalArgumentException();
+        if (posiblesviajes.isEmpty()) throw new IllegalArgumentException();
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
-        Trayecto t=new Trayecto(viaje.getTrayecto());
+        int viajeSeleccionado=0;
+        boolean encontrado=false;
+        while(viajeSeleccionado<posiblesviajes.size() && !encontrado)
+        {
+        Trayecto t= posiblesviajes.get(viajeSeleccionado).getTrayecto();
                for(int j=0; j< t.listarHorarios().size(); j++){
-                   Horario h=new Horario(t.listarHorarios().get(j));
+                   Horario h=t.listarHorarios().get(j);
                    if(h.getHoraSalida().equals(hora)){
+                       encontrado=true;
                        if(h.comprobarDisponibilidad())
                            h.actualizaAsientos(-1);
                        else
                            throw new RuntimeException("No quedan asientos disponibles");
                    }
                }
-        ObjectContainer db1 = DBUtils.getDb();
-        Query q=db1.query();
-        q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
-        q.descend("id_reserva").orderDescending();//lo ordena descendente por el id_reserva(supuestamente)
-        ObjectSet result = q.execute();
-        if (result != null)
+               ++viajeSeleccionado;
+        }
+        Reserva reservaVacia = new Reserva(0,null,null);
+        ObjectContainer db = DBUtils.getDb();
+        ObjectSet result=db.queryByExample(reservaVacia);//devuelve todas las reservas
+        if(result.size()==0)
         {
-            Reserva reserva = new Reserva(1,viaje,result.toString()+1);
-            db1.store(reserva);
+        //List<Reserva> reservas = db.query(new Predicate <Reserva>() {
+        //    public boolean match ( Reserva reserva) {
+        //        return true;
+        //    }
+        //    }) ;
+        //Query q=db.query();
+        //q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
+        //q.descend("id_reserva").orderDescending();//lo ordena descendente por el id_reserva(supuestamente)
+        //ObjectSet result = q.execute();
+        //if (!reservas.isEmpty())
+        //{
+            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"1");
+            db.store(reserva);
             return reserva.getIdReserva();
         }
         else
         {
-            Reserva reserva = new Reserva(1,viaje,"1");
-            db1.store(reserva);
+            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"1");
+            db.store(reserva);
             return reserva.getIdReserva();
         }
         //disminuir las plazas del tren
@@ -272,7 +290,7 @@ public class GestionReservas implements InterfazCompras{
         q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
         q.descend("id_reserva").constrain(codigoReserva).equal();
         Object result=q.execute();
-        if (result == null) throw new RuntimeException("El c�digo de reserva no existe");
+        if (result == null) throw new RuntimeException("El código de reserva no existe");
         db1.delete(result.getClass());
         //Hay que aumentar el n�mero de plazas disponibles
     }
