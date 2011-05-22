@@ -221,7 +221,7 @@ public class GestionReservas implements InterfazCompras{
         while(i <viajes.size()){
             if(viajes.get(i).getTrayecto().getOrigen().getNombre().equals(origen) && viajes.get(i).getTrayecto().getDestino().getNombre().equals(destino))
             {
-                posiblesviajes.add(new Viaje(viajes.get(i)));
+                posiblesviajes.add(viajes.get(i));
                 ++i;
             }
             else
@@ -253,17 +253,6 @@ public class GestionReservas implements InterfazCompras{
         ObjectSet result=db.queryByExample(reservaVacia);//devuelve todas las reservas
         if(result.size()==0)
         {
-        //List<Reserva> reservas = db.query(new Predicate <Reserva>() {
-        //    public boolean match ( Reserva reserva) {
-        //        return true;
-        //    }
-        //    }) ;
-        //Query q=db.query();
-        //q.constrain(Reserva.class);//devuelve los objeto de la clase Reserva
-        //q.descend("id_reserva").orderDescending();//lo ordena descendente por el id_reserva(supuestamente)
-        //ObjectSet result = q.execute();
-        //if (!reservas.isEmpty())
-        //{
             Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"0");
             db.store(reserva);
             return reserva.getIdReserva();
