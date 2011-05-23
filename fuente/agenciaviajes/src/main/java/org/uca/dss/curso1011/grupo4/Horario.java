@@ -18,6 +18,7 @@
 
 package org.uca.dss.curso1011.grupo4;
 import org.joda.time.LocalTime;
+import org.joda.time.LocalDate;
 
 /**
  * Representa el horario previsto para un viaje en el sistema.
@@ -33,7 +34,7 @@ public class Horario {
     private String horaLlegada;
     private String horaSalida;
     private Tren tren;
-
+    private LocalDate fecha;
     // Constructores
     /**
      * Constructor
@@ -45,12 +46,13 @@ public class Horario {
      * @param asientos asientos disponibles para el viaje
      * @param tren tren que realiza el trayecto en este horario
      */
-    public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren){
+    public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren, LocalDate fecha){
   
         this.setHoraSalida(salida);
         this.setHoraLlegada(llegada);
         this.setAsientosDisponibles(asientos);
         this.setTren(tren);
+        this.setFecha(fecha);
     }
 
     /**
@@ -64,11 +66,17 @@ public class Horario {
         this.setHoraLlegada(valor.getHoraLlegada());
         this.setAsientosDisponibles(valor.getAsientosDisponibles());
         this.setTren(valor.getTren());
+        this.setFecha(valor.getFecha());
     }
     //Métodos de asignación
 
     private void setHoraSalida(LocalTime valor){
         this.horaSalida=valor.toString();
+    }
+
+
+    private void setFecha(LocalDate valor){
+        this.fecha=valor;
     }
 
     private void setHoraLlegada(LocalTime valor){
@@ -104,6 +112,10 @@ public class Horario {
         return this.asientosDisponibles;
     }
 
+
+    public LocalDate getFecha(){
+        return this.fecha;
+    }
 
     /**
      * Método consultor de tren.

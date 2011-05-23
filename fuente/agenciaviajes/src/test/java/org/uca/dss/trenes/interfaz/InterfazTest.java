@@ -59,7 +59,7 @@ public abstract class InterfazTest {
     @Before
     public void setUp() {
         DBUtils.initDataBase("reservastests.dat");
-        gestion = new GestionReservas("trenest1.csv", "trayectost1.csv");
+        gestion = new GestionReservas("trenest1.csv", "trayectost1.csv", hoy);
         listado = gestion.getDatos();
         compras = gestion;
     }
