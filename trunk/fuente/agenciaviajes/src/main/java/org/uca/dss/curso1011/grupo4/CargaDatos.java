@@ -22,6 +22,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import org.joda.time.LocalTime;
+import org.joda.time.LocalDate;
 /**
  * Clase encargada de cargar datos.
  *
@@ -41,13 +42,13 @@ public class CargaDatos {
      * @param ArchivoTrayectos ruta del fichero trayectos.csv
      * @param ArchivoTrenes ruta del fichero trenes.csv
      */
-    public CargaDatos(String ArchivoTrayectos, String ArchivoTrenes){
+    public CargaDatos(String ArchivoTrayectos, String ArchivoTrenes, LocalDate fecha){
         try{
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
             this.trenesCargados= new ArrayList<Tren>();
             nextLine = readerTrenes.readNext ();
-            while (nextLine.length == 3 ) {//pongo 3 porque en cada línea hay 3 datos, si estamos en una linea sin datos no valdra 3
+            while (nextLine.length == 3 ) {//pongo 3 porque en cada lï¿½nea hay 3 datos, si estamos en una linea sin datos no valdra 3
                 //Aqui vamos cargando los trenes
                 String nombreTren= nextLine[0];
                 String asientos= nextLine[1];
@@ -92,7 +93,7 @@ public class CargaDatos {
                     String horaLlegada=nextLineTrayectos[i];
                     LocalTime llegada=this.stringToLocaltime(horaLlegada);
                     i=i+1;
-                    Horario h=new Horario(salida, llegada, tren.getNumAsientos(), tren);
+                    Horario h=new Horario(salida, llegada, tren.getNumAsientos(), tren, fecha);
                     
                     if(!horariosTrayecto.add(h)){
                         throw new RuntimeException("Error al introducir horario en trayecto");

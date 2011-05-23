@@ -43,8 +43,8 @@ public class GestionReservas implements InterfazCompras{
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
-        DBUtils.initDataBase("./src/main/resources/reservas.yap");
-        CargaDatos datosprevios= new CargaDatos(trayectos, trenes);
+        //DBUtils.initDataBase("./src/main/resources/reservas.yap");
+        CargaDatos datosprevios= new CargaDatos(trayectos, trenes, cFecha);
         this.datos= new AdaptadorListado(datosprevios);
 
         // Trayecto trayecto=new Trayecto();
@@ -52,8 +52,8 @@ public class GestionReservas implements InterfazCompras{
         //this.reserva= new Reserva(numasientos, viaje);
     };
 
-    public GestionReservas(String trenes, String trayectos){
-        CargaDatos datosprevios= new CargaDatos(trayectos, trenes);
+    public GestionReservas(String trenes, String trayectos, LocalDate fecha){
+        CargaDatos datosprevios= new CargaDatos(trayectos, trenes, fecha);
         this.datos= new AdaptadorListado(datosprevios);
         //DBUtils.initDataBase("./src/main/resources/reservas.yap");
     };
@@ -185,7 +185,7 @@ public class GestionReservas implements InterfazCompras{
      */
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora) {
         double precioViajes;
-        CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv");
+        CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv", fecha);
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), c);
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
@@ -241,7 +241,7 @@ public class GestionReservas implements InterfazCompras{
         Trayecto t= posiblesviajes.get(viajeSeleccionado).getTrayecto();
                for(int j=0; j< t.listarHorarios().size(); j++){
                    Horario h=t.listarHorarios().get(j);
-                   if(h.getHoraSalida().equals(hora)){
+                   if(h.getHoraSalida().equals(hora) && h.getFecha().equals(fecha)){
                        encontrado=true;
                        if(h.comprobarDisponibilidad())
                            h.actualizaAsientos(-1);
@@ -249,7 +249,7 @@ public class GestionReservas implements InterfazCompras{
                            throw new RuntimeException("No quedan asientos disponibles");
                    }
                }
-               ++viajeSeleccionado;
+               if (!encontrado) ++viajeSeleccionado;
         }
         Reserva reservaVacia = new Reserva(0,null,null);
         ObjectContainer db = DBUtils.getDb();
