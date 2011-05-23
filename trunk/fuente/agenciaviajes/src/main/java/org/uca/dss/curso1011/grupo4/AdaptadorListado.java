@@ -81,7 +81,8 @@ public class AdaptadorListado implements InterfazListados {
         return this.datos;
     }
 
-    public ListadoViajes getListado(){
+    public ListadoViajes getListado(String origen, String destino, LocalDate fecha){
+        this.listado=new ListadoViajes(fecha, new Ciudad(origen, "España"), new Ciudad(destino, "España"), this.datos);
         return this.listado;
     }
 

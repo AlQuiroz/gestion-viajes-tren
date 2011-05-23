@@ -44,7 +44,10 @@ public class GestionReservas implements InterfazCompras{
         this.tren = cTren;
         this.numAsientos = numasientos;
         DBUtils.initDataBase("./src/main/resources/reservas.yap");
-       // Trayecto trayecto=new Trayecto();
+        CargaDatos datosprevios= new CargaDatos(trayectos, trenes);
+        this.datos= new AdaptadorListado(datosprevios);
+
+        // Trayecto trayecto=new Trayecto();
         //Viaje viaje=new Viaje(this.fecha, trayecto);
         //this.reserva= new Reserva(numasientos, viaje);
     };
@@ -212,8 +215,8 @@ public class GestionReservas implements InterfazCompras{
      * @return
      */
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
-        
-        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
+        ListadoViajes l= new ListadoViajes(this.datos.getListado(origen, destino, fecha));
+        //ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         ArrayList<Viaje> posiblesviajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
