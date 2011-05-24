@@ -14,10 +14,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.junit.After;
 import org.junit.Before;
-import org.uca.dss.curso1011.grupo4.AdaptadorListado;
 import org.uca.dss.trenes.basededatos.DBUtils;
 import org.uca.dss.curso1011.grupo4.GestionReservas;
-import org.uca.dss.curso1011.grupo4.CargaDatos;
 
 /**
  *

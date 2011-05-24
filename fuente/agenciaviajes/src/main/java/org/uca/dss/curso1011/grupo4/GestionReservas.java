@@ -6,10 +6,7 @@
 package org.uca.dss.curso1011.grupo4;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import com.db4o.query.Predicate;
-import com.db4o.query.Query;
 import java.util.ArrayList;
-import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
@@ -195,10 +192,10 @@ public class GestionReservas implements InterfazCompras{
             Trayecto auxTrayecto=new Trayecto(viajes.get(i).getTrayecto());
             Ciudad auxOrigen=new Ciudad(auxTrayecto.getOrigen());
             Ciudad auxDestino=new Ciudad(auxTrayecto.getDestino());
-            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino))
-                precioViajes = viajes.get(i).getTrayecto().getPrecio();
-            else
-            ++i;
+            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino)){
+                precioViajes = viajes.get(i).getTrayecto().getPrecio();}
+            else{
+                ++i;}
         }
         return precioViajes;
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -228,9 +225,10 @@ public class GestionReservas implements InterfazCompras{
                 ++i;
             }
             else
-                ++i;
+            {
+                ++i;}
         }
-        if (posiblesviajes.isEmpty()) throw new IllegalArgumentException();
+        if (posiblesviajes.isEmpty()) {throw new IllegalArgumentException();}
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
@@ -242,14 +240,17 @@ public class GestionReservas implements InterfazCompras{
                for(int j=0; j< t.listarHorarios().size(); j++){
                    Horario h=t.listarHorarios().get(j);
                    if(h.getHoraSalida().equals(hora) && h.getFecha().equals(fecha)){
-                       encontrado=true;
+                   {
+                           encontrado = true;}
                        if(h.comprobarDisponibilidad())
-                           h.actualizaAsientos(-1);
+                       {
+                           h.actualizaAsientos(-1);}
                        else
-                           throw new RuntimeException("No quedan asientos disponibles");
+                       {
+                           throw new RuntimeException("No quedan asientos disponibles");}
                    }
                }
-               if (!encontrado) ++viajeSeleccionado;
+               if (!encontrado) {++viajeSeleccionado;}
         }
         Reserva reservaVacia = new Reserva(0,null,null);
         ObjectContainer db = DBUtils.getDb();
@@ -280,11 +281,15 @@ public class GestionReservas implements InterfazCompras{
         Reserva reserva = new Reserva(0,null,codigoReserva);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
-        if (result.isEmpty()) throw new RuntimeException("El código de reserva no existe");
+        if (result.isEmpty()) {throw new RuntimeException("El código de reserva no existe");}
         else{
-            Reserva reservaCancelada =  (Reserva)result.next();
-            reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
-            db.delete(reservaCancelada);
+            while (result.hasNext()){
+                Reserva reservaCancelada =  (Reserva)result.next();
+                if (reservaCancelada.getIdReserva().equals(codigoReserva)){
+                    reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
+                    db.delete(reservaCancelada);
+                }
+            }
         }
     }
     /**

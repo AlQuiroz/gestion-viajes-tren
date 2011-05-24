@@ -9,15 +9,9 @@ import org.joda.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Random;
 import org.joda.time.LocalDate;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.uca.dss.curso1011.grupo4.GestionReservas;
 import static org.junit.Assert.*;
 
 /**
