@@ -33,7 +33,7 @@ public class CargaDatos {
 
     private ArrayList<Tren> trenesCargados;
     private ArrayList<Trayecto> trayectosCargados;
-
+    private LocalDate fecha;
     /**
      * Constructor de la clase.
      *
@@ -44,6 +44,7 @@ public class CargaDatos {
      */
     public CargaDatos(String ArchivoTrayectos, String ArchivoTrenes, LocalDate fecha){
         try{
+            this.fecha=fecha;
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
             this.trenesCargados= new ArrayList<Tren>();
@@ -126,6 +127,10 @@ public class CargaDatos {
         this.trayectosCargados=new ArrayList<Trayecto>();
         this.trayectosCargados=valor.getTrayectosCargados();
         this.trenesCargados=valor.getTrenesCargados();
+    }
+
+    public LocalDate getFecha(){
+        return this.fecha;
     }
     /**
      * Método convertidor.

@@ -35,6 +35,7 @@ public class InterfazComprasTest extends InterfazTest {
 
         int libresAntes = compras.asientosLibres(origen, destino, hoy, hora);
         int libresOtraHoraAntes = compras.asientosLibres(origen, destino, hoy, hora2);
+        
         compras.reservaAsiento(origen, destino, hoy, hora);
         
         int libresDespues = compras.asientosLibres(origen, destino, hoy, hora);
