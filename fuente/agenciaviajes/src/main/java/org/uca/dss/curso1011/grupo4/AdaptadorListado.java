@@ -46,7 +46,7 @@ public class AdaptadorListado implements InterfazListados {
      * Recibe de parámetro de entrada un objeto de la clase CargaDatos con los trayectos y trenes precargados.
      * @param datos objeto de la clase CargaDatos
      */
-    public AdaptadorListado(String Trenes, String Trayectos, String origen, String destino, LocalDate fecha){
+    public AdaptadorListado(String Trenes, String Trayectos){
         this.rutaTrayectos=Trayectos;
         this.rutaTrenes=Trenes;
       //  this.listado=new ListadoViajes(fecha, new Ciudad(origen, "España"), new Ciudad(destino, "España"), this.rutaTrenes, this.rutaTrayectos);

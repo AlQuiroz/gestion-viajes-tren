@@ -16,7 +16,6 @@
  */
 
 package org.uca.dss.curso1011.grupo4;
-import java.lang.Float;
 import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -151,7 +150,7 @@ public class Viaje {
      *
      * Lo calcula en función del precio del trayecto, y el número de trayectos que componen el viaje. Establece dicho precio en el atributo 'precio_final'.
      */
-    public void calcularPrecioViaje(){
+    private void calcularPrecioViaje(){
         this.setPrecio(this.getTrayecto().getPrecio());
     }
 
