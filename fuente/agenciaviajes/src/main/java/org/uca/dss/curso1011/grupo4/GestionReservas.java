@@ -6,7 +6,10 @@
 package org.uca.dss.curso1011.grupo4;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Predicate;
+import com.db4o.query.Query;
 import java.util.ArrayList;
+import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
@@ -33,77 +36,58 @@ public class GestionReservas implements InterfazCompras{
      * @param cTren
      * @param numasientos
      */
-    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, String trenes, String trayectos ){
+    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, String trenes, String trayectos, AdaptadorListado adaptador ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
-        //DBUtils.initDataBase("./src/main/resources/reservas.yap");
-        CargaDatos datosprevios= new CargaDatos(trayectos, trenes, cFecha);
-        this.datos= new AdaptadorListado(datosprevios);
-
+        this.pathTrayectos=trayectos;
+        this.pathTrenes=trenes;
+        //this.datos= new AdaptadorListado(trenes, trayectos, cOrigen.getNombre(), cDestino.getNombre(), fecha);
+        this.datos=adaptador;
         // Trayecto trayecto=new Trayecto();
         //Viaje viaje=new Viaje(this.fecha, trayecto);
         //this.reserva= new Reserva(numasientos, viaje);
     };
 
-    public GestionReservas(String trenes, String trayectos, LocalDate fecha){
-        CargaDatos datosprevios= new CargaDatos(trayectos, trenes, fecha);
-        this.datos= new AdaptadorListado(datosprevios);
-        //DBUtils.initDataBase("./src/main/resources/reservas.yap");
+    public GestionReservas(AdaptadorListado adaptador){
+        this.datos=adaptador;
     };
 
    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
-       Trayecto t;
-       int resultado=-1;
-       int[] numTrayecto=new int[5];
-       int indiceTrayecto=0;
-       boolean or=false;
-       boolean des=false;
-       ArrayList<Trayecto> trayectos = this.datos.getDatos().getTrayectosCargados();
-       for(int i=0; i<trayectos.size(); i++){
-           Ciudad orig=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
-           //System.out.println(this.datos.getDatos().getTrayectosCargados().get(i).getOrigen());
-           if(orig.getNombre().equals(origen)){
-               or=true;
-           }
-           Ciudad dest=new Ciudad(this.datos.getDatos().getTrayectosCargados().get(i).getDestino());
-           if(dest.getNombre().equals(destino)){
-               des=true;
-           }
-           if(orig.getNombre().equals(origen) && dest.getNombre().equals(destino)){
-               //Horario salida = new Horario(trayectos.get(i).getHorarioElegido());
-               //if (salida.getHoraSalida().equals(hora))
-                    numTrayecto[indiceTrayecto]=i;
-                    ++indiceTrayecto;
-           }
-       }
-       
-       if(!or){
-           throw new IllegalArgumentException("Error: La ciudad origen no existe");
-       }else{
-           if(!des){
-               throw new IllegalArgumentException("Error: La ciudad destino no existe");
-           }else{
-               for(int i=0;i<indiceTrayecto;++i)
-               {
-                t=new Trayecto(trayectos.get(numTrayecto[i]));
-
-                for(int j=0; j< t.listarHorarios().size(); j++){
-                   Horario h=new Horario(t.listarHorarios().get(j));
-                   if(h.getHoraSalida().equals(hora)){
-                       
-                       resultado= h.getAsientosDisponibles();
+       CargaDatos datosDia=this.datos.getDatosDia(fecha);
+       int asientos=0;
+       boolean existeOrigen=false;
+       boolean existeDestino=false;
+       for(int i=0; i<datosDia.getTrayectosCargados().size(); i++){
+           if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen)){
+               existeOrigen=true;
+               if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen) && datosDia.getTrayectosCargados().get(i).getDestino().getNombre().equals(destino)){
+                   existeDestino=true;
+                   for(int j=0; j<datosDia.getTrayectosCargados().get(i).listarHorarios().size(); j++){
+                        if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
+                            if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
+                                asientos=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
+                            }
+                        }
                    }
                 }
-               }
-           }
+          }
        }
+
+       if(!existeOrigen){
+            throw new IllegalArgumentException("Error: La ciudad origen no existe");
+
+       }
+       if(!existeDestino){
+                throw new IllegalArgumentException("Error: La ciudad destino no existe");
+
+       }    
        
-       return resultado;
-   };
+       return asientos;
+     };
     /**
      * Metodo Consultor de la fecha de reserva
      *
@@ -182,8 +166,7 @@ public class GestionReservas implements InterfazCompras{
      */
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora) {
         double precioViajes;
-        CargaDatos c=new CargaDatos("./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trayectos.csv", "./src/main/java/org/uca/dss/curso1011/grupo4/interfaz/trenes.csv", fecha);
-        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), c);
+        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.pathTrenes, this.pathTrayectos, this.datos);
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
         int i=0;
@@ -192,10 +175,10 @@ public class GestionReservas implements InterfazCompras{
             Trayecto auxTrayecto=new Trayecto(viajes.get(i).getTrayecto());
             Ciudad auxOrigen=new Ciudad(auxTrayecto.getOrigen());
             Ciudad auxDestino=new Ciudad(auxTrayecto.getDestino());
-            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino)){
-                precioViajes = viajes.get(i).getTrayecto().getPrecio();}
-            else{
-                ++i;}
+            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino))
+                precioViajes = viajes.get(i).getTrayecto().getPrecio();
+            else
+            ++i;
         }
         return precioViajes;
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -212,8 +195,28 @@ public class GestionReservas implements InterfazCompras{
      * @return
      */
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
-        ListadoViajes l= new ListadoViajes(this.datos.getListado(origen, destino, fecha));
-        //ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
+        CargaDatos datosDia=this.datos.getDatosDia(fecha);
+        int asientosDisponibles=0;
+        for(int i=0; i<datosDia.getTrayectosCargados().size(); i++){
+            if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen) && datosDia.getTrayectosCargados().get(i).getDestino().getNombre().equals(destino)){
+                for(int j=0; j<datosDia.getTrayectosCargados().get(i).listarHorarios().size(); j++){
+                    if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
+                        //asientosDisponibles=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
+                        if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
+                            datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).actualizaAsientos(-1);
+                        }else{
+                            throw new RuntimeException("No quedan asientos disponibles para este viaje");
+                        }
+                    }
+                }
+            }
+        }
+
+
+        //------------------------------------------------------------
+        //List<LocalTime> listaHorarios=this.datos.getHorarios(origen, destino, fecha);
+        ListadoViajes l=new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino),this.pathTrenes, this.pathTrayectos, this.datos);
+                //ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         ArrayList<Viaje> posiblesviajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
@@ -225,10 +228,9 @@ public class GestionReservas implements InterfazCompras{
                 ++i;
             }
             else
-            {
-                ++i;}
+                ++i;
         }
-        if (posiblesviajes.isEmpty()) {throw new IllegalArgumentException();}
+        if (posiblesviajes.isEmpty()) throw new IllegalArgumentException();
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
@@ -240,17 +242,10 @@ public class GestionReservas implements InterfazCompras{
                for(int j=0; j< t.listarHorarios().size(); j++){
                    Horario h=t.listarHorarios().get(j);
                    if(h.getHoraSalida().equals(hora) && h.getFecha().equals(fecha)){
-                   {
-                           encontrado = true;}
-                       if(h.comprobarDisponibilidad())
-                       {
-                           h.actualizaAsientos(-1);}
-                       else
-                       {
-                           throw new RuntimeException("No quedan asientos disponibles");}
+                       encontrado=true;
                    }
                }
-               if (!encontrado) {++viajeSeleccionado;}
+               if (!encontrado) ++viajeSeleccionado;
         }
         Reserva reservaVacia = new Reserva(0,null,null);
         ObjectContainer db = DBUtils.getDb();
@@ -281,15 +276,11 @@ public class GestionReservas implements InterfazCompras{
         Reserva reserva = new Reserva(0,null,codigoReserva);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
-        if (result.isEmpty()) {throw new RuntimeException("El código de reserva no existe");}
+        if (result.isEmpty()) throw new RuntimeException("El código de reserva no existe");
         else{
-            while (result.hasNext()){
-                Reserva reservaCancelada =  (Reserva)result.next();
-                if (reservaCancelada.getIdReserva().equals(codigoReserva)){
-                    reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
-                    db.delete(reservaCancelada);
-                }
-            }
+            Reserva reservaCancelada =  (Reserva)result.next();
+            reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
+            db.delete(reservaCancelada);
         }
     }
     /**
@@ -312,6 +303,8 @@ public class GestionReservas implements InterfazCompras{
     private Tren tren;
     private int numAsientos;
     private AdaptadorListado datos;
+    private String pathTrenes;
+    private String pathTrayectos;
     //private ListadoViajes listado;
     //private DBUtils db = new DBUtils();
    // private Reserva reserva;

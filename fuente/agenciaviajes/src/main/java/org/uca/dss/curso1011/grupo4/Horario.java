@@ -181,7 +181,10 @@ public class Horario {
      * @return booleano que verifica la disponibildad o no de asientos
      */
     public boolean comprobarDisponibilidad(){
-        return this.getAsientosDisponibles() > 0;
+        if(this.getAsientosDisponibles() > 0)
+            return true;
+        else
+            return false;
     }
     
     /**
