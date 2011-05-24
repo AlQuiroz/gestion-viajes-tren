@@ -57,7 +57,7 @@ public abstract class InterfazTest {
     @Before
     public void setUp() {
         DBUtils.initDataBase("reservastests.dat");
-        AdaptadorListado adaptador=new AdaptadorListado("trenest1.csv", "trayectost1.csv", origen, destino, hoy);
+        AdaptadorListado adaptador=new AdaptadorListado("trenest1.csv", "trayectost1.csv");
         gestion = new GestionReservas(adaptador);
         listado = gestion.getDatos();
         compras = gestion;

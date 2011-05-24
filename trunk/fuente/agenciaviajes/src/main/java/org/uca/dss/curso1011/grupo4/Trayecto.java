@@ -16,11 +16,9 @@
  */
 
 package org.uca.dss.curso1011.grupo4;
-import org.uca.dss.curso1011.grupo4.Horario;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.lang.Float;
 /**
  * Clase encargada de representar un trayecto.
  *

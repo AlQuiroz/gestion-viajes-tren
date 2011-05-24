@@ -6,10 +6,7 @@
 package org.uca.dss.curso1011.grupo4;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import com.db4o.query.Predicate;
-import com.db4o.query.Query;
 import java.util.ArrayList;
-import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
@@ -19,7 +16,7 @@ import org.uca.dss.trenes.basededatos.DBUtils;
 /**
  * Genera y gestiona una Reserva.
  *
- * Clase encargada de generar y gestionar una reserva determinada, para un viaje de nuestro sistema. Ser� la encargada de interaccionar con el usuario a la hora de realizar la reserva.
+ * Clase encargada de generar y gestionar una reserva determinada, para un viaje de nuestro sistema. Será la encargada de interaccionar con el usuario a la hora de realizar la reserva.
  *
  * @author migue
  */
@@ -27,7 +24,7 @@ public class GestionReservas implements InterfazCompras{
     /**
      * Constructor de la clase GestionReserva
      *
-     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren y el n�mero de asiento a reservar
+     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren y el número de asiento a reservar
      *
      * @param cFecha
      * @param cOrigen
@@ -36,15 +33,13 @@ public class GestionReservas implements InterfazCompras{
      * @param cTren
      * @param numasientos
      */
-    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, String trenes, String trayectos, AdaptadorListado adaptador ){
+    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, AdaptadorListado adaptador ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
-        this.pathTrayectos=trayectos;
-        this.pathTrenes=trenes;
         //this.datos= new AdaptadorListado(trenes, trayectos, cOrigen.getNombre(), cDestino.getNombre(), fecha);
         this.datos=adaptador;
         // Trayecto trayecto=new Trayecto();
@@ -166,7 +161,7 @@ public class GestionReservas implements InterfazCompras{
      */
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora) {
         double precioViajes;
-        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.pathTrenes, this.pathTrayectos, this.datos);
+        ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos);
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
         int i=0;
@@ -175,10 +170,10 @@ public class GestionReservas implements InterfazCompras{
             Trayecto auxTrayecto=new Trayecto(viajes.get(i).getTrayecto());
             Ciudad auxOrigen=new Ciudad(auxTrayecto.getOrigen());
             Ciudad auxDestino=new Ciudad(auxTrayecto.getDestino());
-            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino))
-                precioViajes = viajes.get(i).getTrayecto().getPrecio();
-            else
-            ++i;
+            if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino)){
+                precioViajes = viajes.get(i).getTrayecto().getPrecio();}
+            else{
+                ++i;}
         }
         return precioViajes;
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -196,7 +191,7 @@ public class GestionReservas implements InterfazCompras{
      */
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
         CargaDatos datosDia=this.datos.getDatosDia(fecha);
-        int asientosDisponibles=0;
+        //int asientosDisponibles=0;
         for(int i=0; i<datosDia.getTrayectosCargados().size(); i++){
             if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen) && datosDia.getTrayectosCargados().get(i).getDestino().getNombre().equals(destino)){
                 for(int j=0; j<datosDia.getTrayectosCargados().get(i).listarHorarios().size(); j++){
@@ -215,7 +210,7 @@ public class GestionReservas implements InterfazCompras{
 
         //------------------------------------------------------------
         //List<LocalTime> listaHorarios=this.datos.getHorarios(origen, destino, fecha);
-        ListadoViajes l=new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino),this.pathTrenes, this.pathTrayectos, this.datos);
+        ListadoViajes l=new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos);
                 //ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         ArrayList<Viaje> posiblesviajes = new ArrayList<Viaje>();
@@ -227,10 +222,10 @@ public class GestionReservas implements InterfazCompras{
                 posiblesviajes.add(viajes.get(i));
                 ++i;
             }
-            else
-                ++i;
+            else{
+                ++i;}
         }
-        if (posiblesviajes.isEmpty()) throw new IllegalArgumentException();
+        if (posiblesviajes.isEmpty()) {throw new IllegalArgumentException();}
         // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
         //Para grabar datos parece que hay que usar lo siguiente
         //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
@@ -245,7 +240,8 @@ public class GestionReservas implements InterfazCompras{
                        encontrado=true;
                    }
                }
-               if (!encontrado) ++viajeSeleccionado;
+               if (!encontrado) {
+                   ++viajeSeleccionado;}
         }
         Reserva reservaVacia = new Reserva(0,null,null);
         ObjectContainer db = DBUtils.getDb();
@@ -276,11 +272,17 @@ public class GestionReservas implements InterfazCompras{
         Reserva reserva = new Reserva(0,null,codigoReserva);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
-        if (result.isEmpty()) throw new RuntimeException("El código de reserva no existe");
+        if (result.isEmpty()){
+            throw new RuntimeException("El código de reserva no existe");}
         else{
-            Reserva reservaCancelada =  (Reserva)result.next();
-            reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
-            db.delete(reservaCancelada);
+            while (result.hasNext()){
+                Reserva reservaCancelada =  (Reserva)result.next();
+                if(reservaCancelada.getIdReserva().equals(codigoReserva))
+                {
+                    reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
+                    db.delete(reservaCancelada);
+                }
+            }
         }
     }
     /**
@@ -303,10 +305,7 @@ public class GestionReservas implements InterfazCompras{
     private Tren tren;
     private int numAsientos;
     private AdaptadorListado datos;
-    private String pathTrenes;
-    private String pathTrayectos;
     //private ListadoViajes listado;
-    //private DBUtils db = new DBUtils();
    // private Reserva reserva;
     
 }

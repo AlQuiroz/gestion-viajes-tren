@@ -19,7 +19,6 @@ package org.uca.dss.curso1011.grupo4;
 
 import org.joda.time.LocalDate;
 import java.util.ArrayList;
-import java.lang.Float;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -49,15 +48,12 @@ public class ListadoViajes {
      * @param destino ciudad destino de los viajes que queremos listar
      * @param datos objeto de la clase CargaDatos que contiene los datos de trenes y trayectos precargados.
      */
-    public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, String rutaTrenes, String rutaTrayectos, AdaptadorListado adaptador){
+    public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, AdaptadorListado adaptador){
 
         this.datos=adaptador;
         this.setFecha(fecha);
         CargaDatos datos=this.datos.getDatosDia(fecha);
-        //if(!this.comprobarValidezFecha()){
-          //  throw new RuntimeException("Error: La fecha indicada es anterior a la actual");
-
-        //}
+        
         this.setOrigen(origen);
         this.setDestino(destino);
         //Ahora creamos los viajes
@@ -197,11 +193,4 @@ public class ListadoViajes {
        return listado;
    }
 
-   private boolean comprobarValidezFecha(){
-       if(this.fecha.isBefore(new LocalDate())){
-           return false;
-       }else{
-           return true;
-       }
-   }
 }
