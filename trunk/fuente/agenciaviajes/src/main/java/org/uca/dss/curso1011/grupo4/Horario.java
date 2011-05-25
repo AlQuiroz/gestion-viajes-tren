@@ -45,6 +45,7 @@ public class Horario {
      * @param llegada hora de llegada del viaje
      * @param asientos asientos disponibles para el viaje
      * @param tren tren que realiza el trayecto en este horario
+     * @param fecha LocalDate con la fecha para la que se aplica el horario.
      */
     public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren, LocalDate fecha){
   
@@ -68,7 +69,8 @@ public class Horario {
         this.setTren(valor.getTren());
         this.setFecha(valor.getFecha());
     }
-    //Métodos de asignación
+    
+    // Métodos privados de asignación
 
     private void setHoraSalida(LocalTime valor){
         this.horaSalida=valor.toString();
@@ -113,6 +115,13 @@ public class Horario {
     }
 
 
+    /**
+     * Método consultor de fecha.
+     *
+     * Devuelve la fecha en la cual se aplica el Horario.
+     *
+     * @return LocalDate con la fecha.
+     */
     public LocalDate getFecha(){
         return this.fecha;
     }
@@ -167,7 +176,6 @@ public class Horario {
         }
         else
         {
-            //If supera numero de asientos del tren otra excepcion
             this.setAsientosDisponibles(disponibles);
         }
 

@@ -23,25 +23,32 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
+
 /**
  * Clase encargada de cargar datos.
  *
- * Realiza una carga de los trenes y trayectos que obtiene de los ficheros csv.
+ * Realiza una carga de los trenes y trayectos que obtiene de los ficheros csv, para un día determinado (fecha concreta).
+ *
  * @author Manuel Jesús de la Calle Brihuega
  */
+
 public class CargaDatos {
 
     private ArrayList<Tren> trenesCargados;
     private ArrayList<Trayecto> trayectosCargados;
     private LocalDate fecha;
+
     /**
      * Constructor de la clase.
      *
-     * Recibe como parámetros dos strings con las rutas de los ficheros trenes.csv y trayectos.csv de los cuales se obtienen los trenes y trayectos.
+     * Recibe como parámetros dos strings con las rutas de los ficheros trenes.csv y trayectos.csv de los cuales se obtienen los trenes y trayectos. Además recibe la fecha para la cual se van a cargar los datos.
      *
-     * @param ArchivoTrayectos ruta del fichero trayectos.csv
-     * @param ArchivoTrenes ruta del fichero trenes.csv
+     * @param ArchivoTrayectos String con la ruta del fichero trayectos.csv
+     * @param ArchivoTrenes String con la ruta del fichero trenes.csv
+     * @param fecha LocalDate con la fecha para la que se cargarán los datos.
+     *
      */
+
     public CargaDatos(String ArchivoTrayectos, String ArchivoTrenes, LocalDate fecha){
         try{
             this.fecha=fecha;
@@ -122,6 +129,7 @@ public class CargaDatos {
      *
      * @param valor objeto de CargaDatos del cual se realizará la copia.
      */
+
     public CargaDatos(CargaDatos valor){
         this.trenesCargados= new ArrayList<Tren>();
         this.trayectosCargados=new ArrayList<Trayecto>();
@@ -129,6 +137,13 @@ public class CargaDatos {
         this.trenesCargados=valor.getTrenesCargados();
     }
 
+    /**
+     * Método consultor de fecha.
+     *
+     * Devuelve la fecha para la cual se han cargado los datos (para la cual se ha creado el objeto CargaDatos).
+     *
+     * @return LocalDate con la fecha.
+     */
     public LocalDate getFecha(){
         return this.fecha;
     }

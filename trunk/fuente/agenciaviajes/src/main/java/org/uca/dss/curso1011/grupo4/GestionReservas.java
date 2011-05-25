@@ -20,38 +20,43 @@ import org.uca.dss.trenes.basededatos.DBUtils;
  *
  * @author migue
  */
+
 public class GestionReservas implements InterfazCompras{
     /**
      * Constructor de la clase GestionReserva
      *
-     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren y el número de asiento a reservar
+     * Recibe la fecha del viaje, la ciudad origen, la ciudad destino, la hora del viaje, el tren, el número de asiento a reservar y el objeto adaptador que contiene los datos del sistema.
      *
-     * @param cFecha
-     * @param cOrigen
-     * @param cDestino
-     * @param cHora
-     * @param cTren
-     * @param numasientos
+     * @param cFecha LocalDate con la fecha para la cual queremos gestionar la reserva.
+     * @param cOrigen Ciudad de origen del viaje a reservar.
+     * @param cDestino Ciudad de destino del viaje a reservar.
+     * @param cHora LocalTime con la hora de salida para la que queremos reservar el viaje.
+     * @param cTren Tren con el tren para el que queremos reservar el viaje.
+     * @param numasientos int con el número de asientos que queremos reservar.
+     * @param adaptador Objeto Adaptador que contiene los datos del sistema.
      */
-    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, AdaptadorListado adaptador ){
+    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, Adaptador adaptador ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
         this.hora = cHora;
         this.tren = cTren;
         this.numAsientos = numasientos;
-        //this.datos= new AdaptadorListado(trenes, trayectos, cOrigen.getNombre(), cDestino.getNombre(), fecha);
         this.datos=adaptador;
-        // Trayecto trayecto=new Trayecto();
-        //Viaje viaje=new Viaje(this.fecha, trayecto);
-        //this.reserva= new Reserva(numasientos, viaje);
+ };
+
+ /**
+  * Constructor de la clase GestionReserva
+  *
+  * Recibe el objeto adaptador a partir del cual se construye el sistema, y crea un objeto GestionReserva.
+  *
+  * @param adaptador Objeto Adaptador que contiene los datos del sistema.
+  */
+ public GestionReservas(Adaptador adaptador){
+        this.datos=adaptador;
     };
 
-    public GestionReservas(AdaptadorListado adaptador){
-        this.datos=adaptador;
-    };
-
-   public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
+public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
        CargaDatos datosDia=this.datos.getDatosDia(fecha);
        int asientos=0;
        boolean existeOrigen=false;
@@ -142,23 +147,13 @@ public class GestionReservas implements InterfazCompras{
      * Método consultor del número de asientos reservado.
      *
      * Devuelve el número de asientos que se han reservado.
-     * @return the numAsientos
+     * @return int Número de asientos que queremos gestionar para la reserva.
      */
     public int getNumAsientos() {
         return numAsientos;
     }
 
-    /**
-     * Método consultor del precio.
-     *
-     * Devuelve el precio de la reserva.
-     *
-     * @param origen
-     * @param destino
-     * @param fecha
-     * @param hora
-     * @return Precio de la reserva
-     */
+    
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora) {
         double precioViajes;
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos);
@@ -176,19 +171,9 @@ public class GestionReservas implements InterfazCompras{
                 ++i;}
         }
         return precioViajes;
-        //throw new UnsupportedOperationException("Not supported yet.");
+    
     }
-    /**
-     * Realiza la reserva del viaje.
-     *
-     * Reserva un asiento para el viaje dandole ciudad orige, ciudad destino, fecha y hora
-     * 
-     * @param origen
-     * @param destino
-     * @param fecha
-     * @param hora
-     * @return
-     */
+    
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
         CargaDatos datosDia=this.datos.getDatosDia(fecha);
         //int asientosDisponibles=0;
@@ -206,10 +191,6 @@ public class GestionReservas implements InterfazCompras{
                 }
             }
         }
-
-
-        //------------------------------------------------------------
-        //List<LocalTime> listaHorarios=this.datos.getHorarios(origen, destino, fecha);
         ListadoViajes l=new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos);
                 //ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
@@ -226,50 +207,45 @@ public class GestionReservas implements InterfazCompras{
                 ++i;}
         }
         if (posiblesviajes.isEmpty()) {throw new IllegalArgumentException();}
-        // una guia de dB4o: http://www.programacion.com/articulo/persistencia_de_objetos_java_utilizando_db4o_308#4_ejemplo
-        //Para grabar datos parece que hay que usar lo siguiente
-        //ObjectContainer db = Db4o.openFile("./src/main/resources/reservas.yap");
         int viajeSeleccionado=0;
         boolean encontrado=false;
+        Horario elegido;
+        int indiceHorarioElegido=0;
         while(viajeSeleccionado<posiblesviajes.size() && !encontrado)
         {
         Trayecto t= posiblesviajes.get(viajeSeleccionado).getTrayecto();
-               for(int j=0; j< t.listarHorarios().size(); j++){
+
+                for(int j=0; j< t.listarHorarios().size(); j++){
                    Horario h=t.listarHorarios().get(j);
                    if(h.getHoraSalida().equals(hora) && h.getFecha().equals(fecha)){
                        encontrado=true;
+                       indiceHorarioElegido=j;
                    }
                }
                if (!encontrado) {
                    ++viajeSeleccionado;}
         }
-        Reserva reservaVacia = new Reserva(0,null,null);
+        Reserva reservaVacia = new Reserva(0,null,null, null);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reservaVacia);//devuelve todas las reservas
+        elegido=posiblesviajes.get(viajeSeleccionado).getTrayecto().listarHorarios().get(indiceHorarioElegido);
         if(result.size()==0)
         {
-            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"0");
+            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"0", elegido);
             db.store(reserva);
             return reserva.getIdReserva();
         }
         else
         {
             String codigo = ""+ result.size();
-            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),codigo);
+            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),codigo, elegido);
             db.store(reserva);
             return reserva.getIdReserva();
         }
-        //disminuir las plazas del tren
     }
-    /**
-     * Cancela una reserva.
-     *
-     * Dado un código de reserva, cancela la reserva si existe liberando los asientes del tren de dicho viaje.
-     *
-     * @param codigoReserva de la reserva a cancelar
-     */
+
     public void cancelaReserva(String codigoReserva) {
-        Reserva reserva = new Reserva(0,null,codigoReserva);
+        Reserva reserva = new Reserva(0,null,codigoReserva, null);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
         if (result.isEmpty()){
@@ -279,12 +255,16 @@ public class GestionReservas implements InterfazCompras{
                 Reserva reservaCancelada =  (Reserva)result.next();
                 if(reservaCancelada.getIdReserva().equals(codigoReserva))
                 {
-                    reservaCancelada.getViaje().getTrayecto().getHorarioElegido().actualizaAsientos(reservaCancelada.getNumAsientos());//aumento asiento
-                    db.delete(reservaCancelada);
+                      reservaCancelada.getHorario().actualizaAsientos(reservaCancelada.getNumAsientos());
+                      
                 }
+                    //aumento asiento
+                    db.delete(reservaCancelada);
             }
-        }
+            }
+        
     }
+
     /**
      * Limpia la base de datos
      *
@@ -294,7 +274,14 @@ public class GestionReservas implements InterfazCompras{
         DBUtils.clear();
     }
 
-    public AdaptadorListado getDatos(){
+    /**
+     * Método consultor de datos.
+     *
+     * Consulta y devuelve una referencia del objeto Adaptador en el cual se basa el sistema, y el cual contiene los datos del mismo.
+     *
+     * @return objeto Adaptador con los datos del sistema.
+     */
+    public Adaptador getDatos(){
         return this.datos;
     }
 
@@ -304,8 +291,5 @@ public class GestionReservas implements InterfazCompras{
     private LocalTime hora;
     private Tren tren;
     private int numAsientos;
-    private AdaptadorListado datos;
-    //private ListadoViajes listado;
-   // private Reserva reserva;
-    
+    private Adaptador datos;
 }

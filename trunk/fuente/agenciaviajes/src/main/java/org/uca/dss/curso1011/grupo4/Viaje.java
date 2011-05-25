@@ -30,9 +30,7 @@ import java.util.Map;
 public class Viaje {
     private Float precioFinal;
     private LocalDate fecha;
-    //private ArrayList<Reserva> reservas;
     private Trayecto trayecto;
-    //private boolean realizadaReserva;
 
     //Constructor
 
@@ -51,7 +49,6 @@ public class Viaje {
         this.setTrayecto(trayecto);
 
         this.calcularPrecioViaje();
-        //this.realizadaReserva=false;
     }
     /**
      * Constructor de copia
@@ -64,10 +61,6 @@ public class Viaje {
         this.setFecha(viaje.getFecha());
         this.setTrayecto(viaje.getTrayecto());
         this.precioFinal = viaje.getPrecio();
-       // this.realizadaReserva=viaje.realizadaReserva;
-      //  if(viaje.realizadaReserva){
-        //    this.SetReservas(viaje.GetReservas());
-        //}
     }
 
     //Métodos de asignación
@@ -80,18 +73,6 @@ public class Viaje {
         this.trayecto=new Trayecto(valor);
     }
     
-    /**
-     * Método modificador.
-     *
-     * Establece la reserva, o conjunto de reservas realizadas previamente para el viaje.
-     *
-     * @param valor conjunto de reservas para el viaje
-     */
-    //public void SetReservas(ArrayList<Reserva> valor){
-      //  this.Reservas=new ArrayList<Reserva>();
-        //this.Reservas=valor;
-        //this.realizadaReserva=true;
-    //}
 
     private void setPrecio(Float valor){
         this.precioFinal=valor;
@@ -121,16 +102,6 @@ public class Viaje {
         return this.trayecto;
     }
     
-    /**
-     * Método consultor.
-     *
-     * Devuelve el conjunto de reservas realizadas para el viaje.
-     *
-     * @return conjunto de reservas del viaje
-     */
-    //public ArrayList<Reserva> GetReservas(){
-      //  return this.Reservas;
-    //}
 
     /**
      * Método consultor del precio

@@ -34,7 +34,7 @@ public class ListadoViajes {
     private Ciudad origen;
     private Ciudad destino;
     private ArrayList<Viaje> viajes;
-    private AdaptadorListado datos;
+    private Adaptador datos;
 
     // Constructores
 
@@ -46,9 +46,9 @@ public class ListadoViajes {
      * @param fecha fecha para los viajes que queremos listar
      * @param origen ciudad origen de los viajes que queremos listar
      * @param destino ciudad destino de los viajes que queremos listar
-     * @param datos objeto de la clase CargaDatos que contiene los datos de trenes y trayectos precargados.
+     * @param adaptador referencia del objeto Adaptador que contiene los datos del sistema.
      */
-    public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, AdaptadorListado adaptador){
+    public ListadoViajes(LocalDate fecha, Ciudad origen, Ciudad destino, Adaptador adaptador){
 
         this.datos=adaptador;
         this.setFecha(fecha);
@@ -141,6 +141,7 @@ public class ListadoViajes {
    public LocalDate getFecha(){
        return this.fecha;
    }
+
    private void setFecha(LocalDate valor){
        this.fecha=valor;
    }
