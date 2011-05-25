@@ -16,7 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.uca.dss.trenes.basededatos.DBUtils;
 import org.uca.dss.curso1011.grupo4.GestionReservas;
-import org.uca.dss.curso1011.grupo4.AdaptadorListado;
+import org.uca.dss.curso1011.grupo4.Adaptador;
 /**
  *
  * @author dmolina
@@ -57,7 +57,7 @@ public abstract class InterfazTest {
     @Before
     public void setUp() {
         DBUtils.initDataBase("reservastests.dat");
-        AdaptadorListado adaptador=new AdaptadorListado("trenest1.csv", "trayectost1.csv");
+        Adaptador adaptador=new Adaptador("trenest1.csv", "trayectost1.csv");
         gestion = new GestionReservas(adaptador);
         listado = gestion.getDatos();
         compras = gestion;

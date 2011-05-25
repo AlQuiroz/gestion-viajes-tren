@@ -27,38 +27,64 @@ import java.util.LinkedList;
 /**
  * Clase adaptadora de la interfaz.
  *
- * Se encarga de implementar la funcionalidad de la interfaz, en otras palabras, adaptala interfaz a la clase de gestión de listados
+ * Se encarga de implementar la funcionalidad de la interfaz 'InterfazListados', en otras palabras, adapta la interfaz a la clase de gestión de listados. Además es la clase central del sistema, de la que parten todos los datos a utilizar por el mismo, ya que guarda internamente una lista de objetos CargaDatos, con los datos cargados para cada día.
  *
  * @author Manuel Jesús de la Calle Brihuega
  */
 
-public class AdaptadorListado implements InterfazListados {
+public class Adaptador implements InterfazListados {
 
     private String rutaTrenes;
     private String rutaTrayectos;
-    //private CargaDatos datos;
-    //private ListadoViajes listado;
     private List<CargaDatos> listaDatos;
+
     //Constructor
     /**
-     * Construye un objeto de la clase AdaptadorListado
+     * Construye un objeto de la clase Adaptador
      *
-     * Recibe de parámetro de entrada un objeto de la clase CargaDatos con los trayectos y trenes precargados.
-     * @param datos objeto de la clase CargaDatos
+     * Recibe de parámetros de entrada las rutas de los archivos CSV con los trayectos y trenes que utilizará el sistema e inicializa internamente la lista de CargaDatos.
+     *
+     * @param Trenes String con la ruta del archivo CSV que contiene los trenes a cargar.
+     * @param Trayectos String con la ruta del archivo CSV que contiene los trayectos a cargar.
      */
-    public AdaptadorListado(String Trenes, String Trayectos){
+    public Adaptador(String Trenes, String Trayectos){
         this.rutaTrayectos=Trayectos;
         this.rutaTrenes=Trenes;
-      //  this.listado=new ListadoViajes(fecha, new Ciudad(origen, "España"), new Ciudad(destino, "España"), this.rutaTrenes, this.rutaTrayectos);
         this.listaDatos=new LinkedList();
-
     }
 
+    /**
+     * Método modificador
+     *
+     * Genera los datos (el objeto CargaDatos) correspondientes al día introducido por parámetro. Si ya existen cargados, no realiza ninguna acción.
+     *
+     * @param dia LocalDate con la fecha para la cual queremos cargar los datos.
+     */
     public void generarDatosDia(LocalDate dia){
-        CargaDatos datos=new CargaDatos(this.rutaTrayectos, this.rutaTrenes, dia);
-        this.listaDatos.add(datos);
+        boolean existenDatos=false;
+        for(int i=0; i<this.listaDatos.size(); i++){
+            if(this.listaDatos.get(i).getFecha().equals(dia)){
+                existenDatos=true;
+            }
+        }
+        if(!existenDatos){
+            CargaDatos datos=new CargaDatos(this.rutaTrayectos, this.rutaTrenes, dia);
+            this.listaDatos.add(datos);
+        }
     }
 
+
+    //Métodos Get
+
+    /**
+     * Método consultor
+     *
+     * Devuelve los datos cargados para la fecha que recibe por parámetro. Internamente, si descubre que para esa fecha no existen datos cargados, los carga.
+     *
+     * @param dia LocalDate con la fecha para la cual queremos obtener los datos cargados.
+     *
+     * @return Un objeto CargaDatos con los datos cargados para el día indicado por parámetro.
+     */
     public CargaDatos getDatosDia(LocalDate dia){
         CargaDatos datos;
         boolean existe=false;
@@ -83,10 +109,6 @@ public class AdaptadorListado implements InterfazListados {
     }
 
     
-    //Métodos Get
-    //public ListadoViajes getListado(){
-      //  return this.listado;
-   // }
     public List<LocalTime> getHorarios(String origen, String destino, LocalDate fecha){
         int indice=0;
         boolean existe=false;
@@ -114,14 +136,5 @@ public class AdaptadorListado implements InterfazListados {
                 }
             }
         return listadoSalidas;
-    }
-
-    /**
-     * Método consultor de datos.
-     *
-     * Devuelve el objeto de la clase CargaDatos que contiene los trenes y trayectos precargados.
-     * @return objeto de CargaDatos con los trenes y trayectos existentes.
-     */
-    
-     
+    }     
 }

@@ -40,7 +40,7 @@ public class Tren {
         this.nombre= tren.getNombre();
      }
      /**
-     * Método consultor del n�mero de asiento
+     * Método consultor del número de asiento
      *
      * @return Duelve el valor del numasiento
      */
