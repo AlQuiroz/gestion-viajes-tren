@@ -17,6 +17,7 @@
 
 package org.uca.dss.trenes.interfazExtendido;
 
+import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -72,4 +73,43 @@ public interface InterfazCompras {
      * @return precio de una reserva del viaje
      */
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora);
+
+/**
+     * Permite realizar una reserva de un viaje, a partir de su itinerario
+     *
+     * En el caso de que el itinerario, debe de devolver
+     * una excepción IllegalArgumentException
+     *
+     * @param fecha de la reserva
+     * @param itinerario deseado
+     * @return Lista de las reservas, permite cancelar parcialmente cada reserva.
+     *
+     */
+    //public List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha);
+    /**
+     * Permite comprobar el número de asientos libres de todo el trayecto,
+     * considerando los distintos viajes del itinerario.
+     *
+     * En el caso de que alguno de los parámetros no sea correcto, debe de devolver
+     * una excepción IllegalArgumentException
+     *
+     * @param fecha de la reserva
+     * @param itinerario deseado
+     * @return número de asientos libres
+     *
+     */
+    public int asientosLibres(LocalDate fecha, Itinerario itinerario);
+
+    /**
+     * Cancela una reserva, dejando el asiento indicado libre
+     *
+     * @param reserva a cancelar
+     */
+    public void cancelaReserva(ReservaTrayecto reserva);
+    /**
+     * Cancela la reserva de un itinerario
+     *
+     * @param reservas lista de reservas a cancelar
+     */
+    public void cancelaReserva(List<ReservaTrayecto> reservas);
 }
