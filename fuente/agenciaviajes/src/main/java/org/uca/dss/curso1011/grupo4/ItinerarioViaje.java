@@ -48,95 +48,95 @@ public class ItinerarioViaje implements Itinerario{
     }
 
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.size();
     }
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.isEmpty();
     }
 
     public boolean contains(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.contains(o);
     }
 
     public Iterator<InformacionTrayecto> iterator() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.iterator();
     }
 
     public Object[] toArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.toArray();
     }
 
     public <T> T[] toArray(T[] a) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.toArray(a);
     }
 
     public boolean add(InformacionTrayecto e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.add(e);
     }
 
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.remove(o);
     }
 
     public boolean containsAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.containsAll(c);
     }
 
     public boolean addAll(Collection<? extends InformacionTrayecto> c) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.addAll(c);
     }
 
     public boolean addAll(int index, Collection<? extends InformacionTrayecto> c) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.addAll(index, c);
     }
 
     public boolean removeAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.removeAll(c);
     }
 
     public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.retainAll(c);
     }
 
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        itinerario.clear();
     }
 
     public InformacionTrayecto get(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.get(index);
     }
 
     public InformacionTrayecto set(int index, InformacionTrayecto element) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.set(index, element);
     }
 
     public void add(int index, InformacionTrayecto element) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        itinerario.add(index, element);
     }
 
     public InformacionTrayecto remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.remove(index);
     }
 
     public int indexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.indexOf(o);
     }
 
     public int lastIndexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.lastIndexOf(o);
     }
 
     public ListIterator<InformacionTrayecto> listIterator() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.listIterator();
     }
 
     public ListIterator<InformacionTrayecto> listIterator(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.listIterator(index);
     }
 
     public List<InformacionTrayecto> subList(int fromIndex, int toIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return itinerario.subList(fromIndex, toIndex);
     }
 
    }
