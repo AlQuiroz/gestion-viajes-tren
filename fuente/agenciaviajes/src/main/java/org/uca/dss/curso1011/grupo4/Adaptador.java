@@ -25,6 +25,7 @@ import java.util.List;
 import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
 import java.util.LinkedList;
+import org.uca.dss.curso1011.grupo4.ItinerarioViaje;
 
 /**
  * Clase adaptadora de la interfaz.
@@ -144,13 +145,15 @@ public class Adaptador implements InterfazListados {
         List<InformacionTrayecto> trayectosOrigen=new LinkedList<InformacionTrayecto>();
         List<InformacionTrayecto> trayectosDestino=new LinkedList<InformacionTrayecto>();
         List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
-        for(int i=0; i<this.listaDatos.size(); i++){
-            if(this.listaDatos.get(i).getFecha().equals(fechaSalida)){
-                for(int j=0; j<this.listaDatos.get(i).getTrayectosCargados().size(); j++){
-                    if(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
-                        for(int k=0; k<this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().size(); k++){
-                            if(this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
-                                InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).getDestino().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+        CargaDatos datosNecesarios=this.getDatosDia(fechaSalida);
+            if(datosNecesarios.getFecha().equals(fechaSalida)){
+                System.out.println("Oleeee");
+                for(int j=0; j<datosNecesarios.getTrayectosCargados().size(); j++){
+                    if(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
+                        for(int k=0; k<datosNecesarios.getTrayectosCargados().get(j).listarHorarios().size(); k++){
+                            if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
+                                InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(j).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+                                System.out.println("LLegamos");
                                 if(!trayectosOrigen.add(info)){
                                     throw new RuntimeException("Error al buscar trayectos");
                                 }
@@ -160,14 +163,13 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
-        }
-        for(int l=0; l<this.listaDatos.size(); l++){
-            if(this.listaDatos.get(l).getFecha().equals(fechaSalida)){
-                for(int m=0; m<this.listaDatos.get(l).getTrayectosCargados().size(); m++){
-                    if(this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
-                        for(int n=0; n<this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().size(); n++){
-                            if(this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
-                                InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(l).getTrayectosCargados().get(m).getOrigen().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
+        
+            if(datosNecesarios.getFecha().equals(fechaSalida)){
+                for(int m=0; m<datosNecesarios.getTrayectosCargados().size(); m++){
+                    if(datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
+                        for(int n=0; n<datosNecesarios.getTrayectosCargados().get(m).listarHorarios().size(); n++){
+                            if(datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
+                                InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(m).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
                                 if(!trayectosDestino.add(info)){
                                     throw new RuntimeException("Error al buscar trayectos");
                                 }
@@ -177,22 +179,25 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
-        }
+        
         //Ahora tenemos trayectosOrigen y trayectosDestino
         for(int p=0; p< trayectosOrigen.size(); p++){
             for(int q=0; q<trayectosDestino.size(); q++){
                 if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
-                        Itinerario itinerario = null;
+                    LocalTime hora=trayectosOrigen.get(p).getHoraLlegada().plusMinutes(10);
+                    if(trayectosDestino.get(q).getHoraSalida().isAfter(hora) || trayectosDestino.get(q).getHoraSalida().equals(hora)){
+                        Itinerario itinerario = new ItinerarioViaje();
                         itinerario.add(trayectosOrigen.get(p));
                         itinerario.add(trayectosDestino.get(q));
                         listaItinerarios.add(itinerario);
+                    }
                 }
             }
         }
 
         for(int u=0; u<trayectosOrigen.size(); u++){
             if(trayectosOrigen.get(u).getDestino().equals(destino)){
-                    Itinerario itinerario=null;
+                    Itinerario itinerario=new ItinerarioViaje();
                     itinerario.add(trayectosOrigen.get(u));
                     listaItinerarios.add(itinerario);
             }
@@ -206,15 +211,15 @@ public class Adaptador implements InterfazListados {
         List<InformacionTrayecto> trayectosOrigen=new LinkedList<InformacionTrayecto>();
         List<InformacionTrayecto> trayectosDestino=new LinkedList<InformacionTrayecto>();
         List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
-        for(int i=0; i<this.listaDatos.size(); i++){
-            if(this.listaDatos.get(i).getFecha().equals(fechaSalida)){
-                for(int j=0; j<this.listaDatos.get(i).getTrayectosCargados().size(); j++){
-                    if(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
-                        for(int k=0; k<this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().size(); k++){
-                            if(this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
+        CargaDatos datosNecesarios=this.getDatosDia(fechaSalida);
+        if(datosNecesarios.getFecha().equals(fechaSalida)){
+                for(int j=0; j<datosNecesarios.getTrayectosCargados().size(); j++){
+                    if(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
+                        for(int k=0; k<datosNecesarios.getTrayectosCargados().get(j).listarHorarios().size(); k++){
+                            if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
 
-                                if(this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().equals(horaSalida) || (this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().isAfter(horaSalida) && (this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().isBefore(horaLlegada) || this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().equals(horaLlegada)))){
-                                    InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).getDestino().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+                                if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().equals(horaSalida) || (datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().isAfter(horaSalida) && (datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().isBefore(horaLlegada) || datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().equals(horaLlegada)))){
+                                    InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(j).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
                                     if(!trayectosOrigen.add(info)){
                                         throw new RuntimeException("Error al buscar trayectos");
                                     }
@@ -224,17 +229,16 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
-        }
+        
 
-        for(int l=0; l<this.listaDatos.size(); l++){
-            if(this.listaDatos.get(l).getFecha().equals(fechaSalida)){
-                for(int m=0; m<this.listaDatos.get(l).getTrayectosCargados().size(); m++){
-                    if(this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
-                        for(int n=0; n<this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().size(); n++){
-                            if(this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
-                                 if(this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().equals(horaSalida) || (this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().isAfter(horaSalida) && (this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().isBefore(horaLlegada) || this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().equals(horaLlegada)))){
+            if(datosNecesarios.getFecha().equals(fechaSalida)){
+                for(int m=0; m<datosNecesarios.getTrayectosCargados().size(); m++){
+                    if(datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
+                        for(int n=0; n<datosNecesarios.getTrayectosCargados().get(m).listarHorarios().size(); n++){
+                            if(datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
+                                 if(datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().equals(horaSalida) || (datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().isAfter(horaSalida) && (datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().isBefore(horaLlegada) || datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().equals(horaLlegada)))){
 
-                                    InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(l).getTrayectosCargados().get(m).getOrigen().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
+                                    InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(m).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
                                     if(!trayectosDestino.add(info)){
                                         throw new RuntimeException("Error al buscar trayectos");
                                     }
@@ -244,14 +248,14 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
-        }
+        
         //Ahora tenemos trayectosOrigen y trayectosDestino
         for(int p=0; p< trayectosOrigen.size(); p++){
             for(int q=0; q<trayectosDestino.size(); q++){
                 if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
                     LocalTime hora=trayectosOrigen.get(p).getHoraLlegada().plusMinutes(10);
                     if(trayectosDestino.get(q).getHoraSalida().isAfter(hora) || trayectosDestino.get(q).getHoraSalida().equals(hora)){
-                        Itinerario itinerario = null;
+                        Itinerario itinerario = new ItinerarioViaje();
                         itinerario.add(trayectosOrigen.get(p));
                         itinerario.add(trayectosDestino.get(q));
                         listaItinerarios.add(itinerario);
@@ -263,7 +267,7 @@ public class Adaptador implements InterfazListados {
         for(int u=0; u<trayectosOrigen.size(); u++){
             if(trayectosOrigen.get(u).getDestino().equals(destino)){
                 if(trayectosOrigen.get(u).getHoraLlegada().isBefore(horaLlegada) || trayectosOrigen.get(u).getHoraLlegada().equals(horaLlegada)){
-                    Itinerario itinerario=null;
+                    Itinerario itinerario=new ItinerarioViaje();
                     itinerario.add(trayectosOrigen.get(u));
                     listaItinerarios.add(itinerario);
                 }
