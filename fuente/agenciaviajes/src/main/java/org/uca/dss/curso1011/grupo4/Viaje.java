@@ -19,6 +19,7 @@ package org.uca.dss.curso1011.grupo4;
 import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.Itinerario;
 
 /**
  * Clase encargada de representar un viaje en el sistema.
@@ -28,10 +29,11 @@ import java.util.Map;
  * @author Manuel Jesús de la Calle Brihuega
  */
 public class Viaje {
-    private Float precioFinal;
+    private double precioFinal;
     private LocalDate fecha;
     private Trayecto trayecto;
-
+    private Itinerario itinerario;
+    private boolean compuesto;
     //Constructor
 
     /**
@@ -49,6 +51,13 @@ public class Viaje {
         this.setTrayecto(trayecto);
 
         this.calcularPrecioViaje();
+        this.compuesto=false;
+    }
+
+    public Viaje(LocalDate fecha, Itinerario itinerario){
+        this.compuesto=true;
+        this.setFecha(fecha);
+        this.itinerario=itinerario;
     }
     /**
      * Constructor de copia
@@ -58,23 +67,37 @@ public class Viaje {
      * @param viaje objeto a partir del cual se crea el nuevo
      */
     public Viaje(Viaje viaje){
-        this.setFecha(viaje.getFecha());
-        this.setTrayecto(viaje.getTrayecto());
-        this.precioFinal = viaje.getPrecio();
+        if(viaje.compuesto){
+            this.compuesto=viaje.compuesto;
+            this.setFecha(viaje.getFecha());
+            this.precioFinal= viaje.getPrecio();
+            this.itinerario=viaje.getItinerario();
+            
+        }else{
+            this.setFecha(viaje.getFecha());
+            this.setTrayecto(viaje.getTrayecto());
+            this.precioFinal = viaje.getPrecio();
+            this.compuesto=viaje.compuesto;
+        }
     }
 
+
+
     //Métodos de asignación
+
 
     private void setFecha(LocalDate valor){
         this.fecha=new LocalDate(valor);
     }
 
     private void setTrayecto(Trayecto valor){
-        this.trayecto=new Trayecto(valor);
+        if(!this.compuesto){
+            this.trayecto=new Trayecto(valor);
+        }
     }
     
 
-    private void setPrecio(Float valor){
+    private void setPrecio(double valor){
         this.precioFinal=valor;
     }
 
@@ -91,6 +114,13 @@ public class Viaje {
         return this.fecha;
     }
 
+    public Itinerario getItinerario(){
+        if(this.compuesto){
+            return this.itinerario;
+        }else{
+            return null;
+        }
+    }
     /**
      * Método consultor del trayecto
      *
@@ -99,7 +129,10 @@ public class Viaje {
      * @return trayecto que compone el viaje
      */
     public Trayecto getTrayecto(){
-        return this.trayecto;
+        if(!this.compuesto)
+            return this.trayecto;
+        else
+            return null;
     }
     
 
@@ -110,7 +143,7 @@ public class Viaje {
      *
      * @return precio del viaje
      */
-    public Float getPrecio(){
+    public double getPrecio(){
         return this.precioFinal;
     }
 
@@ -122,7 +155,12 @@ public class Viaje {
      * Lo calcula en función del precio del trayecto, y el número de trayectos que componen el viaje. Establece dicho precio en el atributo 'precio_final'.
      */
     private void calcularPrecioViaje(){
-        this.setPrecio(this.getTrayecto().getPrecio());
+        if(this.compuesto){
+            this.setPrecio(this.getItinerario().getPrecio());
+
+        }else{
+            this.setPrecio(this.getTrayecto().getPrecio());
+        }
     }
 
     /**
@@ -133,7 +171,10 @@ public class Viaje {
      * @return lista de horarios
      */
     public ArrayList<Horario> obtenerHorarios(){
-        return this.getTrayecto().listarHorarios();
+        if(!this.compuesto)
+            return this.getTrayecto().listarHorarios();
+        else
+            return null;
     }
 
     /**
@@ -144,7 +185,10 @@ public class Viaje {
      * @return map de horarios y precios asociados
      */
     public Map<Horario, Float> obtenerHorariosConPrecios(){
-        return this.getTrayecto().listarHorariosConPrecios();
+        if(!this.compuesto)
+            return this.getTrayecto().listarHorariosConPrecios();
+        else
+            return null;
     }
     
 }

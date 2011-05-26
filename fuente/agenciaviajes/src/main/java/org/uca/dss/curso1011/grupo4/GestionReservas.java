@@ -9,9 +9,8 @@ import com.db4o.ObjectSet;
 import java.util.ArrayList;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.InterfazCompras;
 import org.uca.dss.trenes.basededatos.DBUtils;
-
 
 /**
  * Genera y gestiona una Reserva.

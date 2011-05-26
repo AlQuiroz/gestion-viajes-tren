@@ -15,17 +15,65 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.uca.dss.trenes.interfazExtendido;
+package org.uca.dss.curso1011.grupo4.interfazExtendido;
 
 import java.util.List;
 import org.joda.time.LocalDate;
-
+import org.joda.time.LocalTime;
 /**
  * Este interface permite realizar y cancelar las reservas
  *
  * @author dmolina
  */
 public interface InterfazCompras {
+
+    /**
+     * Permite realizar una reserva del viaje
+     *
+     * En el caso de que alguno de los parámetros no sea correcto, debe de devolver
+     * una excepción IllegalArgumentException
+     *
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param fecha fecha del viaje
+     * @param hora hora del viaje
+     * @return cadena que identifica a la reserva. Puede ser cualquier cadena
+     *
+     */
+    public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora);
+    /**
+     * Permite comprobar el número de asientos libres
+     *
+     * En el caso de que alguno de los parámetros no sea correcto, debe de devolver
+     * una excepción IllegalArgumentException
+     *
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param fecha fecha del viaje
+     * @param hora hora del viaje
+     * @return número de asientos libres (no reservados)
+     *
+     */
+    public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora);
+    /**
+     * Cancela una reserva, dejando el asiento indicado libre
+     *
+     * @param reserva cadena que identifica la reserva
+     */
+    public void cancelaReserva(String codigoReserva);
+
+    /**
+     * Devuelve el precio de la reserva del viaje
+     *
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param fecha fecha del viaje
+     * @param hora hora del viaje
+     *
+     * @return precio de una reserva del viaje
+     */
+    public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora);
+
     /**
      * Permite realizar una reserva de un viaje, a partir de su itinerario
      *
