@@ -7,10 +7,14 @@ package org.uca.dss.curso1011.grupo4;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.util.ArrayList;
+import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.InterfazCompras;
 import org.uca.dss.trenes.basededatos.DBUtils;
+import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
+import org.uca.dss.trenes.interfazExtendido.Itinerario;
+import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
 
 
 /**
@@ -55,6 +59,21 @@ public class GestionReservas implements InterfazCompras{
  public GestionReservas(Adaptador adaptador){
         this.datos=adaptador;
     };
+
+    
+    public int asientosLibres(LocalDate fecha, Itinerario itinerario){
+        //entiendo que con devolver el numero de asientos libres significa devolver
+        //el tren del trayecto con menor número de asientos libres
+        int minNumAsiento=10000;
+        for (int i=0;i<itinerario.size();++i)
+        {
+            int numAsiento;
+            InformacionTrayecto rt = itinerario.get(i);
+            numAsiento=this.asientosLibres(rt.getOrigen(), rt.getDestino(), fecha, rt.getHoraSalida());
+            if(numAsiento<minNumAsiento){minNumAsiento=numAsiento;}
+        }
+        return minNumAsiento;
+    }
 
 public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
        CargaDatos datosDia=this.datos.getDatosDia(fecha);
@@ -173,6 +192,18 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         return precioViajes;
     
     }
+    //TODO añadir este metodo en la interfaz y el tema de los metodo de reservar el asiento
+    List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha){
+        List<ReservaTrayecto> listRT = new ArrayList<ReservaTrayecto> ();
+        for (int i=0;i<itinerario.size();++i)
+        {
+            InformacionTrayecto rt = itinerario.get(i);
+            String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
+            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,-1,codReserva);//falta el tema de generar el número de asiento
+            listRT.add(reserva);
+        }
+        return listRT;
+    }
     
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
         CargaDatos datosDia=this.datos.getDatosDia(fecha);
@@ -263,6 +294,25 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
             }
             }
         
+    }
+    /**
+     * Cancela una reserva, dejando el asiento indicado libre
+     *
+     * @param reserva a cancelar
+     */
+    public void cancelaReserva(ReservaTrayecto reserva){
+        this.cancelaReserva(reserva.getCodigoReserva());
+    }
+    /**
+     * Cancela la reserva de un itinerario
+     *
+     * @param reservas lista de reservas a cancelar
+     */
+    public void cancelaReserva(List<ReservaTrayecto> reservas){
+        for (int i=0;i<reservas.size();++i)
+        {
+            this.cancelaReserva(reservas.get(i).getCodigoReserva());
+        }
     }
 
     /**
