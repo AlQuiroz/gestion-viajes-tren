@@ -17,7 +17,9 @@
 
 package org.uca.dss.curso1011.grupo4;
 
-import org.uca.dss.curso1011.grupo4.interfaz.InterfazListados;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.InterfazListados;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.Itinerario;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.InformacionTrayecto;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.LocalTime;
@@ -136,5 +138,140 @@ public class Adaptador implements InterfazListados {
                 }
             }
         return listadoSalidas;
-    }     
+    }
+
+    public List<Itinerario> getItinerarios(String origen, String destino, LocalDate fechaSalida){
+        List<InformacionTrayecto> trayectosOrigen=new LinkedList<InformacionTrayecto>();
+        List<InformacionTrayecto> trayectosDestino=new LinkedList<InformacionTrayecto>();
+        List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
+        for(int i=0; i<this.listaDatos.size(); i++){
+            if(this.listaDatos.get(i).getFecha().equals(fechaSalida)){
+                for(int j=0; j<this.listaDatos.get(i).getTrayectosCargados().size(); j++){
+                    if(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
+                        for(int k=0; k<this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().size(); k++){
+                            if(this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
+                                InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).getDestino().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+                                if(!trayectosOrigen.add(info)){
+                                    throw new RuntimeException("Error al buscar trayectos");
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for(int l=0; l<this.listaDatos.size(); l++){
+            if(this.listaDatos.get(l).getFecha().equals(fechaSalida)){
+                for(int m=0; m<this.listaDatos.get(l).getTrayectosCargados().size(); m++){
+                    if(this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
+                        for(int n=0; n<this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().size(); n++){
+                            if(this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
+                                InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(l).getTrayectosCargados().get(m).getOrigen().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
+                                if(!trayectosDestino.add(info)){
+                                    throw new RuntimeException("Error al buscar trayectos");
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Ahora tenemos trayectosOrigen y trayectosDestino
+        for(int p=0; p< trayectosOrigen.size(); p++){
+            for(int q=0; q<trayectosDestino.size(); q++){
+                if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
+                        Itinerario itinerario = null;
+                        itinerario.add(trayectosOrigen.get(p));
+                        itinerario.add(trayectosDestino.get(q));
+                        listaItinerarios.add(itinerario);
+                }
+            }
+        }
+
+        for(int u=0; u<trayectosOrigen.size(); u++){
+            if(trayectosOrigen.get(u).getDestino().equals(destino)){
+                    Itinerario itinerario=null;
+                    itinerario.add(trayectosOrigen.get(u));
+                    listaItinerarios.add(itinerario);
+            }
+
+        }
+        return listaItinerarios;
+
+    }
+
+    public List<Itinerario> getItinerariosEntre(String origen, String destino, LocalDate fechaSalida, LocalTime horaSalida, LocalTime horaLlegada){
+        List<InformacionTrayecto> trayectosOrigen=new LinkedList<InformacionTrayecto>();
+        List<InformacionTrayecto> trayectosDestino=new LinkedList<InformacionTrayecto>();
+        List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
+        for(int i=0; i<this.listaDatos.size(); i++){
+            if(this.listaDatos.get(i).getFecha().equals(fechaSalida)){
+                for(int j=0; j<this.listaDatos.get(i).getTrayectosCargados().size(); j++){
+                    if(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
+                        for(int k=0; k<this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().size(); k++){
+                            if(this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
+
+                                if(this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().equals(horaSalida) || (this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().isAfter(horaSalida) && (this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().isBefore(horaLlegada) || this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().equals(horaLlegada)))){
+                                    InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(i).getTrayectosCargados().get(j).getOrigen().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).getDestino().getNombre(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), this.listaDatos.get(i).getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+                                    if(!trayectosOrigen.add(info)){
+                                        throw new RuntimeException("Error al buscar trayectos");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for(int l=0; l<this.listaDatos.size(); l++){
+            if(this.listaDatos.get(l).getFecha().equals(fechaSalida)){
+                for(int m=0; m<this.listaDatos.get(l).getTrayectosCargados().size(); m++){
+                    if(this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
+                        for(int n=0; n<this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().size(); n++){
+                            if(this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
+                                 if(this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().equals(horaSalida) || (this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().isAfter(horaSalida) && (this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().isBefore(horaLlegada) || this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().equals(horaLlegada)))){
+
+                                    InformacionTrayecto info=new InformacionTrayecto(this.listaDatos.get(l).getTrayectosCargados().get(m).getOrigen().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).getDestino().getNombre(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), this.listaDatos.get(l).getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
+                                    if(!trayectosDestino.add(info)){
+                                        throw new RuntimeException("Error al buscar trayectos");
+                                    }
+                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Ahora tenemos trayectosOrigen y trayectosDestino
+        for(int p=0; p< trayectosOrigen.size(); p++){
+            for(int q=0; q<trayectosDestino.size(); q++){
+                if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
+                    LocalTime hora=trayectosOrigen.get(p).getHoraLlegada().plusMinutes(10);
+                    if(trayectosDestino.get(q).getHoraSalida().isAfter(hora) || trayectosDestino.get(q).getHoraSalida().equals(hora)){
+                        Itinerario itinerario = null;
+                        itinerario.add(trayectosOrigen.get(p));
+                        itinerario.add(trayectosDestino.get(q));
+                        listaItinerarios.add(itinerario);
+                    }
+                }
+            }
+        }
+
+        for(int u=0; u<trayectosOrigen.size(); u++){
+            if(trayectosOrigen.get(u).getDestino().equals(destino)){
+                if(trayectosOrigen.get(u).getHoraLlegada().isBefore(horaLlegada) || trayectosOrigen.get(u).getHoraLlegada().equals(horaLlegada)){
+                    Itinerario itinerario=null;
+                    itinerario.add(trayectosOrigen.get(u));
+                    listaItinerarios.add(itinerario);
+                }
+
+            }
+
+        }
+
+        return listaItinerarios;
+    }
 }

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.uca.dss.trenes.interfazExtendido;
+package org.uca.dss.curso1011.grupo4.interfazExtendido;
 
 import java.util.List;
 import org.joda.time.LocalDate;
@@ -28,6 +28,17 @@ import org.joda.time.LocalTime;
  * @author dmolina
  */
 public interface InterfazListados {
+    /**
+     * Permite obtener la hora de inicio del viaje. No se mostrarán las
+     * horas para las cuales ya no hay asientos disponibles
+     *
+     * @param origen ciudad origen
+     * @param destino ciudad destino
+     * @param fecha fecha del viaje
+     * @return un array con las horas de partida disponibles
+     */
+    public List<LocalTime> getHorarios(String origen, String destino, LocalDate fecha);
+
     /**
      * Permite obtener la disponibilidad de un viaje, mostrando para dicho
      * origen y destino el viaje (considerando la posibilidad de realizar

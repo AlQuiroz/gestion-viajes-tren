@@ -34,7 +34,6 @@ public class Trayecto {
     private Horario horarioElegido;
     private float precio;
     private boolean horarioSeleccionado;
-
     //Constructores
 
     /**
@@ -57,6 +56,7 @@ public class Trayecto {
         this.setHorarios(Horarios);
         this.setPrecio(0);
         this.horarioSeleccionado=false;
+
     }
 
     // Constructor de copia

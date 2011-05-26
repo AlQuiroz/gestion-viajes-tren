@@ -161,8 +161,8 @@ public class ListadoViajes {
     *
     * @return conjunto de pares de viaje-precio
     */
-   public Map<Viaje, Float> listarViajesConPrecio(){
-       Map<Viaje, Float> listado=new HashMap<Viaje, Float>();
+   /*public Map<Viaje, double> listarViajesConPrecio(){
+       Map<Viaje, double> listado=new HashMap<Viaje, double>();
        int i=0;
        while(i<this.getViajes().size()){
             listado.put(this.getViajes().get(i), this.getViajes().get(i).getPrecio());
@@ -170,7 +170,7 @@ public class ListadoViajes {
        }
        return listado;
    }
-
+*/
    /**
     * Método consultor de listado.
     *

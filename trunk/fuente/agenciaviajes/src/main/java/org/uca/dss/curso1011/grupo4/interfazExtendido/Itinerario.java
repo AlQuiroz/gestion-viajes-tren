@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.uca.dss.trenes.interfazExtendido;
+package org.uca.dss.curso1011.grupo4.interfazExtendido;
 
 import java.util.List;
 

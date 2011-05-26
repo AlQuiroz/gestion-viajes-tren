@@ -4,8 +4,8 @@
  */
 
 package org.uca.dss.trenes.interfaz;
-import org.uca.dss.curso1011.grupo4.interfaz.InterfazListados;
-import org.uca.dss.curso1011.grupo4.interfaz.InterfazCompras;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.InterfazListados;
+import org.uca.dss.curso1011.grupo4.interfazExtendido.InterfazCompras;
 
 import java.util.LinkedList;
 import java.util.List;
