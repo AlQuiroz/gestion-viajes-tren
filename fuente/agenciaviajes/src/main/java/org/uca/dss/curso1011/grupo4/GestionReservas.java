@@ -12,6 +12,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.InterfazCompras;
 import org.uca.dss.trenes.basededatos.DBUtils;
+import org.uca.dss.trenes.interfazExtendido.IRepartoAsiento;
 import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
 import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
@@ -194,12 +195,14 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     }
     //TODO añadir este metodo en la interfaz y el tema de los metodo de reservar el asiento
     List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha){
+        if (repartoAsiento == null)
+            throw new RuntimeException("No hay estrategia de reparto de asientos seleccionada");
         List<ReservaTrayecto> listRT = new ArrayList<ReservaTrayecto> ();
         for (int i=0;i<itinerario.size();++i)
         {
             InformacionTrayecto rt = itinerario.get(i);
             String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
-            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,-1,codReserva);//falta el tema de generar el número de asiento
+            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this),codReserva);//falta el tema de generar el número de asiento
             listRT.add(reserva);
 
             ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null);
@@ -339,6 +342,14 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     public Adaptador getDatos(){
         return this.datos;
     }
+    /**
+     * Método para asignar el modo de repartir los asientos
+     * @param repartoAsiento estrategia a seguir
+     * @throws CloneNotSupportedException
+     */
+    public void setRepartoAsientoStrategy(IRepartoAsiento repartoAsiento) throws CloneNotSupportedException {
+        this.repartoAsiento = (IRepartoAsiento) repartoAsiento.clone();
+    }
 
     private LocalDate fecha;
     private Ciudad origen;
@@ -347,4 +358,5 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     private Tren tren;
     private int numAsientos;
     private Adaptador datos;
+    private IRepartoAsiento repartoAsiento;
 }
