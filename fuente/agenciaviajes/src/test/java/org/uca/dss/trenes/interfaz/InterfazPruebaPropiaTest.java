@@ -66,4 +66,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
 
     }
 
+
+    @Test
+    public void testNumeroAsientoTrayecto(){
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int asiento = compras.asientosLibres(hoy,itinerarios.get(0));
+        assertEquals(asiento, 10);
+    }
+
 }
