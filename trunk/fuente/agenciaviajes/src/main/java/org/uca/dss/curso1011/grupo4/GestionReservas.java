@@ -201,6 +201,11 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
             String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
             ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,-1,codReserva);//falta el tema de generar el número de asiento
             listRT.add(reserva);
+
+            ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null);
+            ObjectContainer db = DBUtils.getDb();
+            db.queryByExample(reservanull);//devuelve todas las ReservaTrayecto
+            db.store(reserva);
         }
         return listRT;
     }
