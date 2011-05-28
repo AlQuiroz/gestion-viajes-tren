@@ -85,7 +85,7 @@ public interface InterfazCompras {
      * @return Lista de las reservas, permite cancelar parcialmente cada reserva.
      *
      */
-    //public List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha);
+    public List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha);
     /**
      * Permite comprobar el número de asientos libres de todo el trayecto,
      * considerando los distintos viajes del itinerario.

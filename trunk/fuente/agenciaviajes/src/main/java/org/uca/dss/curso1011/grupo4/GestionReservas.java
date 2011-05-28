@@ -194,7 +194,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     
     }
     //TODO añadir este metodo en la interfaz y el tema de los metodo de reservar el asiento
-    List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha){
+    public List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha){
         if (repartoAsiento == null)
             throw new RuntimeException("No hay estrategia de reparto de asientos seleccionada");
         List<ReservaTrayecto> listRT = new ArrayList<ReservaTrayecto> ();

@@ -13,7 +13,9 @@ import java.util.Random;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.uca.dss.curso1011.grupo4.NoAsignarAsiento;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
+import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
 
 /**
  *
@@ -72,6 +74,17 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int asiento = compras.asientosLibres(hoy,itinerarios.get(0));
         assertEquals(asiento, 10);
+    }
+    @Test
+    public void testReservaTrayecto() throws CloneNotSupportedException{
+        gestion.setRepartoAsientoStrategy(new NoAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
+            List<ReservaTrayecto> rt = gestion.reservaAsiento(itinerarios.get(0), hoy);
+            ++reservas;
+        }
+        assertEquals(reservas, 10);
     }
 
 }
