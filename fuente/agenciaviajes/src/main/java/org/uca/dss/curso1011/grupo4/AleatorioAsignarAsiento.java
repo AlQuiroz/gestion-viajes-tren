@@ -22,8 +22,4 @@ public class AleatorioAsignarAsiento implements IRepartoAsiento{
     }
 
 
-    public IRepartoAsiento clone() throws CloneNotSupportedException {
-        return (IRepartoAsiento) super.clone();
-    }
-
 }

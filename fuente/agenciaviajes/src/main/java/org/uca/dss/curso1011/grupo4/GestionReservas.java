@@ -342,13 +342,9 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     public Adaptador getDatos(){
         return this.datos;
     }
-    /**
-     * Método para asignar el modo de repartir los asientos
-     * @param repartoAsiento estrategia a seguir
-     * @throws CloneNotSupportedException
-     */
-    public void setRepartoAsientoStrategy(IRepartoAsiento repartoAsiento) throws CloneNotSupportedException {
-        this.repartoAsiento = (IRepartoAsiento) repartoAsiento.clone();
+    
+    public void setRepartoAsientoStrategy(IRepartoAsiento reparto) throws CloneNotSupportedException {
+        this.repartoAsiento = (IRepartoAsiento) reparto;
     }
 
     private LocalDate fecha;

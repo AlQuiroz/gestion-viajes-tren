@@ -23,8 +23,4 @@ public class IncrementalAsignarAsiento implements IRepartoAsiento{
     }
 
 
-    public IRepartoAsiento clone() throws CloneNotSupportedException {
-        return (IRepartoAsiento) super.clone();
-    }
-
 }
