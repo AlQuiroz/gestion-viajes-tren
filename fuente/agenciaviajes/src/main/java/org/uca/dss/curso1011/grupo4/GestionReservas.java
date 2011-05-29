@@ -16,6 +16,7 @@ import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
 import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
 import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
+import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 
 
 /**
@@ -40,12 +41,12 @@ public class GestionReservas implements InterfazCompras{
      * @param numasientos int con el número de asientos que queremos reservar.
      * @param adaptador Objeto Adaptador que contiene los datos del sistema.
      */
-    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, Tren cTren, int numasientos, Adaptador adaptador ){
+    public GestionReservas(LocalDate cFecha, Ciudad cOrigen, Ciudad cDestino, LocalTime cHora, InterfazVehiculo cVehiculo, int numasientos, Adaptador adaptador ){
         this.fecha = cFecha;
         this.origen = cOrigen;
         this.destino = cDestino;
         this.hora = cHora;
-        this.tren = cTren;
+        this.vehiculo = cVehiculo;
         this.numAsientos = numasientos;
         this.datos=adaptador;
  };
@@ -90,7 +91,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
                         if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
                             if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
                                 asientos=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
-                                this.tren=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getTren();
+                                this.vehiculo=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getVehiculo();
                             }
                         }
                    }
@@ -160,8 +161,8 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
      *
      * @return Tren del viaje reservado
      */
-    public Tren getTren() {
-        return tren;
+    public InterfazVehiculo getVehiculo() {
+        return this.vehiculo;
     }
 
     /**
@@ -224,7 +225,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
                         //asientosDisponibles=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
                         if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
                             datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).actualizaAsientos(-1);
-                            this.tren=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getTren();
+                            this.vehiculo=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getVehiculo();
 
                         }else{
                             throw new RuntimeException("No quedan asientos disponibles para este viaje");
@@ -354,7 +355,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     private Ciudad origen;
     private Ciudad destino;
     private LocalTime hora;
-    private Tren tren;
+    private InterfazVehiculo vehiculo;
     private int numAsientos;
     private Adaptador datos;
     private InterfazRepartoAsiento repartoAsiento;

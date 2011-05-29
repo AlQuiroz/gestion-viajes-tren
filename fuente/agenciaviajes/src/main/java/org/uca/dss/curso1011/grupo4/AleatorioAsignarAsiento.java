@@ -30,7 +30,7 @@ public class AleatorioAsignarAsiento implements InterfazRepartoAsiento{
                     Horario horario=trayecto.listarHorarios().get(j);
                     if(horario.getHoraSalida().equals(hora)){
                         existeViaje=true;
-                        numeroAleatorio=(int) (Math.random()*gr.getTren().getNumAsientos()+1);
+                        numeroAleatorio=(int) (Math.random()*gr.getVehiculo().getNumAsientos()+1);
                         ArrayList<Integer> listaAsientos=horario.getListaAsientosReservados();
                         for(int y=0; y<listaAsientos.size(); y++){
                             if(listaAsientos.get(y).equals(numeroAleatorio)){
@@ -38,7 +38,7 @@ public class AleatorioAsignarAsiento implements InterfazRepartoAsiento{
                             }
                         }
                         while(existeAsiento){
-                            numeroAleatorio=(int) (Math.random()*gr.getTren().getNumAsientos()+1);
+                            numeroAleatorio=(int) (Math.random()*gr.getVehiculo().getNumAsientos()+1);
                             existeAsiento=false;
                             for(int h=0; h<listaAsientos.size(); h++){
                                 if(listaAsientos.get(h).equals(numeroAleatorio)){

@@ -23,7 +23,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
-
+import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 /**
  * Clase encargada de cargar datos.
  *
@@ -34,7 +34,7 @@ import org.joda.time.LocalDate;
 
 public class CargaDatos {
 
-    private ArrayList<Tren> trenesCargados;
+    private ArrayList<InterfazVehiculo> vehiculosCargados;
     private ArrayList<Trayecto> trayectosCargados;
     private LocalDate fecha;
 
@@ -54,7 +54,7 @@ public class CargaDatos {
             this.fecha=fecha;
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
-            this.trenesCargados= new ArrayList<Tren>();
+            this.vehiculosCargados= new ArrayList<InterfazVehiculo>();
             nextLine = readerTrenes.readNext ();
             while (nextLine.length == 3 ) {//pongo 3 porque en cada l�nea hay 3 datos, si estamos en una linea sin datos no valdra 3
                 //Aqui vamos cargando los trenes
@@ -64,7 +64,7 @@ public class CargaDatos {
                 float precioConvertido=Float.valueOf(precio.trim()).floatValue();
                 int asientosConvertido=Integer.parseInt(asientos.trim());
                 Tren tren= new Tren(asientosConvertido, precioConvertido, nombreTren.trim());
-                if(!this.trenesCargados.add(tren)){
+                if(!this.vehiculosCargados.add(tren)){
                     throw new RuntimeException("Error al introducir el tren" + nombreTren);
 
                 }
@@ -86,7 +86,7 @@ public class CargaDatos {
                 String ciudadOrigen= nextLineTrayectos[1];
                 String ciudadDestino=nextLineTrayectos[2];
                 String tramos=nextLineTrayectos[3];
-                Tren tren=new Tren(this.getTren(nombre.trim()));
+                InterfazVehiculo vehiculo=this.getVehiculo(nombre.trim());
                 Ciudad origen= new Ciudad(ciudadOrigen.trim(), "España");
                 Ciudad destino= new Ciudad(ciudadDestino.trim(), "España");
                 int numtramos=Integer.parseInt(tramos.trim());
@@ -101,7 +101,7 @@ public class CargaDatos {
                     String horaLlegada=nextLineTrayectos[i];
                     LocalTime llegada=this.stringToLocaltime(horaLlegada);
                     i=i+1;
-                    Horario h=new Horario(salida, llegada, tren.getNumAsientos(), tren, fecha);
+                    Horario h=new Horario(salida, llegada, vehiculo.getNumAsientos(), vehiculo, fecha);
                     
                     if(!horariosTrayecto.add(h)){
                         throw new RuntimeException("Error al introducir horario en trayecto");
@@ -131,10 +131,10 @@ public class CargaDatos {
      */
 
     public CargaDatos(CargaDatos valor){
-        this.trenesCargados= new ArrayList<Tren>();
+        this.vehiculosCargados= new ArrayList<InterfazVehiculo>();
         this.trayectosCargados=new ArrayList<Trayecto>();
         this.trayectosCargados=valor.getTrayectosCargados();
-        this.trenesCargados=valor.getTrenesCargados();
+        this.vehiculosCargados=valor.getVehiculosCargados();
     }
 
     /**
@@ -172,16 +172,16 @@ public class CargaDatos {
      * @param nombre string con el nombre del tren que queremos obtener.
      * @return objeto tren cuyo nombre coincide con el parámetro de entrada.
      */
-    public Tren getTren(String nombre){
+    public InterfazVehiculo getVehiculo(String nombre){
         int i=0, j=0;
-        Tren t;
-        while(i<this.trenesCargados.size()){
-            if(this.trenesCargados.get(i).getNombre().equalsIgnoreCase(nombre)){
+        InterfazVehiculo t;
+        while(i<this.vehiculosCargados.size()){
+            if(this.vehiculosCargados.get(i).getNombre().equalsIgnoreCase(nombre)){
                 j= i;
             }
             i=i+1;
         }
-        t=new Tren(this.trenesCargados.get(j));
+        t=this.vehiculosCargados.get(j);
         return t;
     }
     /**
@@ -190,8 +190,8 @@ public class CargaDatos {
      * Devuelve el conjunto de trenes que han sido cargados del fichero trenes.csv
      * @return conjunto de trenes existentes
      */
-    public ArrayList<Tren> getTrenesCargados(){
-        return this.trenesCargados;
+    public ArrayList<InterfazVehiculo> getVehiculosCargados(){
+        return this.vehiculosCargados;
     }
     
     /**
