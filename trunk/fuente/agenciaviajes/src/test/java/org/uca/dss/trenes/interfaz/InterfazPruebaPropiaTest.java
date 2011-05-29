@@ -13,6 +13,7 @@ import java.util.Random;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 import org.uca.dss.curso1011.grupo4.NoAsignarAsiento;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
 import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
@@ -106,12 +107,27 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
+        ArrayList<Integer> listaNumeros=new ArrayList<Integer>();
+        boolean existe=false;
         while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
             List<ReservaTrayecto> rt = compras.reservaAsiento(itinerarios.get(0), hoy);
-            System.out.println(rt.get(0).getNumeroAsiento());
-            //assertEquals(rt.get(0).getNumeroAsiento(),reservas+1);
+            listaNumeros.add(rt.get(0).getNumeroAsiento());
             ++reservas;
         }
+        //Comprobamos que no se repite el número de asiento
+        for(int i=0; i<listaNumeros.size(); i++){
+            existe=false;
+            for(int j=0; j<listaNumeros.size(); j++){
+                if(listaNumeros.get(i).equals(listaNumeros.get(j)) && i!=j){
+                    existe=true;
+                }
+            }
+            if(existe){
+                throw new RuntimeException("No pasa el test");
+            }
+        }
+        // Comprobamos que se han reservado 10 asientos.
+        assertEquals(listaNumeros.size(), 10);
         assertEquals(reservas, 10);
     }
 }
