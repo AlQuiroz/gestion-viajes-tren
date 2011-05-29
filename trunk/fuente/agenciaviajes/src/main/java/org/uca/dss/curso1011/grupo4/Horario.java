@@ -21,6 +21,7 @@ import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.lang.Integer;
+import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 
 /**
  * Representa el horario previsto para un viaje en el sistema.
@@ -36,7 +37,7 @@ public class Horario {
     private ArrayList<Integer> asientosReservados;
     private String horaLlegada;
     private String horaSalida;
-    private Tren tren;
+    private InterfazVehiculo vehiculo;
     private LocalDate fecha;
     // Constructores
     /**
@@ -50,12 +51,12 @@ public class Horario {
      * @param tren tren que realiza el trayecto en este horario
      * @param fecha LocalDate con la fecha para la que se aplica el horario.
      */
-    public Horario(LocalTime salida, LocalTime llegada, int asientos, Tren tren, LocalDate fecha){
+    public Horario(LocalTime salida, LocalTime llegada, int asientos, InterfazVehiculo vehiculo, LocalDate fecha){
   
         this.setHoraSalida(salida);
         this.setHoraLlegada(llegada);
         this.setAsientosDisponibles(asientos);
-        this.setTren(tren);
+        this.setVehiculo(vehiculo);
         this.setFecha(fecha);
         this.asientosReservados=new ArrayList<Integer>();
     }
@@ -70,7 +71,7 @@ public class Horario {
         this.setHoraSalida(valor.getHoraSalida());
         this.setHoraLlegada(valor.getHoraLlegada());
         this.setAsientosDisponibles(valor.getAsientosDisponibles());
-        this.setTren(valor.getTren());
+        this.setVehiculo(valor.getVehiculo());
         this.setFecha(valor.getFecha());
         this.asientosReservados=valor.asientosReservados;
     }
@@ -102,8 +103,8 @@ public class Horario {
 
     }
     
-    private void setTren(Tren valor){
-        this.tren=new Tren(valor);
+    private void setVehiculo(InterfazVehiculo valor){
+        this.vehiculo=valor;
     }
      
 
@@ -145,8 +146,8 @@ public class Horario {
      *
      * @return objeto de la clase tren que realiza el trayecto para el horario
      */
-    public Tren getTren(){
-        return this.tren;
+    public InterfazVehiculo getVehiculo(){
+        return this.vehiculo;
     }
 
     /**
@@ -212,7 +213,7 @@ public class Horario {
      * @return precio del horario
      */
     public float getPrecioHorario(){
-        return this.getTren().getCosteTramo();
+        return this.getVehiculo().getCosteTramo();
     }
     
 }

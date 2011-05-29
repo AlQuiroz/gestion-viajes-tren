@@ -19,6 +19,7 @@ package org.uca.dss.curso1011.grupo4;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 /**
  * Clase encargada de representar un trayecto.
  *
@@ -211,7 +212,7 @@ public class Trayecto {
      * @return precio para el horario introducido por parámetro
      */
     public Float calcularPrecioTrayecto(Horario HorarioElegido){
-        Tren auxiliar=new Tren(horarioElegido.getTren());
+        InterfazVehiculo auxiliar=horarioElegido.getVehiculo();
         float costePorTramo=auxiliar.getCosteTramo();
         int numTramos=this.getTramos();
         return costePorTramo*numTramos;
