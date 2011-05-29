@@ -13,14 +13,14 @@ import org.uca.dss.curso1011.grupo4.GestionReservas;
  * Esta clase permite abstraer el método de reparto de asientos
  * @author migue
  */
-public interface IRepartoAsiento  {
+public interface InterfazRepartoAsiento  {
     /**
      * Da el asiento que le corresponde al cliente
      *
-     * @param gr Informacion del trayecto al cual debe de dar el asiento
+     * @param info Informacion del trayecto al cual debe de dar el asiento
      * @return el número del asiento
      */
-    public int reparteAsiento(GestionReservas gr,String origen, String destino,LocalDate fecha, LocalTime hora);
+    public int reparteAsiento(GestionReservas info, String origen, String destino, LocalDate fecha, LocalTime hora);
 
 
 }

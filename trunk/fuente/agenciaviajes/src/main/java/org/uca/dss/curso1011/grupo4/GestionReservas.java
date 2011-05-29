@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.InterfazCompras;
 import org.uca.dss.trenes.basededatos.DBUtils;
-import org.uca.dss.trenes.interfazExtendido.IRepartoAsiento;
+import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
 import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
 import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
@@ -90,6 +90,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
                         if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
                             if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
                                 asientos=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
+                                this.tren=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getTren();
                             }
                         }
                    }
@@ -223,6 +224,8 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
                         //asientosDisponibles=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
                         if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
                             datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).actualizaAsientos(-1);
+                            this.tren=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getTren();
+
                         }else{
                             throw new RuntimeException("No quedan asientos disponibles para este viaje");
                         }
@@ -343,8 +346,8 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         return this.datos;
     }
     
-    public void setRepartoAsientoStrategy(IRepartoAsiento reparto) throws CloneNotSupportedException {
-        this.repartoAsiento = (IRepartoAsiento) reparto;
+    public void setRepartoAsientoStrategy(InterfazRepartoAsiento reparto) throws CloneNotSupportedException {
+        this.repartoAsiento = (InterfazRepartoAsiento) reparto;
     }
 
     private LocalDate fecha;
@@ -354,5 +357,5 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     private Tren tren;
     private int numAsientos;
     private Adaptador datos;
-    private IRepartoAsiento repartoAsiento;
+    private InterfazRepartoAsiento repartoAsiento;
 }
