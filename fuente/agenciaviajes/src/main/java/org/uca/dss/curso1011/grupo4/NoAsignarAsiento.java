@@ -5,6 +5,8 @@
 
 package org.uca.dss.curso1011.grupo4;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.IRepartoAsiento;
 /**
  *
@@ -12,9 +14,9 @@ import org.uca.dss.trenes.interfazExtendido.IRepartoAsiento;
  */
 public class NoAsignarAsiento implements IRepartoAsiento{
 
-    public int reparteAsiento(GestionReservas gr){
+    public int reparteAsiento(GestionReservas gr,String origen, String destino,LocalDate fecha, LocalTime hora){
         //datos.
-        if (gr.asientosLibres(gr.getOrigen().getNombre(),gr.getDestino().getNombre(),gr.getFecha(),gr.getHora()) == 0){
+        if (gr.asientosLibres(origen,destino,fecha,hora) < 0){
             throw new RuntimeException("No quedan asientos disponibles");
         }
         return -1;

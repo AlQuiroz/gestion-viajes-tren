@@ -5,6 +5,8 @@
 
 package org.uca.dss.curso1011.grupo4;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.IRepartoAsiento;
 
 /**
@@ -13,9 +15,9 @@ import org.uca.dss.trenes.interfazExtendido.IRepartoAsiento;
  */
 public class AleatorioAsignarAsiento implements IRepartoAsiento{
     //TODO hay q mirar cuales han sido ya repartidos
-    public int reparteAsiento(GestionReservas gr){
-        int asientosLibres =gr.asientosLibres(gr.getOrigen().getNombre(),gr.getDestino().getNombre(),gr.getFecha(),gr.getHora());
-        if (asientosLibres == 0){
+    public int reparteAsiento(GestionReservas gr,String origen, String destino,LocalDate fecha, LocalTime hora){
+        int asientosLibres =gr.asientosLibres(origen,destino,fecha,hora);
+        if (asientosLibres < 0){
             throw new RuntimeException("No quedan asientos disponibles");
         }
         return (int) (Math.random()*30+1);
