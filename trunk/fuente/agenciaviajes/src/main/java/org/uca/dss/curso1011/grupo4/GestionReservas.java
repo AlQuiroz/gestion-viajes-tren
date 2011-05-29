@@ -193,7 +193,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         return precioViajes;
     
     }
-    //TODO añadir este metodo en la interfaz y el tema de los metodo de reservar el asiento
+    
     public List<ReservaTrayecto> reservaAsiento(Itinerario itinerario, LocalDate fecha){
         if (repartoAsiento == null)
             throw new RuntimeException("No hay estrategia de reparto de asientos seleccionada");
@@ -202,7 +202,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         {
             InformacionTrayecto rt = itinerario.get(i);
             String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
-            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida()),codReserva);//falta el tema de generar el número de asiento
+            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida()),codReserva);
             listRT.add(reserva);
 
             ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null);
