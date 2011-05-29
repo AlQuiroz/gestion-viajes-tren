@@ -202,7 +202,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         {
             InformacionTrayecto rt = itinerario.get(i);
             String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
-            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this),codReserva);//falta el tema de generar el número de asiento
+            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida()),codReserva);//falta el tema de generar el número de asiento
             listRT.add(reserva);
 
             ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null);

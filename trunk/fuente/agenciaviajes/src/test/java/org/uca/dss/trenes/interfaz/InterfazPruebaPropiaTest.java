@@ -82,6 +82,7 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         int reservas = 0;
         while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
             List<ReservaTrayecto> rt = compras.reservaAsiento(itinerarios.get(0), hoy);
+            assertEquals(rt.get(0).getNumeroAsiento(),-1);
             ++reservas;
         }
         assertEquals(reservas, 10);
