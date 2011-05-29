@@ -19,6 +19,8 @@
 package org.uca.dss.curso1011.grupo4;
 import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
+import java.util.ArrayList;
+import java.lang.Integer;
 
 /**
  * Representa el horario previsto para un viaje en el sistema.
@@ -31,6 +33,7 @@ public class Horario {
 
     //Atributos
     private int asientosDisponibles;
+    private ArrayList<Integer> asientosReservados;
     private String horaLlegada;
     private String horaSalida;
     private Tren tren;
@@ -54,6 +57,7 @@ public class Horario {
         this.setAsientosDisponibles(asientos);
         this.setTren(tren);
         this.setFecha(fecha);
+        this.asientosReservados=new ArrayList<Integer>();
     }
 
     /**
@@ -68,6 +72,7 @@ public class Horario {
         this.setAsientosDisponibles(valor.getAsientosDisponibles());
         this.setTren(valor.getTren());
         this.setFecha(valor.getFecha());
+        this.asientosReservados=valor.asientosReservados;
     }
     
     // Métodos privados de asignación
@@ -114,6 +119,13 @@ public class Horario {
         return this.asientosDisponibles;
     }
 
+    public ArrayList<Integer> getListaAsientosReservados(){
+        return this.asientosReservados;
+    }
+    
+    public void setAsientoReservado(int numero){
+        this.asientosReservados.add(numero);
+    }
 
     /**
      * Método consultor de fecha.

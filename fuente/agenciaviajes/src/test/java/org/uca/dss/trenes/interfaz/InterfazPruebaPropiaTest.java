@@ -16,7 +16,8 @@ import static org.junit.Assert.*;
 import org.uca.dss.curso1011.grupo4.NoAsignarAsiento;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
 import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
-
+import org.uca.dss.curso1011.grupo4.IncrementalAsignarAsiento;
+import org.uca.dss.curso1011.grupo4.AleatorioAsignarAsiento;
 /**
  *
  * @author manuel
@@ -76,7 +77,7 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         assertEquals(asiento, 10);
     }
     @Test
-    public void testReservaTrayecto() throws CloneNotSupportedException{
+    public void testReservaTrayectoSinAsignacion() throws CloneNotSupportedException{
         compras.setRepartoAsientoStrategy(new NoAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
@@ -87,5 +88,30 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         }
         assertEquals(reservas, 10);
     }
+    @Test
+    public void testReservaTrayectoAsignacionIncremental() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
+            List<ReservaTrayecto> rt = compras.reservaAsiento(itinerarios.get(0), hoy);
+            assertEquals(rt.get(0).getNumeroAsiento(),reservas+1);
+            ++reservas;
+        }
+        assertEquals(reservas, 10);
+    }
 
+    @Test
+    public void testReservaTrayectoAsignacionAleatoria() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
+            List<ReservaTrayecto> rt = compras.reservaAsiento(itinerarios.get(0), hoy);
+            System.out.println(rt.get(0).getNumeroAsiento());
+            //assertEquals(rt.get(0).getNumeroAsiento(),reservas+1);
+            ++reservas;
+        }
+        assertEquals(reservas, 10);
+    }
 }
