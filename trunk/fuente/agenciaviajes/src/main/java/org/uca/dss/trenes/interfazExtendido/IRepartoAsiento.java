@@ -20,6 +20,5 @@ public interface IRepartoAsiento  {
      */
     public int reparteAsiento(GestionReservas gr);
 
-    public IRepartoAsiento clone() throws CloneNotSupportedException;
 
 }

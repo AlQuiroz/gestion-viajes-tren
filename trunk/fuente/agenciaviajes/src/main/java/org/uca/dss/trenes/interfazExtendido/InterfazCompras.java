@@ -112,4 +112,11 @@ public interface InterfazCompras {
      * @param reservas lista de reservas a cancelar
      */
     public void cancelaReserva(List<ReservaTrayecto> reservas);
+    /**
+     * Método para asignar el modo de repartir los asientos
+     *
+     * @param repartoAsiento estrategia a seguir
+     * @throws CloneNotSupportedException
+     */
+    public void setRepartoAsientoStrategy(IRepartoAsiento repartoAsiento) throws CloneNotSupportedException;
 }

@@ -77,11 +77,11 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
     }
     @Test
     public void testReservaTrayecto() throws CloneNotSupportedException{
-        gestion.setRepartoAsientoStrategy(new NoAsignarAsiento());
+        compras.setRepartoAsientoStrategy(new NoAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
-            List<ReservaTrayecto> rt = gestion.reservaAsiento(itinerarios.get(0), hoy);
+            List<ReservaTrayecto> rt = compras.reservaAsiento(itinerarios.get(0), hoy);
             ++reservas;
         }
         assertEquals(reservas, 10);

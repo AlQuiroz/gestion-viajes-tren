@@ -21,8 +21,5 @@ public class NoAsignarAsiento implements IRepartoAsiento{
     }
 
 
-    public IRepartoAsiento clone() throws CloneNotSupportedException {
-        return (IRepartoAsiento) super.clone();
-    }
 
 }
