@@ -204,10 +204,30 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         {
             InformacionTrayecto rt = itinerario.get(i);
             String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
-            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida()),codReserva);
+            
+            List<Trayecto> lista=this.datos.getDatosDia(fecha).getTrayectosCargados();
+            Horario hora=null;
+            for(int y=0; y<lista.size(); y++){
+                        //System.out.println(reservaCancelada.getTrayecto().getDestino());
+                if(lista.get(y).getOrigen().getNombre().equals(rt.getOrigen()) && lista.get(y).getDestino().getNombre().equals(rt.getDestino())){
+                    for(int z=0;z<lista.get(y).listarHorarios().size(); z++){
+                        LocalTime horaSalida=lista.get(y).listarHorarios().get(z).getHoraSalida();
+                                //System.out.println(reservaCancelada.getTrayecto().getHoraSalida());
+                        LocalTime horaLlegada=lista.get(y).listarHorarios().get(z).getHoraLlegada();
+                        if(rt.getHoraSalida().equals(horaSalida) && rt.getHoraLlegada().equals(horaLlegada)){
+                                    hora=lista.get(y).listarHorarios().get(z);
+                                }
+                            }
+                        }
+                    }
+            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida()),codReserva, hora);
+
+
+
+
             listRT.add(reserva);
 
-            ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null);
+            ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null, null);
             ObjectContainer db = DBUtils.getDb();
             db.queryByExample(reservanull);//devuelve todas las ReservaTrayecto
             db.store(reserva);
@@ -217,16 +237,13 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
         CargaDatos datosDia=this.datos.getDatosDia(fecha);
-        //int asientosDisponibles=0;
         for(int i=0; i<datosDia.getTrayectosCargados().size(); i++){
             if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen) && datosDia.getTrayectosCargados().get(i).getDestino().getNombre().equals(destino)){
                 for(int j=0; j<datosDia.getTrayectosCargados().get(i).listarHorarios().size(); j++){
                     if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
-                        //asientosDisponibles=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
                         if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
                             datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).actualizaAsientos(-1);
                             this.vehiculo=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getVehiculo();
-
                         }else{
                             throw new RuntimeException("No quedan asientos disponibles para este viaje");
                         }
@@ -235,7 +252,6 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
             }
         }
         ListadoViajes l=new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos);
-                //ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos.getDatos());
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
         ArrayList<Viaje> posiblesviajes = new ArrayList<Viaje>();
         viajes  = l.getViajes();
@@ -247,7 +263,8 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
                 ++i;
             }
             else{
-                ++i;}
+                ++i;
+            }
         }
         if (posiblesviajes.isEmpty()) {throw new IllegalArgumentException();}
         int viajeSeleccionado=0;
@@ -257,55 +274,56 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         while(viajeSeleccionado<posiblesviajes.size() && !encontrado)
         {
         Trayecto t= posiblesviajes.get(viajeSeleccionado).getTrayecto();
-
-                for(int j=0; j< t.listarHorarios().size(); j++){
-                   Horario h=t.listarHorarios().get(j);
-                   if(h.getHoraSalida().equals(hora) && h.getFecha().equals(fecha)){
-                       encontrado=true;
-                       indiceHorarioElegido=j;
-                   }
-               }
-               if (!encontrado) {
-                   ++viajeSeleccionado;}
+        for(int j=0; j< t.listarHorarios().size(); j++){
+            Horario h=t.listarHorarios().get(j);
+            if(h.getHoraSalida().equals(hora) && h.getFecha().equals(fecha)){
+                encontrado=true;
+                indiceHorarioElegido=j;
+            }
         }
-        Reserva reservaVacia = new Reserva(0,null,null, null);
+        if (!encontrado) {
+            ++viajeSeleccionado;
+        }
+        }
+        ReservaTrayecto reservaVacia=new ReservaTrayecto(null, null, 0, null, null);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reservaVacia);//devuelve todas las reservas
         elegido=posiblesviajes.get(viajeSeleccionado).getTrayecto().listarHorarios().get(indiceHorarioElegido);
         if(result.size()==0)
         {
-            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),"0", elegido);
-            db.store(reserva);
-            return reserva.getIdReserva();
+            if(this.repartoAsiento == null){
+                ReservaTrayecto reserva=new ReservaTrayecto(posiblesviajes.get(viajeSeleccionado).getInformacionTrayecto(), fecha, -1, "0", elegido);
+                db.store(reserva);
+            }
+            return "0";
         }
         else
         {
             String codigo = ""+ result.size();
-            Reserva reserva = new Reserva(1,posiblesviajes.get(viajeSeleccionado),codigo, elegido);
-            db.store(reserva);
-            return reserva.getIdReserva();
+            if(this.repartoAsiento==null){
+                ReservaTrayecto reserva=new ReservaTrayecto(posiblesviajes.get(viajeSeleccionado).getInformacionTrayecto(), fecha, -1, codigo, elegido);
+                db.store(reserva);
+            }
+            return codigo;
         }
     }
 
     public void cancelaReserva(String codigoReserva) {
-        Reserva reserva = new Reserva(0,null,codigoReserva, null);
+        ReservaTrayecto reserva = new ReservaTrayecto(null, null, -1, codigoReserva, null);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
         if (result.isEmpty()){
             throw new RuntimeException("El código de reserva no existe");}
         else{
             while (result.hasNext()){
-                Reserva reservaCancelada =  (Reserva)result.next();
-                if(reservaCancelada.getIdReserva().equals(codigoReserva))
+                ReservaTrayecto reservaCancelada =  (ReservaTrayecto)result.next();
+                if(reservaCancelada.getCodigoReserva().equals(codigoReserva))
                 {
-                      reservaCancelada.getHorario().actualizaAsientos(reservaCancelada.getNumAsientos());
-                      
+                    reservaCancelada.getHorario().actualizaAsientos(1);
                 }
-                    //aumento asiento
-                    db.delete(reservaCancelada);
+                db.delete(reservaCancelada);
             }
             }
-        
     }
     /**
      * Cancela una reserva, dejando el asiento indicado libre

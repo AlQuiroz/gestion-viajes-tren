@@ -21,6 +21,7 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
 
 /**
  * Clase encargada de generar un listado de viajes.
@@ -69,7 +70,8 @@ public class ListadoViajes {
                 while(j<trayectos.get(i).listarHorarios().size()){
                     Trayecto trayecto_=new Trayecto(trayectos.get(i));
                     trayecto_.setHorarioElegido(trayecto_.listarHorarios().get(j));
-                    Viaje viaje_=new Viaje(fecha, trayecto_);
+                    InformacionTrayecto info=new InformacionTrayecto(origen.getNombre(), destino.getNombre(), trayecto_.listarHorarios().get(j).getHoraSalida(), trayecto_.listarHorarios().get(j).getHoraLlegada(), trayecto_.listarHorarios().get(j).getPrecioHorario());
+                    Viaje viaje_=new Viaje(fecha, trayecto_, info);
                     if(!viajes.add(viaje_)){
                         throw new RuntimeException("Error al cargar el viaje");
                     }

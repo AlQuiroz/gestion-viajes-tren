@@ -19,6 +19,7 @@ package org.uca.dss.curso1011.grupo4;
 import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
+import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
 
 /**
  * Clase encargada de representar un viaje en el sistema.
@@ -31,6 +32,7 @@ public class Viaje {
     private Float precioFinal;
     private LocalDate fecha;
     private Trayecto trayecto;
+    private InformacionTrayecto trayectoInfo;
 
     //Constructor
 
@@ -42,13 +44,14 @@ public class Viaje {
      * @param fecha fecha prevista para el viaje
      * @param trayecto trayecto que compone el viaje
      */
-    public Viaje(LocalDate fecha, Trayecto trayecto){
+    public Viaje(LocalDate fecha, Trayecto trayecto, InformacionTrayecto info){
         
         this.setFecha(fecha);
 
         this.setTrayecto(trayecto);
 
         this.calcularPrecioViaje();
+        this.trayectoInfo=info;
     }
     /**
      * Constructor de copia
@@ -61,6 +64,7 @@ public class Viaje {
         this.setFecha(viaje.getFecha());
         this.setTrayecto(viaje.getTrayecto());
         this.precioFinal = viaje.getPrecio();
+        this.trayectoInfo=viaje.trayectoInfo;
     }
 
     //Métodos de asignación
@@ -91,6 +95,9 @@ public class Viaje {
         return this.fecha;
     }
 
+    public InformacionTrayecto getInformacionTrayecto(){
+        return this.trayectoInfo;
+    }
     /**
      * Método consultor del trayecto
      *
