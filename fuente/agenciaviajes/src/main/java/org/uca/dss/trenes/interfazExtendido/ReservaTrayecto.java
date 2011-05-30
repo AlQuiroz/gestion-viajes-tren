@@ -6,6 +6,7 @@
 package org.uca.dss.trenes.interfazExtendido;
 
 import org.joda.time.LocalDate;
+import org.uca.dss.curso1011.grupo4.Horario;
 
 /**
  *
@@ -16,7 +17,7 @@ public class ReservaTrayecto {
     private String codigoReserva;
     private LocalDate fechaSalida;
     private InformacionTrayecto trayecto;
-
+    private Horario horario;
 /**
  * Constructor de la información de una reserva
  * @param recorrido a reservar
@@ -26,11 +27,12 @@ public class ReservaTrayecto {
  */
     public ReservaTrayecto(InformacionTrayecto recorrido,
             LocalDate fechaSalida,
-            int numeroAsiento, String codigoReserva) {
+            int numeroAsiento, String codigoReserva, Horario horario) {
         this.trayecto = recorrido;
         this.fechaSalida = fechaSalida;
         this.numeroAsiento = numeroAsiento;
         this.codigoReserva = codigoReserva;
+        this.horario=horario;
     }
 
     /**
@@ -40,6 +42,9 @@ public class ReservaTrayecto {
         return numeroAsiento;
     }
 
+    public Horario getHorario(){
+        return this.horario;
+    }
     /**
      * @return the codigoReserva
      */
