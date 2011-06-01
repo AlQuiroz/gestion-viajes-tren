@@ -50,7 +50,7 @@ public class Viaje {
 
         this.setTrayecto(trayecto);
 
-        this.calcularPrecioViaje();
+        this.setPrecioViaje();
         this.trayectoInfo=info;
     }
     /**
@@ -128,7 +128,7 @@ public class Viaje {
      *
      * Lo calcula en función del precio del trayecto, y el número de trayectos que componen el viaje. Establece dicho precio en el atributo 'precio_final'.
      */
-    private void calcularPrecioViaje(){
+    private void setPrecioViaje(){
         this.setPrecio(this.getTrayecto().getPrecio());
     }
 

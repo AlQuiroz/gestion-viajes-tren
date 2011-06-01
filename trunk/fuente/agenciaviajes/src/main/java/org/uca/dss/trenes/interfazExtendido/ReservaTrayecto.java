@@ -17,7 +17,6 @@ public class ReservaTrayecto {
     private String codigoReserva;
     private LocalDate fechaSalida;
     private InformacionTrayecto trayecto;
-    private Horario horario;
 /**
  * Constructor de la información de una reserva
  * @param recorrido a reservar
@@ -27,12 +26,11 @@ public class ReservaTrayecto {
  */
     public ReservaTrayecto(InformacionTrayecto recorrido,
             LocalDate fechaSalida,
-            int numeroAsiento, String codigoReserva, Horario horario) {
+            int numeroAsiento, String codigoReserva) {
         this.trayecto = recorrido;
         this.fechaSalida = fechaSalida;
         this.numeroAsiento = numeroAsiento;
         this.codigoReserva = codigoReserva;
-        this.horario=horario;
     }
 
     /**
@@ -42,9 +40,6 @@ public class ReservaTrayecto {
         return numeroAsiento;
     }
 
-    public Horario getHorario(){
-        return this.horario;
-    }
     /**
      * @return the codigoReserva
      */
@@ -71,4 +66,5 @@ public class ReservaTrayecto {
     public InformacionTrayecto getTrayecto() {
         return trayecto;
     }
+
 }

@@ -72,7 +72,7 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
 
 
     @Test
-    public void testNumeroAsientoTrayecto(){
+    public void testNumerosAsientosTrayecto(){
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int asiento = compras.asientosLibres(hoy,itinerarios.get(0));
         assertEquals(asiento, 10);
@@ -130,4 +130,145 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         assertEquals(listaNumeros.size(), 10);
         assertEquals(reservas, 10);
     }
+
+    //En el siguiente test comprobamos que si están disponibles, para varios trayectos del mismo itinerario
+    // se reservan los mismos asientos
+    @Test
+    public void testReservaItinerarioMismoAsiento() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        List<ReservaTrayecto> listaReservas=compras.reservaAsiento(itinerarios.get(0), hoy);
+        for(int i=0; i<listaReservas.size(); i++){
+            if((i+1)<listaReservas.size()){
+            assertSame(listaReservas.get(i).getNumeroAsiento(), listaReservas.get(i+1).getNumeroAsiento());
+            }
+        }
+
+        }
+
+    @Test
+    public void testReservaItinerarioMismoAsientoAleatorio() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        List<ReservaTrayecto> listaReservas=compras.reservaAsiento(itinerarios.get(0), hoy);
+        for(int i=0; i<listaReservas.size(); i++){
+            if((i+1)<listaReservas.size()){
+            assertSame(listaReservas.get(i).getNumeroAsiento(), listaReservas.get(i+1).getNumeroAsiento());
+            }
+        }
+
+        }
+
+
+    @Test
+    public void testReservaItinerarioDistintoAsiento() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        // Reservamos los asientos numeros 1.
+        List<ReservaTrayecto> lista1=compras.reservaAsiento(itinerarios.get(0), hoy);
+
+        lista1.remove(1);
+        // Cancelamos solo el primer trayecto del itinerario
+        compras.cancelaReserva(lista1);
+        List<ReservaTrayecto> lista2=compras.reservaAsiento(itinerarios.get(0), hoy);
+        // Para el primer trayecto podremos reservar ahora el asiento 1
+        // Para el segundo trayecto no podremos reservarlo, y se reservará el 2
+        for(int y=0; y<lista2.size(); y++){
+            if(y==0){
+                assertSame(lista2.get(y).getNumeroAsiento(), 1);
+            }else{
+                assertSame(lista2.get(y).getNumeroAsiento(), 2);
+            }
+        }
+
+        }
+
+    @Test
+    public void testReservaCancelayReserva() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        // Reservamos los asientos numeros 1.
+        List<ReservaTrayecto> lista1=compras.reservaAsiento(itinerarios.get(0), hoy);
+        
+        for(int y=0; y<lista1.size(); y++){
+            assertSame(lista1.get(y).getNumeroAsiento(), 1);
+        }
+        // Cancelamos la reserva
+        compras.cancelaReserva(lista1);
+        // Volvemos a reservar, por lo que los asientos tendrán que ser de nuevo los numeros 1
+        List<ReservaTrayecto> lista2=compras.reservaAsiento(itinerarios.get(0), hoy);
+
+        for(int i=0; i<lista2.size(); i++){
+            assertSame(lista2.get(i).getNumeroAsiento(), 1);
+        }
+
+        // Volvemos a reservar, por lo que los asientos serán los número 2.
+        List<ReservaTrayecto> lista3= compras.reservaAsiento(itinerarios.get(0), hoy);
+
+        for(int j=0; j<lista3.size(); j++){
+            assertSame(lista3.get(j).getNumeroAsiento(), 2);
+        }
+        // Cancelamos todo
+        compras.cancelaReserva(lista3);
+        compras.cancelaReserva(lista2);
+        // Reservamos 10 viajes
+        int viajes=0;
+        while(viajes<10){
+            List<ReservaTrayecto> lista=compras.reservaAsiento(itinerarios.get(0), hoy);
+            viajes++;
+            // Comprobamos que la asignación es incremental
+            assertSame(lista.get(0).getNumeroAsiento(), viajes);
+            // Cancelamos el viaje cuyo asiento es el numero 8 y lo volvemos a reservar
+            if(lista.get(0).getNumeroAsiento()==8){
+                compras.cancelaReserva(lista);
+                List<ReservaTrayecto> lista4=compras.reservaAsiento(itinerarios.get(0), hoy);
+                assertSame(lista4.get(0).getNumeroAsiento(),8);
+            }
+        }
+        
+
+        }
+
+    @Test
+    public void testReservaCancelayReservaAsientosAleatorios() throws CloneNotSupportedException{
+        compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
+        List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
+        int reservas = 0;
+        // Reservamos asientos.
+        List<ReservaTrayecto> lista1=compras.reservaAsiento(itinerarios.get(0), hoy);
+        int asientoDisponibledeNuevo=lista1.get(0).getNumeroAsiento();
+        // Cancelamos la reserva
+        compras.cancelaReserva(lista1);
+        // Volvemos a reservar, por lo que los números utilizados anteriormente podrán volver a usarse
+        List<ReservaTrayecto> lista2=compras.reservaAsiento(itinerarios.get(0), hoy);
+        int asientoDisponibledeNuevo2=lista2.get(0).getNumeroAsiento();
+        // Volvemos a cancelar
+        compras.cancelaReserva(lista2);
+        // Reservamos las 10 plazas disponibles, por lo que los asientos liberados anteriormente tendrán que ser usados.
+        int viajes=0;
+        boolean exito1=false;
+        boolean exito2=false;
+        while(viajes<10){
+            List<ReservaTrayecto> lista=compras.reservaAsiento(itinerarios.get(0), hoy);
+            viajes++;
+            if(lista.get(0).getNumeroAsiento()==asientoDisponibledeNuevo){
+                exito1=true;
+            }
+            if(lista.get(0).getNumeroAsiento()==asientoDisponibledeNuevo2){
+                exito2=true;
+            }
+
+        }
+
+
+            if(!exito1 || !exito2){
+                throw new RuntimeException("No utiliza los asientos liberados por la cancelación");
+            }
+
+        }
+
 }
