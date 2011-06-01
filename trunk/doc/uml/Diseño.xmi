@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
 	<xmi:Documentation exporter="Bouml" exporterVersion="1.15"/>
-	<uml:Model xmi:type="uml:Model" xmi:id="themodel" name="disenno_definity">
-		<packagedElement xmi:type="uml:Package" xmi:id="BOUML_0x81_22" name ="disenno_definity">
+	<uml:Model xmi:type="uml:Model" xmi:id="themodel" name="diseno_definitivo">
+		<packagedElement xmi:type="uml:Package" xmi:id="BOUML_0x81_22" name ="diseno_definitivo">
 			<packagedElement xmi:type="uml:Class" name="Viaje" xmi:id="BOUML_0x1f48a_4" visibility="package">
 				<ownedAttribute xmi:type="uml:Property" name="precioFinal" xmi:id="BOUML_0x1f60a_1" visibility="private">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_0"/>
@@ -34,11 +34,6 @@
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x21d0a_0" visibility="private" association="BOUML_ASSOC_0x21d0a_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f80a_4"/>
 				</ownedAttribute>
-				<ownedOperation xmi:type="uml:Operation" name="calcularPrecioViaje" xmi:id="BOUML_0x20f8a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_1" direction="return">
-						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_0"/>
-					</ownedParameter>
-				</ownedOperation>
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2570a_0" visibility="private" association="BOUML_ASSOC_0x2570a_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f60a_4"/>
 					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x2570a_0" value="1"/>
@@ -64,7 +59,7 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f68a_4"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="obtenerHorarios" xmi:id="BOUML_0x2618a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_2" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_1" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 					<ownedParameter xmi:type="uml:Parameter" name="conprecio" xmi:id="BOUML_op_param_1" direction="in">
@@ -75,21 +70,30 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f60a_4"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="getTrayecto" xmi:id="BOUML_0x1f4fb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_3" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_2" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f60a_4"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getPrecio" xmi:id="BOUML_0x1f5fb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_4" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_3" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_0"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getFecha" xmi:id="BOUML_0x230fb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_5" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_4" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_3"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="obtenerHorariosConPrecios" xmi:id="BOUML_0x231fb_2" visibility="public" isAbstract="false">
+				</ownedOperation>
+				<ownedAttribute xmi:type="uml:Property" name="trayectoInfo" xmi:id="BOUML_0x263fb_1" visibility="private">
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2bc7b_0" visibility="private" association="BOUML_ASSOC_0x2bc7b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x25e7b_4"/>
+					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x2bc7b_0" value="1"/>
+					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2bc7b_0" value="1"/>
+				</ownedAttribute>
+				<ownedOperation xmi:type="uml:Operation" name="getInformacionTrayecto" xmi:id="BOUML_0x2ad7b_2" visibility="public" isAbstract="false">
 				</ownedOperation>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="Directo" xmi:id="BOUML_0x1f50a_4" visibility="package">
@@ -135,7 +139,7 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f48a_4"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="listarHorarios" xmi:id="BOUML_0x1f40a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_6" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_5" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -148,7 +152,7 @@
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2000a_0" value="1"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="calcularPrecioTrayecto" xmi:id="BOUML_0x20f0a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_7" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_6" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_0"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -183,7 +187,7 @@
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2600a_0" value="*"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="listarHorariosConPrecios" xmi:id="BOUML_0x27c0a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_8" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_7" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -197,7 +201,7 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f68a_4"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="setHorarioElegido" xmi:id="BOUML_0x1f57b_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_9" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_8" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 					<ownedParameter xmi:type="uml:Parameter" name="valor" xmi:id="BOUML_op_param_2" direction="in">
@@ -216,27 +220,27 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_5"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="getTramos" xmi:id="BOUML_0x22dfb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_10" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_9" direction="return">
 						<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#Integer"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getOrigen" xmi:id="BOUML_0x22e7b_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_11" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_10" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f78a_4"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getDestino" xmi:id="BOUML_0x22efb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_12" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_11" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f78a_4"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getPrecio" xmi:id="BOUML_0x22f7b_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_13" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_12" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_0"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getHorarioElegido" xmi:id="BOUML_0x22ffb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_14" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_13" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f68a_4"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -260,7 +264,7 @@
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="actualizaAsientos" xmi:id="BOUML_0x2620a_2" visibility="private" isAbstract="false">
 					<ownedComment xmi:type="uml:Comment" xmi:id="COMMENT_3" body="Actualiza el n?mero de asientos libres para el horario, decrementando el atributo asientos_disponibles con el n?mero de asientos reservados (par?metro 'asientos_reservados')."/>
-					<ownedParameter name="return" xmi:id="BOUML_return_15" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_14" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 					<ownedParameter xmi:type="uml:Parameter" name="asientos_reservados" xmi:id="BOUML_op_param_3" direction="in">
@@ -314,13 +318,13 @@
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="comprobarDisponibilidad" xmi:id="BOUML_0x2628a_2" visibility="public" isAbstract="false">
 					<ownedComment xmi:type="uml:Comment" xmi:id="COMMENT_6" body="Comprueba si existen asientos disponibles para el horario. Devuelve un booleano indicando su resultado."/>
-					<ownedParameter name="return" xmi:id="BOUML_return_16" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_15" direction="return">
 						<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#Boolean"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getPrecioHorario" xmi:id="BOUML_0x27d0a_2" visibility="public" isAbstract="false">
 					<ownedComment xmi:type="uml:Comment" xmi:id="COMMENT_7" body="Devuelve el precio de un horario, que no es m?s que el precio por tramo del tren que cubre. No devuelve un precio final, solo el precio del tramo viajado."/>
-					<ownedParameter name="return" xmi:id="BOUML_return_17" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_16" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_0"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -331,22 +335,22 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f60a_4"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="getAsientosDisponibles" xmi:id="BOUML_0x22bfb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_18" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_17" direction="return">
 						<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#Integer"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getVehiculo" xmi:id="BOUML_0x22c7b_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_19" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_18" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f70a_4"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getHoraLlegada" xmi:id="BOUML_0x22cfb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_20" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_19" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_6"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getHoraSalida" xmi:id="BOUML_0x22d7b_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_21" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_20" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_6"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -357,6 +361,12 @@
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x22efb_0" visibility="private" association="BOUML_ASSOC_0x22e7b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f80a_4"/>
 				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="asientosReservados" xmi:id="BOUML_0x2637b_1" visibility="private">
+				</ownedAttribute>
+				<ownedOperation xmi:type="uml:Operation" name="getListaAsientosReservados" xmi:id="BOUML_0x2ac7b_2" visibility="public" isAbstract="false">
+				</ownedOperation>
+				<ownedOperation xmi:type="uml:Operation" name="setAsientoReservado" xmi:id="BOUML_0x2acfb_2" visibility="public" isAbstract="false">
+				</ownedOperation>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="Tren" xmi:id="BOUML_0x1f70a_4" visibility="package">
 				<ownedRule xmi:type="uml:Constraint" xmi:id="BOUML_CONSTRAINT_0x1f70a_4" constrainedElement="BOUML_0x1f70a_4">
@@ -424,12 +434,12 @@
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f60a_4"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="getNombre" xmi:id="BOUML_0x2297b_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_22" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_21" direction="return">
 						<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#String"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getPais" xmi:id="BOUML_0x229fb_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_23" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_22" direction="return">
 						<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#String"/>
 					</ownedParameter>
 				</ownedOperation>
@@ -480,18 +490,10 @@
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getTrayecto" xmi:id="BOUML_0x2337b_2" visibility="public" isAbstract="false">
 				</ownedOperation>
-				<ownedOperation xmi:type="uml:Operation" name="getFechaReserva" xmi:id="BOUML_0x233fb_2" visibility="public" isAbstract="false">
-				</ownedOperation>
-				<ownedAttribute xmi:type="uml:Property" name="horario" xmi:id="BOUML_0x22cfb_1" visibility="private">
-				</ownedAttribute>
-				<ownedOperation xmi:type="uml:Operation" name="getHorario" xmi:id="BOUML_0x257fb_2" visibility="public" isAbstract="false">
-				</ownedOperation>
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x22e7b_0" visibility="private" association="BOUML_ASSOC_0x22e7b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f68a_4"/>
 					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x22e7b_0" value="1"/>
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x22e7b_0" value="1"/>
-				</ownedAttribute>
-				<ownedAttribute xmi:type="uml:Property" name="fechaReserva" xmi:id="BOUML_0x2467b_1" visibility="private">
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="getFechaSalida" xmi:id="BOUML_0x28efb_2" visibility="public" isAbstract="false">
 				</ownedOperation>
@@ -500,6 +502,8 @@
 					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x2827b_0" value="1"/>
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2827b_0" value="1"/>
 				</ownedAttribute>
+				<ownedOperation xmi:type="uml:Operation" name="getPrecio" xmi:id="BOUML_0x2af7b_2" visibility="public" isAbstract="false">
+				</ownedOperation>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="ListadoViajes" xmi:id="BOUML_0x2118a_4" visibility="package">
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x21c0a_0" visibility="private" association="BOUML_ASSOC_0x21c0a_0" aggregation="none">
@@ -517,17 +521,17 @@
 					<type xmi:type="uml:PrimitiveType" href="http://schema.omg.org/spec/UML/2.1/uml.xml#String"/>
 				</ownedAttribute>
 				<ownedOperation xmi:type="uml:Operation" name="listarViajesConPrecio" xmi:id="BOUML_0x20d8a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_24" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_23" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="listarViajesPorAsientoDisponible" xmi:id="BOUML_0x2448a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_25" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_24" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_2"/>
 					</ownedParameter>
 				</ownedOperation>
 				<ownedOperation xmi:type="uml:Operation" name="getViajes" xmi:id="BOUML_0x2610a_2" visibility="public" isAbstract="false">
-					<ownedParameter name="return" xmi:id="BOUML_return_26" direction="return">
+					<ownedParameter name="return" xmi:id="BOUML_return_25" direction="return">
 						<type xmi:type="uml:Class" xmi:idref="BOUML_datatype_7"/>
 					</ownedParameter>
 					<ownedParameter xmi:type="uml:Parameter" name="f" xmi:id="BOUML_op_param_4" direction="in">
@@ -555,6 +559,11 @@
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x212fb_0" value="1"/>
 				</ownedAttribute>
 				<ownedAttribute xmi:type="uml:Property" name="datos" xmi:id="BOUML_0x22c7b_1" visibility="private">
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2b97b_0" visibility="private" association="BOUML_ASSOC_0x2b97b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x20e7b_4"/>
+					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x2b97b_0" value="1"/>
+					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2b97b_0" value="1"/>
 				</ownedAttribute>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="GestionReserva" xmi:id="BOUML_0x2120a_4" visibility="package">
@@ -625,6 +634,19 @@
 					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x29f7b_0" value="1"/>
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x29f7b_0" value="1"/>
 				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="repartoAsiento" xmi:id="BOUML_0x2627b_1" visibility="private">
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="reservasRealizadas" xmi:id="BOUML_0x262fb_1" visibility="private">
+				</ownedAttribute>
+				<ownedOperation xmi:type="uml:Operation" name="comprobarDisponibilidadAsiento" xmi:id="BOUML_0x2ab7b_2" visibility="public" isAbstract="false">
+				</ownedOperation>
+				<ownedOperation xmi:type="uml:Operation" name="getNumAsientos" xmi:id="BOUML_0x2abfb_2" visibility="public" isAbstract="false">
+				</ownedOperation>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2bb7b_0" visibility="private" association="BOUML_ASSOC_0x2bb7b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x25efb_4"/>
+					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x2bb7b_0" value="1"/>
+					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2bb7b_0" value="1"/>
+				</ownedAttribute>
 			</packagedElement>
 			<packagedElement xmi:type="uml:AssociationClass" name="CargaDatos" xmi:id="BOUML_0x20dfb_4" visibility="package">
 				<memberEnd xmi:idref="BOUML_0x20f7b_0"/>
@@ -694,6 +716,9 @@
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x22ffb_0" visibility="private" association="BOUML_ASSOC_0x22f7b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x2120a_4"/>
 				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2b9fb_0" visibility="private" association="BOUML_ASSOC_0x2b97b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x2118a_4"/>
+				</ownedAttribute>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="InterfazListados" xmi:id="BOUML_0x228fb_4" visibility="package">
 				<ownedOperation xmi:type="uml:Operation" name="getHorarios" xmi:id="BOUML_0x2587b_2" visibility="public" isAbstract="false">
@@ -701,6 +726,10 @@
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x22cfb_0" visibility="private" association="BOUML_ASSOC_0x22c7b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x20e7b_4"/>
 				</ownedAttribute>
+				<ownedOperation xmi:type="uml:Operation" name="getItinerariosEntre" xmi:id="BOUML_0x2ae7b_2" visibility="public" isAbstract="false">
+				</ownedOperation>
+				<ownedOperation xmi:type="uml:Operation" name="getItinerarios" xmi:id="BOUML_0x2aefb_2" visibility="public" isAbstract="false">
+				</ownedOperation>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="InterfazCompras" xmi:id="BOUML_0x2297b_4" visibility="package">
 				<ownedOperation xmi:type="uml:Operation" name="reservaAsiento" xmi:id="BOUML_0x258fb_2" visibility="public" isAbstract="false">
@@ -714,6 +743,8 @@
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x22dfb_0" visibility="private" association="BOUML_ASSOC_0x22d7b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x2120a_4"/>
 				</ownedAttribute>
+				<ownedOperation xmi:type="uml:Operation" name="setEstrategiaRepartoAsientos" xmi:id="BOUML_0x2adfb_2" visibility="public" isAbstract="false">
+				</ownedOperation>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="InterfazVehiculo" xmi:id="BOUML_0x242fb_4" visibility="package">
 				<ownedOperation xmi:type="uml:Operation" name="getNumAsientos" xmi:id="BOUML_0x273fb_2" visibility="public" isAbstract="false">
@@ -798,6 +829,12 @@
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x285fb_0" visibility="private" association="BOUML_ASSOC_0x2857b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x25efb_4"/>
 				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2bafb_0" visibility="private" association="BOUML_ASSOC_0x2ba7b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x25efb_4"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2bcfb_0" visibility="private" association="BOUML_ASSOC_0x2bc7b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x1f48a_4"/>
+				</ownedAttribute>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Class" name="Itinerario" xmi:id="BOUML_0x25efb_4" visibility="package">
 				<ownedOperation xmi:type="uml:Operation" name="getPrecio" xmi:id="BOUML_0x291fb_2" visibility="public" isAbstract="false">
@@ -811,6 +848,14 @@
 					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2857b_0" value="*"/>
 				</ownedAttribute>
 				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x29ffb_0" visibility="private" association="BOUML_ASSOC_0x29f7b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x2120a_4"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2ba7b_0" visibility="private" association="BOUML_ASSOC_0x2ba7b_0" aggregation="none">
+					<type xmi:type="uml:Class" xmi:idref="BOUML_0x25e7b_4"/>
+					<lowerValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_L_0x2ba7b_0" value="1"/>
+					<upperValue xmi:type="uml:LiteralString" xmi:id="BOUML_MULTIPLICITY_U_0x2ba7b_0" value="*"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" name="" xmi:id="BOUML_0x2bbfb_0" visibility="private" association="BOUML_ASSOC_0x2bb7b_0" aggregation="none">
 					<type xmi:type="uml:Class" xmi:idref="BOUML_0x2120a_4"/>
 				</ownedAttribute>
 			</packagedElement>
@@ -859,6 +904,10 @@
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x25a0a_0" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x25a0a_0"/>
 				<memberEnd xmi:idref="BOUML_0x25a8a_0"/>
+			</packagedElement>
+			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x2bc7b_0" name="con" visibility="private">
+				<memberEnd xmi:idref="BOUML_0x2bc7b_0"/>
+				<memberEnd xmi:idref="BOUML_0x2bcfb_0"/>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x1f60a_0" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x1f60a_0"/>
@@ -962,6 +1011,10 @@
 			</packagedElement>
 			<packagedElement xmi:type="uml:Dependency" xmi:id="BOUML_0x21f8a_0" client="BOUML_0x2118a_4" supplier="BOUML_0x1f48a_4">
 			</packagedElement>
+			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x2b97b_0" name="requiere" visibility="private">
+				<memberEnd xmi:idref="BOUML_0x2b97b_0"/>
+				<memberEnd xmi:idref="BOUML_0x2b9fb_0"/>
+			</packagedElement>
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x21e0a_0" name="Gestiona" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x21e0a_0"/>
 				<memberEnd xmi:idref="BOUML_0x21e8a_0"/>
@@ -987,6 +1040,10 @@
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x29f7b_0" name="gestiona" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x29f7b_0"/>
 				<memberEnd xmi:idref="BOUML_0x29ffb_0"/>
+			</packagedElement>
+			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x2bb7b_0" name="gestiona" visibility="private">
+				<memberEnd xmi:idref="BOUML_0x2bb7b_0"/>
+				<memberEnd xmi:idref="BOUML_0x2bbfb_0"/>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x20e7b_0" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x20e7b_0"/>
@@ -1031,6 +1088,10 @@
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x2857b_0" name="formado por" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x2857b_0"/>
 				<memberEnd xmi:idref="BOUML_0x285fb_0"/>
+			</packagedElement>
+			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x2ba7b_0" name="formado por" visibility="private">
+				<memberEnd xmi:idref="BOUML_0x2ba7b_0"/>
+				<memberEnd xmi:idref="BOUML_0x2bafb_0"/>
 			</packagedElement>
 			<packagedElement xmi:type="uml:Association" xmi:id="BOUML_ASSOC_0x2847b_0" name="implementa" visibility="private">
 				<memberEnd xmi:idref="BOUML_0x2847b_0"/>

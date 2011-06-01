@@ -10,12 +10,14 @@ import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.GestionReservas;
 
 /**
- * Esta clase permite abstraer el método de reparto de asientos
+ * Esta interfaz permite abstraer el método de reparto de asientos
  * @author migue
  */
 public interface InterfazRepartoAsiento  {
     /**
      * Da el asiento que le corresponde al cliente
+     *
+     * Establece internamente el número de asiento correspondiente al tipo de implementación de la interfaz.
      *
      * @param info Informacion del trayecto al cual debe de dar el asiento
      * @return el número del asiento

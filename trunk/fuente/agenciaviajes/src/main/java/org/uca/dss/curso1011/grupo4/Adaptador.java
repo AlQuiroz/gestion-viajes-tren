@@ -146,13 +146,11 @@ public class Adaptador implements InterfazListados {
         List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
         CargaDatos datosNecesarios=this.getDatosDia(fechaSalida);
             if(datosNecesarios.getFecha().equals(fechaSalida)){
-                System.out.println("Oleeee");
                 for(int j=0; j<datosNecesarios.getTrayectosCargados().size(); j++){
                     if(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
                         for(int k=0; k<datosNecesarios.getTrayectosCargados().get(j).listarHorarios().size(); k++){
                             if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
                                 InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(j).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
-                                System.out.println("LLegamos");
                                 if(!trayectosOrigen.add(info)){
                                     throw new RuntimeException("Error al buscar trayectos");
                                 }
