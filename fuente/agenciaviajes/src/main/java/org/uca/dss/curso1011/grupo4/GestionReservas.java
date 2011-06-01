@@ -1,9 +1,3 @@
-//Falta el tema de intentar reservar el mismo asiento para el segundo tramo del itinerario.
-//Comprobar que no asigna asientos repetidos, y hacer tests para lo mismo.
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package org.uca.dss.curso1011.grupo4;
 import com.db4o.ObjectContainer;
@@ -380,7 +374,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         return this.datos;
     }
     
-    public void setRepartoAsientoStrategy(InterfazRepartoAsiento reparto) throws CloneNotSupportedException {
+    public void setEstrategiaRepartoAsientos(InterfazRepartoAsiento reparto) throws CloneNotSupportedException {
         this.repartoAsiento = (InterfazRepartoAsiento) reparto;
     }
 

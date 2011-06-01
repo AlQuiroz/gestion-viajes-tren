@@ -16,7 +16,6 @@
  */
 package org.uca.dss.trenes.interfazExtendido;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 /**
@@ -29,8 +28,7 @@ public class InformacionTrayecto {
     private String origen;
     /** Ciudad destino del viaje */
     private String destino;
-    /** hora de inicio del viaje,
-     */
+    /** hora de inicio del viaje */
     private LocalTime horaSalida;
     /** hora de fin del viaje */
     private LocalTime horaLlegada;

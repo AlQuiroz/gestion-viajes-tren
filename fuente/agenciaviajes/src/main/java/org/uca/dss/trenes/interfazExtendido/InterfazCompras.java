@@ -118,5 +118,5 @@ public interface InterfazCompras {
      * @param repartoAsiento estrategia a seguir
      * @throws CloneNotSupportedException
      */
-    public void setRepartoAsientoStrategy(InterfazRepartoAsiento repartoAsiento) throws CloneNotSupportedException;
+    public void setEstrategiaRepartoAsientos(InterfazRepartoAsiento repartoAsiento) throws CloneNotSupportedException;
 }

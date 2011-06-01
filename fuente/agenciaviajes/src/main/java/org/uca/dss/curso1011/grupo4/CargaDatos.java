@@ -57,7 +57,6 @@ public class CargaDatos {
             this.vehiculosCargados= new ArrayList<InterfazVehiculo>();
             nextLine = readerTrenes.readNext ();
             while (nextLine.length == 3 ) {//pongo 3 porque en cada l�nea hay 3 datos, si estamos en una linea sin datos no valdra 3
-                //Aqui vamos cargando los trenes
                 String nombreTren= nextLine[0];
                 String asientos= nextLine[1];
                 String precio= nextLine[2];
@@ -81,7 +80,6 @@ public class CargaDatos {
             String [] nextLineTrayectos;
             this.trayectosCargados=new ArrayList<Trayecto>();
             while ((nextLineTrayectos = readerTrayectos.readNext ()) != null ) {
-                //Aqui vamos cargando los trayectos
                 String nombre=nextLineTrayectos[0];
                 String ciudadOrigen= nextLineTrayectos[1];
                 String ciudadDestino=nextLineTrayectos[2];
@@ -165,11 +163,11 @@ public class CargaDatos {
     }
 
     /**
-     * Método consultor de tren.
+     * Método consultor de vehículo.
      *
-     * Devuelve el tren de entre los trenes cargados cuyo nombre coincide con el string que recibe por parámetro.
+     * Devuelve el vehículo de entre los vehículos cargados cuyo nombre coincide con el string que recibe por parámetro.
      *
-     * @param nombre string con el nombre del tren que queremos obtener.
+     * @param nombre string con el nombre del vehículo que queremos obtener.
      * @return objeto tren cuyo nombre coincide con el parámetro de entrada.
      */
     public InterfazVehiculo getVehiculo(String nombre){
@@ -185,10 +183,10 @@ public class CargaDatos {
         return t;
     }
     /**
-     * Método consultor de trenes.
+     * Método consultor de vehículos.
      *
-     * Devuelve el conjunto de trenes que han sido cargados del fichero trenes.csv
-     * @return conjunto de trenes existentes
+     * Devuelve el conjunto de vehículos que han sido cargados del fichero trenes.csv
+     * @return conjunto de vehículos existentes
      */
     public ArrayList<InterfazVehiculo> getVehiculosCargados(){
         return this.vehiculosCargados;

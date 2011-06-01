@@ -47,9 +47,7 @@ public class Viaje {
     public Viaje(LocalDate fecha, Trayecto trayecto, InformacionTrayecto info){
         
         this.setFecha(fecha);
-
         this.setTrayecto(trayecto);
-
         this.setPrecioViaje();
         this.trayectoInfo=info;
     }
@@ -123,11 +121,6 @@ public class Viaje {
 
     //Otros métodos
 
-    /**
-     * Calcula el precio final del viaje.
-     *
-     * Lo calcula en función del precio del trayecto, y el número de trayectos que componen el viaje. Establece dicho precio en el atributo 'precio_final'.
-     */
     private void setPrecioViaje(){
         this.setPrecio(this.getTrayecto().getPrecio());
     }

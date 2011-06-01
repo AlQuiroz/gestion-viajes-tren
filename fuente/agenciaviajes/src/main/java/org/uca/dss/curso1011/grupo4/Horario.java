@@ -20,7 +20,6 @@ package org.uca.dss.curso1011.grupo4;
 import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
 import java.util.ArrayList;
-import java.lang.Integer;
 import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 
 /**
@@ -39,6 +38,7 @@ public class Horario {
     private String horaSalida;
     private InterfazVehiculo vehiculo;
     private LocalDate fecha;
+
     // Constructores
     /**
      * Constructor
@@ -140,11 +140,11 @@ public class Horario {
     }
 
     /**
-     * Método consultor de tren.
+     * Método consultor de vehículo.
      *
-     * Devuelve el tren que realiza el trayecto para este horario.
+     * Devuelve el vehículo que realiza el trayecto para este horario.
      *
-     * @return objeto de la clase tren que realiza el trayecto para el horario
+     * @return objeto de la clase que implemente a la interfaz Interfazvehículo que realiza el trayecto para el horario
      */
     public InterfazVehiculo getVehiculo(){
         return this.vehiculo;

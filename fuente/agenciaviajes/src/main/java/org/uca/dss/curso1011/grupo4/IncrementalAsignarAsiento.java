@@ -24,6 +24,4 @@ public class IncrementalAsignarAsiento implements InterfazRepartoAsiento{
         }
         return asientos-asientosLibres;
     }
-
-
 }
