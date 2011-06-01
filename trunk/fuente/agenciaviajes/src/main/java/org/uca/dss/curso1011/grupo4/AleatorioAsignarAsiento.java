@@ -8,14 +8,12 @@ package org.uca.dss.curso1011.grupo4;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
-import java.util.ArrayList;
 
 /**
  *
  * @author migue
  */
 public class AleatorioAsignarAsiento implements InterfazRepartoAsiento{
-    //TODO hay q mirar cuales han sido ya repartidos
 
     public int reparteAsiento(GestionReservas gr,String origen, String destino,LocalDate fecha, LocalTime hora){
         int asientosLibres =gr.asientosLibres(origen,destino,fecha,hora);

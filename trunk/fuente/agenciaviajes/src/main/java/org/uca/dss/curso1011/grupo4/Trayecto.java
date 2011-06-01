@@ -54,7 +54,6 @@ public class Trayecto {
         this.setTramos(tramos);
         this.setOrigen(Origen);
         this.setDestino(Destino);
-        
         this.setHorarios(Horarios);
         this.setPrecio(0);
         this.horarioSeleccionado=false;
@@ -74,7 +73,6 @@ public class Trayecto {
         this.setTramos(valor.getTramos());
         this.setOrigen(valor.getOrigen());
         this.setDestino(valor.getDestino());
-
         this.setHorarios(valor.listarHorarios());
         this.setPrecio(valor.getPrecio());
         if(valor.horarioSeleccionado){

@@ -15,7 +15,6 @@ import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
 public class NoAsignarAsiento implements InterfazRepartoAsiento{
 
     public int reparteAsiento(GestionReservas info,String origen, String destino,LocalDate fecha, LocalTime hora){
-        //datos.
         if (info.asientosLibres(origen,destino,fecha,hora) < 0){
             throw new RuntimeException("No quedan asientos disponibles");
         }

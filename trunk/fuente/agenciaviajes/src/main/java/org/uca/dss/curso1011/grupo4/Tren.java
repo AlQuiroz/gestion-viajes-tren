@@ -6,6 +6,7 @@
 package org.uca.dss.curso1011.grupo4;
 
 import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
+
 /**
  * Representa al tren que realiza el viaje.
  *
@@ -13,7 +14,9 @@ import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
  *
  * @author migue
  */
+
 public class Tren implements InterfazVehiculo{
+
     /**
      * Constructor de asiento.
      *

@@ -54,10 +54,8 @@ public class ListadoViajes {
         this.datos=adaptador;
         this.setFecha(fecha);
         CargaDatos datos=this.datos.getDatosDia(fecha);
-        
         this.setOrigen(origen);
         this.setDestino(destino);
-        //Ahora creamos los viajes
         ArrayList<Trayecto> trayectos=new ArrayList<Trayecto>();
         trayectos=datos.getTrayectosCargados();
         int i=0;

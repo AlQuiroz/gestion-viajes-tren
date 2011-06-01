@@ -6,7 +6,6 @@
 package org.uca.dss.trenes.interfazExtendido;
 
 import org.joda.time.LocalDate;
-import org.uca.dss.curso1011.grupo4.Horario;
 
 /**
  *
@@ -17,6 +16,7 @@ public class ReservaTrayecto {
     private String codigoReserva;
     private LocalDate fechaSalida;
     private InformacionTrayecto trayecto;
+
 /**
  * Constructor de la información de una reserva
  * @param recorrido a reservar

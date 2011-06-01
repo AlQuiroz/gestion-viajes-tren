@@ -25,7 +25,6 @@ import java.util.List;
 import org.joda.time.LocalTime;
 import org.joda.time.LocalDate;
 import java.util.LinkedList;
-import org.uca.dss.curso1011.grupo4.ItinerarioViaje;
 
 /**
  * Clase adaptadora de la interfaz.
@@ -37,7 +36,7 @@ import org.uca.dss.curso1011.grupo4.ItinerarioViaje;
 
 public class Adaptador implements InterfazListados {
 
-    private String rutaTrenes;
+    private String rutaVehiculos;
     private String rutaTrayectos;
     private List<CargaDatos> listaDatos;
 
@@ -50,9 +49,9 @@ public class Adaptador implements InterfazListados {
      * @param Trenes String con la ruta del archivo CSV que contiene los trenes a cargar.
      * @param Trayectos String con la ruta del archivo CSV que contiene los trayectos a cargar.
      */
-    public Adaptador(String Trenes, String Trayectos){
-        this.rutaTrayectos=Trayectos;
-        this.rutaTrenes=Trenes;
+    public Adaptador(String vehiculos, String trayectos){
+        this.rutaTrayectos=trayectos;
+        this.rutaVehiculos=vehiculos;
         this.listaDatos=new LinkedList();
     }
 
@@ -71,7 +70,7 @@ public class Adaptador implements InterfazListados {
             }
         }
         if(!existenDatos){
-            CargaDatos datos=new CargaDatos(this.rutaTrayectos, this.rutaTrenes, dia);
+            CargaDatos datos=new CargaDatos(this.rutaTrayectos, this.rutaVehiculos, dia);
             this.listaDatos.add(datos);
         }
     }
@@ -180,7 +179,6 @@ public class Adaptador implements InterfazListados {
                 }
             }
         
-        //Ahora tenemos trayectosOrigen y trayectosDestino
         for(int p=0; p< trayectosOrigen.size(); p++){
             for(int q=0; q<trayectosDestino.size(); q++){
                 if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
@@ -249,7 +247,6 @@ public class Adaptador implements InterfazListados {
                 }
             }
         
-        //Ahora tenemos trayectosOrigen y trayectosDestino
         for(int p=0; p< trayectosOrigen.size(); p++){
             for(int q=0; q<trayectosDestino.size(); q++){
                 if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){

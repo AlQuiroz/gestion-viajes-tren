@@ -8,7 +8,7 @@ package org.uca.dss.curso1011.grupo4;
 /**
  * Representa la ciudad origen o destino del viaje.
  *
- * Clase encargada de representar una ciudad en el sistema de viajes de tren, identific�ndola en el mismo mediante su nombre. Tambi�n guarda la provincia y el pa�s al que pertenece.
+ * Clase encargada de representar una ciudad en el sistema de viajes de tren, identificándola en el mismo mediante su nombre. También guarda el país al que pertenece.
  *
  * @author migue
  */

@@ -7,10 +7,6 @@ package org.uca.dss.trenes.interfaz;
 
 import org.joda.time.LocalTime;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Random;
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
@@ -48,6 +44,9 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
 
     }
 
+     /**
+     * Comprueba que los posibles itinerarios para el viaje Cádiz - Barcelona son 6, y muestra por pantalla los que correspondan según el rango horario
+     */
 
     @Test
     public void testListadoItinerariosConRangoHorario() {
@@ -70,6 +69,9 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
 
     }
 
+   /**
+     * Comprueba el correcto funcionamiento de la función asientosLibres
+     */
 
     @Test
     public void testNumerosAsientosTrayecto(){
@@ -77,9 +79,13 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         int asiento = compras.asientosLibres(hoy,itinerarios.get(0));
         assertEquals(asiento, 10);
     }
+
+    /**
+     * Reserva los asientos (sin asignación) correspondientes a los trayectos que componen el itinerario "cádiz" - "huelva"
+     */
     @Test
     public void testReservaTrayectoSinAsignacion() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new NoAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new NoAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
@@ -89,9 +95,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         }
         assertEquals(reservas, 10);
     }
+    /**
+     * Reserva los asientos (con asignación incremental) correspondientes a los trayectos que componen el itinerario "cádiz" - "huelva"
+     */
     @Test
     public void testReservaTrayectoAsignacionIncremental() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new IncrementalAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         while(compras.asientosLibres(hoy,itinerarios.get(0))>0){
@@ -102,9 +111,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         assertEquals(reservas, 10);
     }
 
+    /**
+     * Reserva los asientos (con asignación aleatoria) correspondientes a los trayectos que componen el itinerario "cádiz" - "huelva"
+     */
     @Test
     public void testReservaTrayectoAsignacionAleatoria() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new AleatorioAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         ArrayList<Integer> listaNumeros=new ArrayList<Integer>();
@@ -131,11 +143,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         assertEquals(reservas, 10);
     }
 
-    //En el siguiente test comprobamos que si están disponibles, para varios trayectos del mismo itinerario
-    // se reservan los mismos asientos
+    /**
+     * En el siguiente test comprobamos que si están disponibles, para varios trayectos del mismo itinerario se reservan los mismos asientos (con asignación incremental). 
+     */
     @Test
-    public void testReservaItinerarioMismoAsiento() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+    public void testReservaItinerarioMismoAsientoIncremental() throws CloneNotSupportedException{
+        compras.setEstrategiaRepartoAsientos(new IncrementalAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         List<ReservaTrayecto> listaReservas=compras.reservaAsiento(itinerarios.get(0), hoy);
@@ -146,10 +159,14 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         }
 
         }
+
+    /**
+     * En el siguiente test comprobamos que si están disponibles, para varios trayectos del mismo itinerario se reservan los mismos asientos (con asignación aleatoria).
+     */
 
     @Test
     public void testReservaItinerarioMismoAsientoAleatorio() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new AleatorioAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         List<ReservaTrayecto> listaReservas=compras.reservaAsiento(itinerarios.get(0), hoy);
@@ -162,9 +179,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
         }
 
 
+    /**
+     * En el siguiente test comprobamos que si no está disponible el mismo asiento que el primero para el segundo trayecto del itinerario, se reserva un asiento distinto.
+     */
     @Test
     public void testReservaItinerarioDistintoAsiento() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new IncrementalAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         // Reservamos los asientos numeros 1.
@@ -186,9 +206,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
 
         }
 
+    /**
+     * En el siguiente test realizamos varias reservas y cancelaciones, para comprobar el correcto funcionamiento de las funciones que implementan dicha funcionalidad.
+     */
     @Test
     public void testReservaCancelayReserva() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new IncrementalAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new IncrementalAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         // Reservamos los asientos numeros 1.
@@ -233,9 +256,12 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
 
         }
 
+    /**
+     * Hacemos lo mismo que en el test anterior pero para una asignación de asientos aleatorios.
+     */
     @Test
     public void testReservaCancelayReservaAsientosAleatorios() throws CloneNotSupportedException{
-        compras.setRepartoAsientoStrategy(new AleatorioAsignarAsiento());
+        compras.setEstrategiaRepartoAsientos(new AleatorioAsignarAsiento());
         List<Itinerario> itinerarios = listado.getItinerariosEntre(origen, "huelva", hoy, new LocalTime("9:00"), new LocalTime("18:00"));
         int reservas = 0;
         // Reservamos asientos.
@@ -263,9 +289,7 @@ public class InterfazPruebaPropiaTest extends InterfazTest {
             }
 
         }
-
-
-            if(!exito1 || !exito2){
+       if(!exito1 || !exito2){
                 throw new RuntimeException("No utiliza los asientos liberados por la cancelación");
             }
 
