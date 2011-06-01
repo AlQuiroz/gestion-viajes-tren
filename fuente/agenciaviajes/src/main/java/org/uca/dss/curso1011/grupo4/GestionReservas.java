@@ -1,3 +1,5 @@
+//Falta el tema de intentar reservar el mismo asiento para el segundo tramo del itinerario.
+//Comprobar que no asigna asientos repetidos, y hacer tests para lo mismo.
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -17,7 +19,8 @@ import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
 import org.uca.dss.trenes.interfazExtendido.Itinerario;
 import org.uca.dss.trenes.interfazExtendido.ReservaTrayecto;
 import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
-
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Genera y gestiona una Reserva.
@@ -49,6 +52,7 @@ public class GestionReservas implements InterfazCompras{
         this.vehiculo = cVehiculo;
         this.numAsientos = numasientos;
         this.datos=adaptador;
+        this.reservasRealizadas=new HashMap<String, Horario>();
  };
 
  /**
@@ -60,12 +64,11 @@ public class GestionReservas implements InterfazCompras{
   */
  public GestionReservas(Adaptador adaptador){
         this.datos=adaptador;
+        this.reservasRealizadas=new HashMap<String, Horario>();
     };
 
     
     public int asientosLibres(LocalDate fecha, Itinerario itinerario){
-        //entiendo que con devolver el numero de asientos libres significa devolver
-        //el tren del trayecto con menor número de asientos libres
         int minNumAsiento=10000;
         for (int i=0;i<itinerario.size();++i)
         {
@@ -200,41 +203,50 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         if (repartoAsiento == null)
             throw new RuntimeException("No hay estrategia de reparto de asientos seleccionada");
         List<ReservaTrayecto> listRT = new ArrayList<ReservaTrayecto> ();
+        int numeroAsientoAnterior=-2;
         for (int i=0;i<itinerario.size();++i)
         {
             InformacionTrayecto rt = itinerario.get(i);
-            String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
-            
-            List<Trayecto> lista=this.datos.getDatosDia(fecha).getTrayectosCargados();
-            Horario hora=null;
-            for(int y=0; y<lista.size(); y++){
-                        //System.out.println(reservaCancelada.getTrayecto().getDestino());
-                if(lista.get(y).getOrigen().getNombre().equals(rt.getOrigen()) && lista.get(y).getDestino().getNombre().equals(rt.getDestino())){
-                    for(int z=0;z<lista.get(y).listarHorarios().size(); z++){
-                        LocalTime horaSalida=lista.get(y).listarHorarios().get(z).getHoraSalida();
-                                //System.out.println(reservaCancelada.getTrayecto().getHoraSalida());
-                        LocalTime horaLlegada=lista.get(y).listarHorarios().get(z).getHoraLlegada();
-                        if(rt.getHoraSalida().equals(horaSalida) && rt.getHoraLlegada().equals(horaLlegada)){
-                                    hora=lista.get(y).listarHorarios().get(z);
-                                }
-                            }
-                        }
-                    }
-            ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha,repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida()),codReserva, hora);
-
-
-
-
-            listRT.add(reserva);
-
-            ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null, null);
+	    String codReserva =this.reservaAsiento(rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
+            if(numeroAsientoAnterior!=-2){
+             if(!this.comprobarDisponibilidadAsiento(rt, fecha, numeroAsientoAnterior)){
+                 while(!this.comprobarDisponibilidadAsiento(rt, fecha, numeroAsientoAnterior)){
+                    numeroAsientoAnterior=repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
+                 }
+             }
+            }else{
+            numeroAsientoAnterior=repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
+            while(!this.comprobarDisponibilidadAsiento(rt, fecha, numeroAsientoAnterior)){
+                    numeroAsientoAnterior=repartoAsiento.reparteAsiento(this,rt.getOrigen(),rt.getDestino(),fecha,rt.getHoraSalida());
+            }
+            }
+	    ReservaTrayecto reserva= new ReservaTrayecto(rt,fecha, numeroAsientoAnterior,codReserva);
+            listRT.add(reserva);            
+	    ReservaTrayecto reservanull =new ReservaTrayecto(null,null,0,null);
             ObjectContainer db = DBUtils.getDb();
-            db.queryByExample(reservanull);//devuelve todas las ReservaTrayecto
+            db.queryByExample(reservanull);
             db.store(reserva);
+            
+                
+
         }
         return listRT;
     }
-    
+
+    public boolean comprobarDisponibilidadAsiento(InformacionTrayecto info, LocalDate fecha, int numAsiento){
+        boolean disponible=true;
+        ReservaTrayecto reserva = new ReservaTrayecto(info, fecha, numAsiento, null);
+        ObjectContainer db = DBUtils.getDb();
+        ObjectSet result=db.queryByExample(reserva);
+        if (!result.isEmpty()){
+            disponible=false;
+        }
+        if(numAsiento==-1){
+            disponible=true;
+        }
+        return disponible;
+    }
+
     public String reservaAsiento(String origen, String destino, LocalDate fecha, LocalTime hora) {
         CargaDatos datosDia=this.datos.getDatosDia(fecha);
         for(int i=0; i<datosDia.getTrayectosCargados().size(); i++){
@@ -285,33 +297,36 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
             ++viajeSeleccionado;
         }
         }
-        ReservaTrayecto reservaVacia=new ReservaTrayecto(null, null, 0, null, null);
+        ReservaTrayecto reservaVacia=new ReservaTrayecto(null, null, 0, null);
         ObjectContainer db = DBUtils.getDb();
         ObjectSet result=db.queryByExample(reservaVacia);//devuelve todas las reservas
         elegido=posiblesviajes.get(viajeSeleccionado).getTrayecto().listarHorarios().get(indiceHorarioElegido);
         if(result.size()==0)
         {
             if(this.repartoAsiento == null){
-                ReservaTrayecto reserva=new ReservaTrayecto(posiblesviajes.get(viajeSeleccionado).getInformacionTrayecto(), fecha, -1, "0", elegido);
+                ReservaTrayecto reserva=new ReservaTrayecto(posiblesviajes.get(viajeSeleccionado).getInformacionTrayecto(), fecha, -1, "0");
                 db.store(reserva);
-            }
+    	    }
+
+            this.reservasRealizadas.put("0", elegido);
             return "0";
         }
         else
         {
             String codigo = ""+ result.size();
             if(this.repartoAsiento==null){
-                ReservaTrayecto reserva=new ReservaTrayecto(posiblesviajes.get(viajeSeleccionado).getInformacionTrayecto(), fecha, -1, codigo, elegido);
+                ReservaTrayecto reserva=new ReservaTrayecto(posiblesviajes.get(viajeSeleccionado).getInformacionTrayecto(), fecha, -1, codigo);
                 db.store(reserva);
             }
+            this.reservasRealizadas.put(codigo, elegido);
             return codigo;
         }
     }
 
     public void cancelaReserva(String codigoReserva) {
-        ReservaTrayecto reserva = new ReservaTrayecto(null, null, -1, codigoReserva, null);
+        ReservaTrayecto reserva = new ReservaTrayecto(null, null, 0, codigoReserva);
         ObjectContainer db = DBUtils.getDb();
-        ObjectSet result=db.queryByExample(reserva);//devuelve todas las reservas
+        ObjectSet result=db.queryByExample(reserva);
         if (result.isEmpty()){
             throw new RuntimeException("El código de reserva no existe");}
         else{
@@ -319,7 +334,7 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
                 ReservaTrayecto reservaCancelada =  (ReservaTrayecto)result.next();
                 if(reservaCancelada.getCodigoReserva().equals(codigoReserva))
                 {
-                    reservaCancelada.getHorario().actualizaAsientos(1);
+                    this.reservasRealizadas.get(codigoReserva).actualizaAsientos(1);
                 }
                 db.delete(reservaCancelada);
             }
@@ -377,4 +392,5 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     private int numAsientos;
     private Adaptador datos;
     private InterfazRepartoAsiento repartoAsiento;
+    private Map<String, Horario> reservasRealizadas;
 }
