@@ -36,11 +36,15 @@ import java.util.LinkedList;
 
 public class Adaptador implements InterfazListados {
 
+    /* string con la ruta del fichero donde se encuentran los vehículos. */
     private String rutaVehiculos;
+    /* string con la ruta del fichero donde se encuentran los trayectos. */
     private String rutaTrayectos;
+    /* Lista de objetos CargaDatos. Cada objeto contiene los datos necesarios para una fecha determinada */
     private List<CargaDatos> listaDatos;
 
-    //Constructor
+    /* Constructor */
+
     /**
      * Construye un objeto de la clase Adaptador
      *
@@ -63,12 +67,15 @@ public class Adaptador implements InterfazListados {
      * @param dia LocalDate con la fecha para la cual queremos cargar los datos.
      */
     public void generarDatosDia(LocalDate dia){
+        /* controlamos mediante un booleano, si existen datos cargados para el día dado. */
         boolean existenDatos=false;
+        /* buscamos por la lista, si existen datos cargados para el día dado. */
         for(int i=0; i<this.listaDatos.size(); i++){
             if(this.listaDatos.get(i).getFecha().equals(dia)){
                 existenDatos=true;
             }
         }
+        /* En el caso de que no existan, generamos los datos para dicho día. */
         if(!existenDatos){
             CargaDatos datos=new CargaDatos(this.rutaTrayectos, this.rutaVehiculos, dia);
             this.listaDatos.add(datos);
@@ -89,45 +96,29 @@ public class Adaptador implements InterfazListados {
      */
     public CargaDatos getDatosDia(LocalDate dia){
         CargaDatos datos;
-        boolean existe=false;
         int indice=0;
-        for(int i=0; i<this.listaDatos.size(); i++){
-            if(this.listaDatos.get(i).getFecha().equals(dia)){
-                existe=true;
-                indice=i;
+        /* llamamos a la función de generación de datos, que los generará para tal día si no existen ya.*/
+        this.generarDatosDia(dia);
+        /* buscamos en la lista, hasta que coincida la fecha, y los devolvemos.*/
+        for(int j=0; j<this.listaDatos.size(); j++){
+            if(this.listaDatos.get(j).getFecha().equals(dia)){
+                indice=j;
             }
         }
-        if(!existe){
-            this.generarDatosDia(dia);
-            for(int j=0; j<this.listaDatos.size(); j++){
-                if(this.listaDatos.get(j).getFecha().equals(dia)){
-                    existe=true;
-                    indice=j;
-                }
-            }
-        }
-        datos=this.listaDatos.get(indice);
-        return datos;
-    }
+        return this.listaDatos.get(indice);
+ }
 
 
     public List<LocalTime> getHorarios(String origen, String destino, LocalDate fecha){
         int indice=0;
-        boolean existe=false;
-        for(int c=0; c<this.listaDatos.size(); c++){
-            if(this.listaDatos.get(c).getFecha().equals(fecha)){
-                existe=true;
-                indice=c;
-            }
-        }
+        /* buscamos primero los datos para la fecha indicada, en nuestro listado de datos.*/
+        CargaDatos datos=this.getDatosDia(fecha);
         List<LocalTime> listadoSalidas=new LinkedList<LocalTime>();
-        if(!existe){
-            this.generarDatosDia(fecha);
-        }
-
-            ArrayList<Trayecto> listaTrayectos=this.listaDatos.get(indice).getTrayectosCargados();
-            for(int i=0; i<listaTrayectos.size();i++){
-                if(listaTrayectos.get(i).getOrigen().getNombre().equals(origen) && listaTrayectos.get(i).getDestino().getNombre().equals(destino)){
+        /* Obtenemos todos los trayectos. */
+        ArrayList<Trayecto> listaTrayectos=datos.getTrayectosCargados();
+        /* Buscamos todos los trayectos que coincidan con nuestro origen y detsino y guardamos las horas de salida de los mismos. */
+        for(int i=0; i<listaTrayectos.size();i++){
+            if(listaTrayectos.get(i).getOrigen().getNombre().equals(origen) && listaTrayectos.get(i).getDestino().getNombre().equals(destino)){
                     for(int j=0; j<listaTrayectos.get(i).listarHorarios().size(); j++){
                         if(listaTrayectos.get(i).listarHorarios().get(j).comprobarDisponibilidad()){
                             if(!listadoSalidas.add(listaTrayectos.get(i).listarHorarios().get(j).getHoraSalida())){
@@ -137,20 +128,34 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
+        /* devolvemos la lista con las horas de salida.*/
         return listadoSalidas;
     }
 
     public List<Itinerario> getItinerarios(String origen, String destino, LocalDate fechaSalida){
+        /* Esta lista contendrá la información de todos los trayectos cuyo origen coincide con el solicitado.*/
         List<InformacionTrayecto> trayectosOrigen=new LinkedList<InformacionTrayecto>();
+        /* Esta lista contendrá la información de todos los trayectos cuyo destino coincide con el solicitado.*/
         List<InformacionTrayecto> trayectosDestino=new LinkedList<InformacionTrayecto>();
+        /* Esta lista contendrá los itinerarios solicitados, los cuales devolveremos.*/
         List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
+        /* Listas auxiliares que nos ayudarán a acortar rutas de búsqueda.*/
+        ArrayList<Trayecto> listaTrayectos;
+        ArrayList<Horario> listaHorariosOrigen;
+        ArrayList<Horario> listaHorariosDestino;
+
+        /* buscamos primero los datos para la fecha indicada, en nuestro listado de datos.*/
         CargaDatos datosNecesarios=this.getDatosDia(fechaSalida);
             if(datosNecesarios.getFecha().equals(fechaSalida)){
-                for(int j=0; j<datosNecesarios.getTrayectosCargados().size(); j++){
-                    if(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
-                        for(int k=0; k<datosNecesarios.getTrayectosCargados().get(j).listarHorarios().size(); k++){
-                            if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
-                                InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(j).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+                listaTrayectos=datosNecesarios.getTrayectosCargados();
+                /* Buscamos todos los trayectos cuyo origen coincida con nuestro origen. */
+                for(int j=0; j<listaTrayectos.size(); j++){
+                    if(listaTrayectos.get(j).getOrigen().getNombre().equals(origen)){
+                        listaHorariosOrigen=listaTrayectos.get(j).listarHorarios();
+                        for(int k=0; k<listaTrayectos.get(j).listarHorarios().size(); k++){
+                            if(listaHorariosOrigen.get(k).comprobarDisponibilidad()){
+                                /* Una vez encontrado el trayecto, creamos su objeto de información y lo almacenamos en una lista. */
+                                InformacionTrayecto info=new InformacionTrayecto(listaTrayectos.get(j).getOrigen().getNombre(), listaTrayectos.get(j).getDestino().getNombre(), listaHorariosOrigen.get(k).getHoraSalida(), listaHorariosOrigen.get(k).getHoraLlegada(), listaHorariosOrigen.get(k).getPrecioHorario());
                                 if(!trayectosOrigen.add(info)){
                                     throw new RuntimeException("Error al buscar trayectos");
                                 }
@@ -162,11 +167,15 @@ public class Adaptador implements InterfazListados {
             }
         
             if(datosNecesarios.getFecha().equals(fechaSalida)){
-                for(int m=0; m<datosNecesarios.getTrayectosCargados().size(); m++){
-                    if(datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
-                        for(int n=0; n<datosNecesarios.getTrayectosCargados().get(m).listarHorarios().size(); n++){
-                            if(datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
-                                InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(m).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
+                listaTrayectos=datosNecesarios.getTrayectosCargados();
+                /* Buscamos todos los trayectos cuyo destino coincida con nuestro destino. */
+                for(int m=0; m< listaTrayectos.size(); m++){
+                    if(listaTrayectos.get(m).getDestino().getNombre().equals(destino)){
+                        listaHorariosDestino=listaTrayectos.get(m).listarHorarios();
+                        for(int n=0; n<listaHorariosDestino.size(); n++){
+                            if(listaHorariosDestino.get(n).comprobarDisponibilidad()){
+                                /* Una vez encontrado el trayecto, creamos su objeto de información y lo almacenamos en una lista. */
+                                InformacionTrayecto info=new InformacionTrayecto(listaTrayectos.get(m).getOrigen().getNombre(), listaTrayectos.get(m).getDestino().getNombre(), listaHorariosDestino.get(n).getHoraSalida(), listaHorariosDestino.get(n).getHoraLlegada(), listaHorariosDestino.get(n).getPrecioHorario());
                                 if(!trayectosDestino.add(info)){
                                     throw new RuntimeException("Error al buscar trayectos");
                                 }
@@ -176,10 +185,12 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
-        
+
+        /* buscamos en la lista de trayectos de origen, los que su destino coincida con el origen de alguno de los trayectos de destino.*/
         for(int p=0; p< trayectosOrigen.size(); p++){
             for(int q=0; q<trayectosDestino.size(); q++){
                 if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
+                    /* una vez encontrado los trayectos coincidentes, comprobamos que la hora de salida del segundo sea igual o posterior a la hora de llegada del primero más 10 minutos.*/
                     LocalTime hora=trayectosOrigen.get(p).getHoraLlegada().plusMinutes(10);
                     if(trayectosDestino.get(q).getHoraSalida().isAfter(hora) || trayectosDestino.get(q).getHoraSalida().equals(hora)){
                         Itinerario itinerario = new ItinerarioViaje();
@@ -190,7 +201,7 @@ public class Adaptador implements InterfazListados {
                 }
             }
         }
-
+        /* buscamos en la lista de trayectos de origen, si existe algun trayecto directo que no requiera de trasbordo.*/
         for(int u=0; u<trayectosOrigen.size(); u++){
             if(trayectosOrigen.get(u).getDestino().equals(destino)){
                     Itinerario itinerario=new ItinerarioViaje();
@@ -199,23 +210,38 @@ public class Adaptador implements InterfazListados {
             }
 
         }
+        /*Devolvemos la lista con los itinerarios recopilados.*/
         return listaItinerarios;
 
     }
 
     public List<Itinerario> getItinerariosEntre(String origen, String destino, LocalDate fechaSalida, LocalTime horaSalida, LocalTime horaLlegada){
+        /* Esta lista contendrá la información de todos los trayectos cuyo origen coincide con el solicitado.*/
         List<InformacionTrayecto> trayectosOrigen=new LinkedList<InformacionTrayecto>();
+        /* Esta lista contendrá la información de todos los trayectos cuyo destino coincide con el solicitado.*/
         List<InformacionTrayecto> trayectosDestino=new LinkedList<InformacionTrayecto>();
+        /* Esta lista contendrá los itinerarios solicitados, los cuales devolveremos.*/
         List<Itinerario> listaItinerarios=new LinkedList<Itinerario>();
+        /* Listas auxiliares que nos ayudarán a acortar rutas de búsqueda.*/
+        ArrayList<Trayecto> listaTrayectos;
+        ArrayList<Horario> listaHorariosOrigen;
+        ArrayList<Horario> listaHorariosDestino;
+
+        /* buscamos primero los datos para la fecha indicada, en nuestro listado de datos.*/
         CargaDatos datosNecesarios=this.getDatosDia(fechaSalida);
         if(datosNecesarios.getFecha().equals(fechaSalida)){
-                for(int j=0; j<datosNecesarios.getTrayectosCargados().size(); j++){
-                    if(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre().equals(origen)){
-                        for(int k=0; k<datosNecesarios.getTrayectosCargados().get(j).listarHorarios().size(); k++){
-                            if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).comprobarDisponibilidad()){
-
-                                if(datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().equals(horaSalida) || (datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida().isAfter(horaSalida) && (datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().isBefore(horaLlegada) || datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada().equals(horaLlegada)))){
-                                    InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(j).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(j).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(j).listarHorarios().get(k).getPrecioHorario());
+            listaTrayectos=datosNecesarios.getTrayectosCargados();
+            /* Buscamos todos los trayectos cuyo origen coincida con nuestro origen. */
+            for(int j=0; j<listaTrayectos.size(); j++){
+                    if(listaTrayectos.get(j).getOrigen().getNombre().equals(origen)){
+                        listaHorariosOrigen=listaTrayectos.get(j).listarHorarios();
+                        for(int k=0; k<listaHorariosOrigen.size(); k++){
+                            /*Comprobamos si el horario está disponible. */
+                            if(listaHorariosOrigen.get(k).comprobarDisponibilidad()){
+                                /* Antes de elegir el trayecto, debemos de validar sus requisitos horarios.*/
+                                if(listaHorariosOrigen.get(k).getHoraSalida().equals(horaSalida) || (listaHorariosOrigen.get(k).getHoraSalida().isAfter(horaSalida) && (listaHorariosOrigen.get(k).getHoraLlegada().isBefore(horaLlegada) || listaHorariosOrigen.get(k).getHoraLlegada().equals(horaLlegada)))){
+                                    /* Una vez encontrado el trayecto, creamos su objeto de información y lo almacenamos en una lista. */
+                                    InformacionTrayecto info=new InformacionTrayecto(listaTrayectos.get(j).getOrigen().getNombre(), listaTrayectos.get(j).getDestino().getNombre(), listaHorariosOrigen.get(k).getHoraSalida(), listaHorariosOrigen.get(k).getHoraLlegada(), listaHorariosOrigen.get(k).getPrecioHorario());
                                     if(!trayectosOrigen.add(info)){
                                         throw new RuntimeException("Error al buscar trayectos");
                                     }
@@ -228,13 +254,18 @@ public class Adaptador implements InterfazListados {
         
 
             if(datosNecesarios.getFecha().equals(fechaSalida)){
-                for(int m=0; m<datosNecesarios.getTrayectosCargados().size(); m++){
-                    if(datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre().equals(destino)){
-                        for(int n=0; n<datosNecesarios.getTrayectosCargados().get(m).listarHorarios().size(); n++){
-                            if(datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).comprobarDisponibilidad()){
-                                 if(datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().equals(horaSalida) || (datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida().isAfter(horaSalida) && (datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().isBefore(horaLlegada) || datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada().equals(horaLlegada)))){
-
-                                    InformacionTrayecto info=new InformacionTrayecto(datosNecesarios.getTrayectosCargados().get(m).getOrigen().getNombre(), datosNecesarios.getTrayectosCargados().get(m).getDestino().getNombre(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraSalida(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getHoraLlegada(), datosNecesarios.getTrayectosCargados().get(m).listarHorarios().get(n).getPrecioHorario());
+                listaTrayectos=datosNecesarios.getTrayectosCargados();
+                /* Buscamos todos los trayectos cuyo destino coincida con nuestro destino. */
+                for(int m=0; m<listaTrayectos.size(); m++){
+                    if(listaTrayectos.get(m).getDestino().getNombre().equals(destino)){
+                        listaHorariosDestino=listaTrayectos.get(m).listarHorarios();
+                        for(int n=0; n<listaHorariosDestino.size(); n++){
+                            /*Comprobamos si el horario está disponible. */
+                            if(listaHorariosDestino.get(n).comprobarDisponibilidad()){
+                                /* Antes de elegir el trayecto, debemos de validar sus requisitos horarios.*/
+                                if(listaHorariosDestino.get(n).getHoraSalida().equals(horaSalida) || (listaHorariosDestino.get(n).getHoraSalida().isAfter(horaSalida) && (listaHorariosDestino.get(n).getHoraLlegada().isBefore(horaLlegada) || listaHorariosDestino.get(n).getHoraLlegada().equals(horaLlegada)))){
+                                    /* Una vez encontrado el trayecto, creamos su objeto de información y lo almacenamos en una lista. */
+                                    InformacionTrayecto info=new InformacionTrayecto(listaTrayectos.get(m).getOrigen().getNombre(), listaTrayectos.get(m).getDestino().getNombre(), listaHorariosDestino.get(n).getHoraSalida(), listaHorariosDestino.get(n).getHoraLlegada(), listaHorariosDestino.get(n).getPrecioHorario());
                                     if(!trayectosDestino.add(info)){
                                         throw new RuntimeException("Error al buscar trayectos");
                                     }
@@ -244,11 +275,13 @@ public class Adaptador implements InterfazListados {
                     }
                 }
             }
-        
+
+        /* buscamos en la lista de trayectos de origen, los que su destino coincida con el origen de alguno de los trayectos de destino.*/
         for(int p=0; p< trayectosOrigen.size(); p++){
             for(int q=0; q<trayectosDestino.size(); q++){
                 if(trayectosOrigen.get(p).getDestino().equals(trayectosDestino.get(q).getOrigen())){
                     LocalTime hora=trayectosOrigen.get(p).getHoraLlegada().plusMinutes(10);
+                    /* una vez encontrado los trayectos coincidentes, comprobamos que la hora de salida del segundo sea igual o posterior a la hora de llegada del primero más 10 minutos.*/
                     if(trayectosDestino.get(q).getHoraSalida().isAfter(hora) || trayectosDestino.get(q).getHoraSalida().equals(hora)){
                         Itinerario itinerario = new ItinerarioViaje();
                         itinerario.add(trayectosOrigen.get(p));
@@ -258,7 +291,7 @@ public class Adaptador implements InterfazListados {
                 }
             }
         }
-
+        /* buscamos en la lista de trayectos de origen, si existe algun trayecto directo que no requiera de trasbordo.*/
         for(int u=0; u<trayectosOrigen.size(); u++){
             if(trayectosOrigen.get(u).getDestino().equals(destino)){
                 if(trayectosOrigen.get(u).getHoraLlegada().isBefore(horaLlegada) || trayectosOrigen.get(u).getHoraLlegada().equals(horaLlegada)){
@@ -270,7 +303,7 @@ public class Adaptador implements InterfazListados {
             }
 
         }
-
+        /* Devolvemos los itinerarios.*/
         return listaItinerarios;
     }
 }
