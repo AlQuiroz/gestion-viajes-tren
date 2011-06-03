@@ -25,15 +25,22 @@ import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
  *
  * Se identifica con la ciudad origen y destino del mismo, y forma parte de un viaje. Su distancia se mide mediante tramos.
  *
- * @author manuel
+ * @author Manuel Jesús de la Calle Brihuega
  */
 public class Trayecto {
+    /* Número de tramos que forman el trayecto.*/
     private int tramos;
+    /* Ciudad origen del trayecto.*/
     private Ciudad origen;
+    /* Ciudad destino del trayecto.*/
     private Ciudad destino;
+    /* Lista de horarios para el trayecto.*/
     private ArrayList<Horario> horarios;
+    /* Horario elegido.*/
     private Horario horarioElegido;
+    /* Precio para viajar en este horario.*/
     private float precio;
+    /* Booleano que indica si hay ya un horario seleccionado o no.*/
     private boolean horarioSeleccionado;
 
     //Constructores
@@ -213,6 +220,7 @@ public class Trayecto {
         InterfazVehiculo auxiliar=horarioElegido.getVehiculo();
         float costePorTramo=auxiliar.getCosteTramo();
         int numTramos=this.getTramos();
+        /* Devolvemos el precio, que será el resultado de la multiplicación del número de tramos por el coste del mismo.*/
         return costePorTramo*numTramos;
     }
 
@@ -227,6 +235,7 @@ public class Trayecto {
      */
     public Map<Horario, Float> listarHorariosConPrecios(){
         Map<Horario, Float> mapa= new HashMap<Horario, Float>();
+        /* Recorremos el listado de horarios y añadimos cada horario junto a su precio, en el map creado anteriormente.*/
         for(int i=0; i<this.listarHorarios().size(); i++){
             Horario h=new Horario(this.listarHorarios().get(i));
             Float PrecioParcial=this.calcularPrecioTrayecto(h);

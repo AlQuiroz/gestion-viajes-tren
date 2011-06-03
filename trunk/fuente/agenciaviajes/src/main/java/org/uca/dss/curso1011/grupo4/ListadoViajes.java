@@ -31,10 +31,15 @@ import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
  * @author Manuel Jesús de la Calle Brihuega
  */
 public class ListadoViajes {
+    /* Fecha para la cual queremos generar el listado.*/
     private LocalDate fecha;
+    /* Ciudad origen para la que queremos obtener viajes para el listado.*/
     private Ciudad origen;
+    /* Ciudad destino para la que queremos obtener viajes para el listado.*/
     private Ciudad destino;
+    /* Lista de viajes que forman el listado.*/
     private ArrayList<Viaje> viajes;
+    /* Objeto adaptador con los datos, encargado de adaptar la clase al sistema.*/
     private Adaptador datos;
 
     // Constructores
@@ -181,9 +186,11 @@ public class ListadoViajes {
    public ArrayList<Viaje> listarViajesPorAsientoDisponible(){
        ArrayList<Viaje> listado= new ArrayList<Viaje>();
        int i=0;
+       /* Recorremos el listado de viajes.*/
        while(i<this.getViajes().size()){
            Trayecto auxiliar=new Trayecto(this.getViajes().get(i).getTrayecto());
            Horario hAuxiliar= new Horario(auxiliar.getHorarioElegido());
+           /* Añadimos al nuevo listado, los viajes que tengan asientos disponibles.*/
            if(hAuxiliar.comprobarDisponibilidad()){
                if(!listado.add(this.getViajes().get(i))){
                    throw new RuntimeException("Error al crear el listado");
@@ -191,6 +198,7 @@ public class ListadoViajes {
            }
            i=i+1;
        }
+       /* Devolvemos el nuevo listado.*/
        return listado;
    }
 

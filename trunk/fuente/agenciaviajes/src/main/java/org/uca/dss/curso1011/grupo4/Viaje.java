@@ -29,9 +29,13 @@ import org.uca.dss.trenes.interfazExtendido.InformacionTrayecto;
  * @author Manuel Jesús de la Calle Brihuega
  */
 public class Viaje {
+    /* Precio del viaje. */
     private Float precioFinal;
+    /* Fecha del viaje. */
     private LocalDate fecha;
+    /* Trayecto que compone el viaje. */
     private Trayecto trayecto;
+    /* Información del trayecto que compone el viaje. */
     private InformacionTrayecto trayectoInfo;
 
     //Constructor
@@ -43,6 +47,7 @@ public class Viaje {
      *
      * @param fecha fecha prevista para el viaje
      * @param trayecto trayecto que compone el viaje
+     * @param info
      */
     public Viaje(LocalDate fecha, Trayecto trayecto, InformacionTrayecto info){
         
@@ -93,6 +98,13 @@ public class Viaje {
         return this.fecha;
     }
 
+    /**
+     * Método consultor de información de trayecto.
+     *
+     * Se encarga de devolver la información del trayecto del viaje.
+     *
+     * @return información del trayecto
+     */
     public InformacionTrayecto getInformacionTrayecto(){
         return this.trayectoInfo;
     }

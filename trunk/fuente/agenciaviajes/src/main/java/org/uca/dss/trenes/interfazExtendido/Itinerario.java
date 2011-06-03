@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Interfaz de Itinerario, se define por comodidad para el resto.
+ *
  * @author dmolina
  */
 public interface Itinerario extends List<InformacionTrayecto> {

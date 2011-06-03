@@ -31,12 +31,17 @@ import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
  */
 public class Horario {
 
-    //Atributos
+    /* Número de asientos disponibles para el horario.*/
     private int asientosDisponibles;
+    /* Lista con los números de asientos reservados. */
     private ArrayList<Integer> asientosReservados;
+    /* Hora de llegada del horario. */
     private String horaLlegada;
+    /* Hora de salida del horario. */
     private String horaSalida;
+    /* Vehículo que trabajará dicho horario. */
     private InterfazVehiculo vehiculo;
+    /* Fecha para la que se pone en práctica el horario. */
     private LocalDate fecha;
 
     // Constructores
@@ -48,7 +53,7 @@ public class Horario {
      * @param salida hora de salida del viaje
      * @param llegada hora de llegada del viaje
      * @param asientos asientos disponibles para el viaje
-     * @param tren tren que realiza el trayecto en este horario
+     * @param vehiculo vehículo en el que se realizará el horario
      * @param fecha LocalDate con la fecha para la que se aplica el horario.
      */
     public Horario(LocalTime salida, LocalTime llegada, int asientos, InterfazVehiculo vehiculo, LocalDate fecha){
@@ -120,10 +125,24 @@ public class Horario {
         return this.asientosDisponibles;
     }
 
+    /**
+     * Método consultor de asientos reservados.
+     *
+     * Devuelve una lista de enteros, con los números de los asientos reservados hasta el momento.
+     *
+     * @return lista de enteros con los asientos
+     */
     public ArrayList<Integer> getListaAsientosReservados(){
         return this.asientosReservados;
     }
     
+    /**
+     * Método modificador de asientos.
+     *
+     * Establece el asiento, cuyo número se recibe por parámetro, como reservado.
+     *
+     * @param numero entero con el número que representa al asiento.
+     */
     public void setAsientoReservado(int numero){
         this.asientosReservados.add(numero);
     }
@@ -182,13 +201,16 @@ public class Horario {
      * @param asientosReservados numero de asientos a decrementar (reservados).
      */
     public void actualizaAsientos(int asientosReservados){
+        /* Obtenemos el número de asientos disponibles. */
         int disponibles=this.getAsientosDisponibles();
+        /* Actualizamos los asientos disponibles con los que recibimos por parámetro. */
         disponibles=disponibles + asientosReservados;
         if(disponibles < 0){
             throw new RuntimeException("Error: No hay asientos disponibles");
         }
         else
         {
+            /* Actualizamos el nuevo número de asientos. */
             this.setAsientosDisponibles(disponibles);
         }
 

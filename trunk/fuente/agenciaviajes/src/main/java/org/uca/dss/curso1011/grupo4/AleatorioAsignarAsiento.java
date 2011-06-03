@@ -10,6 +10,9 @@ import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
 import java.util.ArrayList;
 /**
+ * Clase encargada de implementar la interfaz 'InterfazRepartoAsiento'
+ *
+ * Se encarga de repartir los asientos de manera aleatoria, implementando el único método de la interfaz.
  *
  * @author migue
  */

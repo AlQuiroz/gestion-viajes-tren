@@ -19,7 +19,7 @@ public class Ciudad {
      *
      * Construye un objeto de la clase Ciudad
      * @param nombre nombre de la ciudad
-     * @param pais nombre del pa�s en el que esta la ciudad
+     * @param pais nombre del país en el que esta la ciudad
      */
     public Ciudad(String nombre, String pais){
         this.nombre = nombre;
@@ -39,8 +39,7 @@ public class Ciudad {
      * Constructor copia
      *
      * Construye un objeto de la clase Ciudad a partir de
-     * @param valor
-     * @param pais nombre del país en el que esta la ciudad
+     * @param valor objeto Ciudad del que se realizará la copia
      */
     public Ciudad(Ciudad valor){
         this.nombre=valor.getNombre();
@@ -69,6 +68,8 @@ public class Ciudad {
     }
 
     private
+    /* Nombre de la ciudad. */
     String nombre;
+    /* Nombre del país al que pertenece la ciudad. */
     String pais;
 }

@@ -50,8 +50,8 @@ public class Adaptador implements InterfazListados {
      *
      * Recibe de parámetros de entrada las rutas de los archivos CSV con los trayectos y trenes que utilizará el sistema e inicializa internamente la lista de CargaDatos.
      *
-     * @param Trenes String con la ruta del archivo CSV que contiene los trenes a cargar.
-     * @param Trayectos String con la ruta del archivo CSV que contiene los trayectos a cargar.
+     * @param vehiculos ruta del fichero csv que contiene los vehículos
+     * @param trayectos ruta del fichero csv que contiene los trayectos
      */
     public Adaptador(String vehiculos, String trayectos){
         this.rutaTrayectos=trayectos;
@@ -263,9 +263,11 @@ public class Adaptador implements InterfazListados {
                             /*Comprobamos si el horario está disponible. */
                             if(listaHorariosDestino.get(n).comprobarDisponibilidad()){
                                 /* Antes de elegir el trayecto, debemos de validar sus requisitos horarios.*/
-                                if(listaHorariosDestino.get(n).getHoraSalida().equals(horaSalida) || (listaHorariosDestino.get(n).getHoraSalida().isAfter(horaSalida) && (listaHorariosDestino.get(n).getHoraLlegada().isBefore(horaLlegada) || listaHorariosDestino.get(n).getHoraLlegada().equals(horaLlegada)))){
+                                LocalTime horaSalida2=listaHorariosDestino.get(n).getHoraSalida();
+                                LocalTime horaLlegada2=listaHorariosDestino.get(n).getHoraLlegada();
+                                if(horaSalida2.equals(horaSalida) || (horaSalida2.isAfter(horaSalida) && (horaLlegada2.isBefore(horaLlegada) || horaLlegada2.equals(horaLlegada)))){
                                     /* Una vez encontrado el trayecto, creamos su objeto de información y lo almacenamos en una lista. */
-                                    InformacionTrayecto info=new InformacionTrayecto(listaTrayectos.get(m).getOrigen().getNombre(), listaTrayectos.get(m).getDestino().getNombre(), listaHorariosDestino.get(n).getHoraSalida(), listaHorariosDestino.get(n).getHoraLlegada(), listaHorariosDestino.get(n).getPrecioHorario());
+                                    InformacionTrayecto info=new InformacionTrayecto(listaTrayectos.get(m).getOrigen().getNombre(), listaTrayectos.get(m).getDestino().getNombre(), horaSalida2, horaLlegada2, listaHorariosDestino.get(n).getPrecioHorario());
                                     if(!trayectosDestino.add(info)){
                                         throw new RuntimeException("Error al buscar trayectos");
                                     }
