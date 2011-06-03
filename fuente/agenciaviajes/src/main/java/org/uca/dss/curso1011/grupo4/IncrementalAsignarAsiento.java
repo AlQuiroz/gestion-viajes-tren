@@ -10,6 +10,9 @@ import org.joda.time.LocalTime;
 import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
 
 /**
+ * Clase encargada de implementar a la interfaz 'InterfazRepartoAsiento'.
+ *
+ * Se encarga de repartir los asientos de manera incremental, implementando el único método de la interfaz.
  *
  * @author migue
  */

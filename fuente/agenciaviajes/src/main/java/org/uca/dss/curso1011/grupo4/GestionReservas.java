@@ -34,7 +34,7 @@ public class GestionReservas implements InterfazCompras{
      * @param cOrigen Ciudad de origen del viaje a reservar.
      * @param cDestino Ciudad de destino del viaje a reservar.
      * @param cHora LocalTime con la hora de salida para la que queremos reservar el viaje.
-     * @param cTren Tren con el tren para el que queremos reservar el viaje.
+     * @param cVehiculo
      * @param numasientos int con el número de asientos que queremos reservar.
      * @param adaptador Objeto Adaptador que contiene los datos del sistema.
      */
@@ -63,39 +63,50 @@ public class GestionReservas implements InterfazCompras{
 
     
     public int asientosLibres(LocalDate fecha, Itinerario itinerario){
+        /* Establecemos una variable con un valor muy alto. 10000 por ejemplo.*/
         int minNumAsiento=10000;
+        /* Recorremos el itinerario.*/
         for (int i=0;i<itinerario.size();++i)
         {
             int numAsiento;
             InformacionTrayecto rt = itinerario.get(i);
             numAsiento=this.asientosLibres(rt.getOrigen(), rt.getDestino(), fecha, rt.getHoraSalida());
+            /* Nos quedamos con el mínimo número de asientos libres de entre todos los trayectos del itinerario.*/
             if(numAsiento<minNumAsiento){minNumAsiento=numAsiento;}
         }
         return minNumAsiento;
     }
 
 public int asientosLibres(String origen, String destino, LocalDate fecha, LocalTime hora){
+       /* Obtenemos los datos para la fecha indicada.*/
        CargaDatos datosDia=this.datos.getDatosDia(fecha);
        int asientos=0;
+       /* Creamos dos booleanos para controlar la existencia de las ciudades */
        boolean existeOrigen=false;
        boolean existeDestino=false;
-       for(int i=0; i<datosDia.getTrayectosCargados().size(); i++){
-           if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen)){
+       ArrayList<Trayecto> lista=datosDia.getTrayectosCargados();
+       /* Buscamos el trayecto, y el horario dentro del trayecto, que corresponda.*/
+       for(int i=0; i<lista.size(); i++){
+           String origenAux=lista.get(i).getOrigen().getNombre();
+           String destinoAux=lista.get(i).getDestino().getNombre();
+           if(origenAux.equals(origen)){
                existeOrigen=true;
-               if(datosDia.getTrayectosCargados().get(i).getOrigen().getNombre().equals(origen) && datosDia.getTrayectosCargados().get(i).getDestino().getNombre().equals(destino)){
+               if(origenAux.equals(origen) && destinoAux.equals(destino)){
                    existeDestino=true;
-                   for(int j=0; j<datosDia.getTrayectosCargados().get(i).listarHorarios().size(); j++){
-                        if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
-                            if(datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).comprobarDisponibilidad()){
-                                asientos=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getAsientosDisponibles();
-                                this.vehiculo=datosDia.getTrayectosCargados().get(i).listarHorarios().get(j).getVehiculo();
+                   for(int j=0; j<lista.get(i).listarHorarios().size(); j++){
+                        if(lista.get(i).listarHorarios().get(j).getHoraSalida().equals(hora)){
+                            if(lista.get(i).listarHorarios().get(j).comprobarDisponibilidad()){
+                                /* Obtenemos el número de asientos libres */
+                                asientos=lista.get(i).listarHorarios().get(j).getAsientosDisponibles();
+                                /* Establecemos el vehículo que se utiliza en el viaje, obtenido del horario.*/
+                                this.vehiculo=lista.get(i).listarHorarios().get(j).getVehiculo();
                             }
                         }
                    }
                 }
           }
        }
-
+       /* Controlamos mediante excepciones la existencia del origen y el destino.*/
        if(!existeOrigen){
             throw new IllegalArgumentException("Error: La ciudad origen no existe");
 
@@ -175,20 +186,25 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
     
     public double getPrecio(String origen, String destino, LocalDate fecha, LocalTime hora) {
         double precioViajes;
+        /* Creamos un listado de viajes.*/
         ListadoViajes l = new ListadoViajes(fecha, new Ciudad(origen), new Ciudad(destino), this.datos);
         ArrayList<Viaje> viajes = new ArrayList<Viaje>();
+        /* Obtenemos los viajes del listado creado anteriormente.*/
         viajes  = l.getViajes();
         int i=0;
         precioViajes = 0;
+        /* Recorremos la lista de viajes.*/
         while(i <viajes.size()){
             Trayecto auxTrayecto=new Trayecto(viajes.get(i).getTrayecto());
             Ciudad auxOrigen=new Ciudad(auxTrayecto.getOrigen());
             Ciudad auxDestino=new Ciudad(auxTrayecto.getDestino());
             if(auxOrigen.getNombre().equals(origen) && auxDestino.getNombre().equals(destino)){
+                /* Obtenemos el precio.*/
                 precioViajes = viajes.get(i).getTrayecto().getPrecio();}
             else{
                 ++i;}
         }
+        /*Devolvemos el precio.*/
         return precioViajes;
     
     }
@@ -227,6 +243,13 @@ public int asientosLibres(String origen, String destino, LocalDate fecha, LocalT
         return listRT;
     }
 
+    /**
+     *
+     * @param info
+     * @param fecha
+     * @param numAsiento
+     * @return
+     */
     public boolean comprobarDisponibilidadAsiento(InformacionTrayecto info, LocalDate fecha, int numAsiento){
         boolean disponible=true;
         ReservaTrayecto reserva = new ReservaTrayecto(info, fecha, numAsiento, null);

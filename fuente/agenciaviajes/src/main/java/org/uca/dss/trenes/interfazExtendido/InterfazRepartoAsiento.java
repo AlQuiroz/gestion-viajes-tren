@@ -10,7 +10,10 @@ import org.joda.time.LocalTime;
 import org.uca.dss.curso1011.grupo4.GestionReservas;
 
 /**
+ * Interfaz encargada de repartir asientos.
+ *
  * Esta interfaz permite abstraer el método de reparto de asientos
+ *
  * @author migue
  */
 public interface InterfazRepartoAsiento  {

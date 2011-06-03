@@ -34,8 +34,11 @@ import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 
 public class CargaDatos {
 
+    /* Lista de vehículos, que cargaremos desde el fichero de vehículos.*/
     private ArrayList<InterfazVehiculo> vehiculosCargados;
+    /* Lista de trayectos, que cargaremos desde el fichero de trayectos.*/
     private ArrayList<Trayecto> trayectosCargados;
+    /* Fecha para la cual son válidos los vehículos y trayectos. */
     private LocalDate fecha;
 
     /**
@@ -52,21 +55,27 @@ public class CargaDatos {
     public CargaDatos(String ArchivoTrayectos, String ArchivoTrenes, LocalDate fecha){
         try{
             this.fecha=fecha;
+            /* Cargamos el fichero CSV con los trenes*/
             CSVReader readerTrenes=new CSVReader(new FileReader(ArchivoTrenes));
             String [] nextLine;
             this.vehiculosCargados= new ArrayList<InterfazVehiculo>();
+            /* Vamos leyendo linea a linea, y guardando las distintas caracteristicas del tren.*/
             nextLine = readerTrenes.readNext ();
-            while (nextLine.length == 3 ) {//pongo 3 porque en cada l�nea hay 3 datos, si estamos en una linea sin datos no valdra 3
+            /* El 3 se debe porque en cada línea hay 3 datos, si estamos en una linea sin datos no valdra 3 */
+            while (nextLine.length == 3 ) {
                 String nombreTren= nextLine[0];
                 String asientos= nextLine[1];
                 String precio= nextLine[2];
+                /* Convertimos los valores numericos.*/
                 float precioConvertido=Float.valueOf(precio.trim()).floatValue();
                 int asientosConvertido=Integer.parseInt(asientos.trim());
+                /* Creamos el tren y lo añadimos a la lista de vehículos cargados.*/
                 Tren tren= new Tren(asientosConvertido, precioConvertido, nombreTren.trim());
                 if(!this.vehiculosCargados.add(tren)){
                     throw new RuntimeException("Error al introducir el tren" + nombreTren);
 
                 }
+                /* Pasamos a la siguiente linea.*/
                 nextLine = readerTrenes.readNext ();
             }
 
@@ -76,6 +85,7 @@ public class CargaDatos {
        }
 
         try{
+            /*Repetimos el proceso anterior con los trayectos.*/
             CSVReader readerTrayectos=new CSVReader(new FileReader(ArchivoTrayectos));
             String [] nextLineTrayectos;
             this.trayectosCargados=new ArrayList<Trayecto>();
@@ -173,6 +183,7 @@ public class CargaDatos {
     public InterfazVehiculo getVehiculo(String nombre){
         int i=0, j=0;
         InterfazVehiculo t;
+        /* De entre todos los vehículos cargados, buscamos el que coincida con el nombre dado.*/
         while(i<this.vehiculosCargados.size()){
             if(this.vehiculosCargados.get(i).getNombre().equalsIgnoreCase(nombre)){
                 j= i;
