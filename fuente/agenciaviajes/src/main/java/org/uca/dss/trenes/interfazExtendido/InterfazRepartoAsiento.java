@@ -23,6 +23,10 @@ public interface InterfazRepartoAsiento  {
      * Establece internamente el número de asiento correspondiente al tipo de implementación de la interfaz.
      *
      * @param info Informacion del trayecto al cual debe de dar el asiento
+     * @param origen nombre de la ciudad origen del trayecto para el cual debe dar el asiento
+     * @param fecha fecha para el viaje del cual queremos dar el asiento.
+     * @param destino nombre de la ciudad destino del trayecto para el cual debe dar el asiento
+     * @param hora hora del viaje para el cual queremos dar el asiento
      * @return el número del asiento
      */
     public int reparteAsiento(GestionReservas info, String origen, String destino, LocalDate fecha, LocalTime hora);

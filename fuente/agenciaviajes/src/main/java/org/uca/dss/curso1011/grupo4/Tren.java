@@ -8,7 +8,7 @@ package org.uca.dss.curso1011.grupo4;
 import org.uca.dss.trenes.interfazExtendido.InterfazVehiculo;
 
 /**
- * Representa al tren que realiza el viaje.
+ * Clase encargada de implementar a la 'InterfazVehiculo'.
  *
  * Clase encargada de representar al tren que realizará el viaje determinado en el sistema. En ella se describen aspectos fundamentales del mismo, como puede ser su nombre, que lo identificará, su número de asientos, el tipo o el coste por tramo viajado. Implementa a la interfaz 'InterfazVehiculo'
  *
@@ -22,9 +22,9 @@ public class Tren implements InterfazVehiculo{
      *
      * Crea un tren a partir de asientos, coste del tramo y el nombre del tren)
      *
-     * @param asientos
-     * @param costetramo
-     * @param nombre
+     * @param asientos número de asientos del tren
+     * @param costetramo coste por tramo recorrido en el tren
+     * @param nombre nombre del tren
      */
     public Tren(int asientos, float costetramo, String nombre){
         this.numAsientos = asientos;
@@ -59,8 +59,11 @@ public class Tren implements InterfazVehiculo{
         return nombre;
     }
 
+    /* Número de asientos del tren.*/
     private int numAsientos;
+    /* Coste por tramo recorrido en el tren.*/
     private float costeTramo;
+    /* Nombre del tren.*/
     private String nombre;
 
 }

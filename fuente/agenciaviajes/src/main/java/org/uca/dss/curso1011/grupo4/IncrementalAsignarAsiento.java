@@ -19,12 +19,14 @@ import org.uca.dss.trenes.interfazExtendido.InterfazRepartoAsiento;
 public class IncrementalAsignarAsiento implements InterfazRepartoAsiento{
 
     public int reparteAsiento(GestionReservas info,String origen, String destino,LocalDate fecha, LocalTime hora){
+        /*Obtenemos el número de asientos del vehículo.*/
         int asientos = info.getVehiculo().getNumAsientos();
-
+        /*Obtenemos los asientos libres.*/
         int asientosLibres =info.asientosLibres(origen,destino,fecha,hora);
         if (asientosLibres < 0){
             throw new RuntimeException("No quedan asientos disponibles");
         }
+        /*Devolvemos la diferencia entre asientos del vehículo y asientos libres.*/
         return asientos-asientosLibres;
     }
 }
