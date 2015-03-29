@@ -1,0 +1,1 @@
+Pequeña aplicación de consola que nos servirá para gestionar el sistema de reservas de billetes de tren, de una determinada empresa de viajes en tren.
